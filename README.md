@@ -6,4 +6,4 @@ In this repo, you will find all my presentations using [reveal.js](https://revea
 
 ##
 
-[Cloud Migrations](./cloud-migrations/)
+[Cloud Migrations](https://elft3r.github.io/presentations/cloud-migrations/)
