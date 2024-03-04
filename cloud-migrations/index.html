@@ -12,37 +12,58 @@
     <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/reveal.css" />
     <link rel="stylesheet" href="dist/theme/black.css" />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
   </head>
   <body>
     <div class="reveal">
-      <div class="slides">
+      <div class="slides text-3xl">
         <section>
           <section>
             <h2>Accelerating Cloud Adoption in Banking and Insurance</h2>
             Jochen Zehnder
+            <div class="p-20 text-xl">
+              <a href="https://elft3r.github.io/presentations/cloud-migrations/"
+                >https://elft3r.github.io/presentations/cloud-migrations/</a
+              >
+            </div>
           </section>
         </section>
         <section>
           <h2>Jochen Zehnder</h2>
           <p>Cloud-Native Consultant & Partner at 56K.Cloud</p>
-          <ul>
-            <li>Software Development Background</li>
-            <li>Infrastructure Full-Stack Engineer</li>
-            <li>AWS Community Builder & Docker Community Leader</li>
-          </ul>
-          <img
-            src="imgs/jochen-zehnder-profil.jpg"
-            alt="Jochen Zehnder"
-            style="width: 200px; height: auto; border-radius: 50%"
-          />
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-2">
+              <ul>
+                <li>Software Development Background</li>
+                <li>Infrastructure Full-Stack Engineer</li>
+                <li>AWS Community Builder & Docker Community Leader</li>
+              </ul>
+            </div>
+            <div class="col-span-1">
+              <img
+                class="object-cover rounded-full h-100 w-100 flex items-center justify-center shadow-2xl"
+                src="imgs/jochen-zehnder-profil.jpg"
+                alt="Jochen Zehnder"
+              />
+            </div>
+          </div>
         </section>
         <section>
-          <section>Ways to migrate to the Cloud</section>
+          <section><h1>Migration Strategies</h1></section>
           <section>
-            <img src="imgs/aws-migration-paths.png" alt="AWS Migration Paths" />
+            <div class="grid place-items-center">
+              <img
+                class="object-contain"
+                src="imgs/aws-migration-paths.png"
+                alt="AWS Migration Paths"
+              />
+            </div>
           </section>
           <section>
             <ul>
@@ -58,50 +79,180 @@
                   </li>
                 </ul>
               </li>
-              <li>Rehost
+              <li>
+                Rehost
                 <ul>
                   <li>lift and shift</li>
-              </li>
-              <li>Relocate
-                <ul>
-                  <li>Transfer from on-prem to cloud version of the platform</li>
                 </ul>
               </li>
-              <li>Repurchase
+              <li>
+                Relocate
+                <ul>
+                  <li>
+                    Transfer from on-prem to cloud version of the platform
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Repurchase
                 <ul>
                   <li>drop and shop</li>
                 </ul>
               </li>
-              <li>Replatform
+              <li>
+                Replatform
                 <ul>
                   <li>lift, tinker, and shift</li>
                   <li>lift and reshape</li>
                 </ul>
               </li>
-              <li>Refactor or re-architect
+              <li>
+                Refactor or re-architect
                 <ul>
                   <li>Taking full advantage of cloud-native features</li>
                 </ul>
               </li>
             </ul>
             <br />
-            <span>
+            <span class="text-sm">
               <a
                 href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-                >AWS Migration Strategies</a
+                target="_blank"
+                >About the migration strategies</a
               >
             </span>
           </section>
         </section>
-        <section>Legal</section>
-        <section>Security</section>
         <section>
-          <section>Technical</section>
+          <section><h1>Legal</h1></section>
+          <section class="text-xl">
+            <div class="p-5">
+              I'm not a lawyer, but
+              <a href="https://www.lauxlawyers.ch/en/home/" target="_blank"
+                >LAUX LAWYERS AG</a
+              >
+              are.
+            </div>
+            <ul>
+              <li>
+                <a
+                  href="https://www.lauxlawyers.ch/en/legal-opinion-swiss-banking-secrecy-and-cloud-computing"
+                  target="_blank"
+                >
+                  Legal opinion: Use of Cloud Offerings by Banks: Admissibility
+                  under Art. 47 Banking Act
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.lauxlawyers.ch/en/public-cloud-for-public-services/"
+                  target="_blank"
+                >
+                  White Paper: Public Cloud for Public Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.lauxlawyers.ch/en/oiz-cloud-gutachten/"
+                  target="_blank"
+                >
+                  The city of Zurich uses Cloud Services within its municipal
+                  administration
+                </a>
+              </li>
+            </ul>
+          </section>
         </section>
         <section>
-          <section>Challenges</section>
-          <section>Handover</section>
+          <section><h1>Security</h1></section>
+          <section>
+            <h2>Security is a shared responsibility</h2>
+            <a
+              href="https://aws.amazon.com/compliance/shared-responsibility-model/"
+              target="_blank"
+            >
+              <div class="grid place-items-center">
+                <img
+                  class="object-contain"
+                  src="imgs/aws-shared-responsibility-model.jpg"
+                  alt="AWS Shared Responsibility Model"
+                />
+              </div>
+            </a>
+          </section>
+          <section>
+            <h3>All Cloud Providers have a Shared Responsibility Model</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://aws.amazon.com/compliance/shared-responsibility-model/"
+                  target="_blank"
+                  >Amazon Web Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate"
+                  target="_blank"
+                  >Google Cloud</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://cloud.ibm.com/docs/overview?topic=overview-shared-responsibilities"
+                  target="_blank"
+                  >IBM Cloud</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility"
+                  target="_blank"
+                  >Microsoft Azure</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://docs.public.oneportal.content.oci.oraclecloud.com/en-us/iaas/Content/cloud-adoption-framework/security.htm"
+                  target="_blank"
+                  >Oracle Cloud</a
+                >
+              </li>
+              <li>...</li>
+            </ul>
+          </section>
         </section>
+        <section>
+          <section><h1>Technical</h1></section>
+          <section>
+            <h2>How to structure your Cloud?</h2>
+            <ul>
+              <li>Limit the access via permission</li>
+              <li>Limit the access on an account / subscription / ... level</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Account Vending</h2>
+            <ul>
+              <li>Create and configure new accounts / subscriptions / ...</li>
+              <li>What is the best way to automate this?</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Infrastructure as Code (IaC)</h2>
+            <ul>
+              <li>Really good for certain things</li>
+              <li>Challenging at scale</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section><h1>Learnings</h1></section>
+          <section><h2>Assess team capabilities</h2></section>
+          <section><h2>Privileged Access Control</h2></section>
+          <section><h2>Train Application Teams early</h2></section>
+        </section>
+        <section><h1>Q&A</h1></section>
       </div>
     </div>
 
