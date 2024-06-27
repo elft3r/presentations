@@ -37,3 +37,33 @@
     <img class="rounded" src="imgs/user-assignment.svg" alt="User Assignment" />
   </div>
 </section>
+<section>
+  <h2>Automated Assignment</h2>
+  <ul>
+    <li>AWS Identity Center needs mapping</li>
+    <ul>
+      <li>
+        <em>Account / OU</em> &#8596; <em>User / Group</em> &#8596;
+        <em>Permission Set</em>
+      </li>
+    </ul>
+    <li>
+      We used
+      <a href="https://github.com/aws-samples/assignment-automation-4-aws-sso"
+        >aws-samples/assignment-automation-4-aws-sso</a
+      >
+    </li>
+    <li>Create naming convention for Groups</li>
+    <ul>
+      <li>
+        <em>platform-read-only</em>
+      </li>
+      <li>
+        <em>domain-&lt;domain-name&gt;-db-admin</em>
+      </li>
+      <li>
+        <em>workload-&lt;domain-name&gt;-&lt;workload-name&gt;-db-admin</em>
+      </li>
+    </ul>
+  </ul>
+</section>
