@@ -5,4 +5,4 @@
 In this repo, you will find all my presentations using [reveal.js](https://revealjs.com/).
 
 - [Cloud Migrations](https://elft3r.github.io/presentations/cloud-migrations/)
-- [Secure Landing Zones](https://elft3r.github.io/presentations/cloud-migrations/)
+- [Secure Landing Zones](https://elft3r.github.io/presentations/secure-landing-zones/)
