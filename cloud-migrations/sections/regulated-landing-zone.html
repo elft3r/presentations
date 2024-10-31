@@ -1,0 +1,175 @@
+<section>
+  <h1>Migration of Regulated Company</h1>
+  <h2>Use Case</h2>
+</section>
+<section>
+  <h2>Use Case</h2>
+  <ul>
+    <li>FINMA Regulated Company</li>
+    <li>Multiple In-House Development Teams</li>
+    <li>Manage everything In-House</li>
+    <li>Migrate applications to AWS</li>
+  </ul>
+</section>
+<section>
+  <h2>Requirements</h2>
+  <ul>
+    <li>Support CID and non-CID Environments</li>
+    <li>Support multitude of applications</li>
+    <li>Support EKS Based Workload</li>
+    <li>Reflect organization structure</li>
+    <li>Timeline: ~9 month</li>
+  </ul>
+</section>
+<section>
+  <h2>What are the steps?</h2>
+  <ol>
+    <li class="fragment">Define and Set up the Landing Zone</li>
+    <li class="fragment">Decide for each app the migration strategy</li>
+    <li class="fragment">Do the migration</li>
+  </ol>
+</section>
+<section>
+  <h2>What is a Landing Zone?</h2>
+  <q
+    >In military terminology a landing zone (LZ) is an area where aircraft can
+    land.</q
+  >
+  <div>
+    <span class="text-sm">
+      <a href="https://en.wikipedia.org/wiki/Landing_zone" target="_blank"
+        >Wikipedia - Landing Zone</a
+      >
+    </span>
+  </div>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="./imgs/landing-zone-air-zermatt.jpeg"
+      style="max-width: 50%"
+      alt="Air Zermatt - Landing Zones"
+    />
+  </div>
+  <span class="text-sm">
+    <a
+      href="https://www.air-zermatt.ch/en/training/know-how-transfer"
+      target="_blank"
+    >
+      Air Zermatt - Landing Zone
+    </a>
+  </span>
+</section>
+<section>
+  <h2>Cloud Landing Zone</h2>
+  <q
+    >A landing zone is a well-architected, multi-account AWS environment that is
+    scalable and secure.</q
+  >
+  <div>
+    <span class="text-sm">
+      <a
+        href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-aws-environment/understanding-landing-zones.html"
+        target="_blank"
+        >AWS Prescriptive Guidance - What is a landing zone?</a
+      >
+    </span>
+  </div>
+</section>
+<section>
+  <h2>Cloud Landing Zone</h2>
+  <ul>
+    <li><em>It's a concept, not a product</em></li>
+    <li>well-architected</li>
+    <li>multi-account</li>
+    <li>scalable</li>
+    <li>secure</li>
+  </ul>
+</section>
+<section>
+  <h2>Account Types</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="col-span-1">
+      <ul>
+        <li class="fragment">Management Account</li>
+        <li class="fragment">Platform Accounts</li>
+        <li class="fragment">Application Accounts</li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <img
+        class="rounded"
+        style="max-width: 100%"
+        src="https://docs.gruntwork.io/assets/images/gruntwork-landing-zone-3d039266f02a19fc64367b9c3706bb08.png"
+        alt="Jochen Zehnder"
+      />
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Questions?</h2>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="fragment">
+      <p>How many accounts?</p>
+    </div>
+    <div class="fragment">
+      <p>What account structure?</p>
+    </div>
+    <div class="fragment">
+      <p>What environments?</p>
+    </div>
+    <div class="fragment">
+      <p>How many EKS Clusters?</p>
+    </div>
+    <div class="fragment">
+      <p>Responsibility</p>
+    </div>
+    <div class="fragment">
+      <p>...</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Account Types</h2>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="fragment">
+      <h3><em>Platform</em></h3>
+      <p>One account per specific functionality</p>
+    </div>
+    <div class="fragment">
+      <h3><em>Domain</em></h3>
+      <p>Shared accounts to run the applications</p>
+    </div>
+    <div class="fragment">
+      <h3><em>Workload</em></h3>
+      <p>Services used by the application</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Cloud Landing Zone</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      style="max-width: 70%"
+      src="imgs/aws-account-setup.svg"
+      alt="AWS Account Setup"
+    />
+  </div>
+</section>
+<section>
+  <h2>What Migration Strategies to use?</h2>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="fragment">
+      <h3><em>Retain</em></h3>
+      <p>Core Banking Platform</p>
+    </div>
+    <div class="fragment">
+      <h3><em>Rehost</em></h3>
+      <p>Migrate workload from OpenShift to AWS EKS</p>
+    </div>
+    <div class="fragment">
+      <h3><em>Replatform</em></h3>
+      <p>Migrate DBs, Caches, ... to Managed Services</p>
+    </div>
+  </div>
+</section>
