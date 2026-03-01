@@ -10,25 +10,28 @@
 <section>
   <h2>Fine-grained access control</h2>
   <ul>
-    <li>Challenges</li>
-    <ul>
-      <li>Different account types</li>
-      <li>Different environments</li>
-      <li>Dynamic account setup</li>
-    </ul>
+    <li>Challenges
+      <ul>
+        <li>Different account types</li>
+        <li>Different environments</li>
+        <li>Dynamic account setup</li>
+      </ul>
+    </li>
   </ul>
 </section>
 <section>
   <h2>Fine-grained access control</h2>
   <ul>
-    <li>AWS Identity Center</li>
-    <ul>
-      <li>Manage access to your AWS accounts & applications</li>
-    </ul>
-    <li>Microsoft Entra ID</li>
-    <ul>
-      <li>Cloud-based identity and access management solution</li>
-    </ul>
+    <li>AWS Identity Center
+      <ul>
+        <li>Manage access to your AWS accounts & applications</li>
+      </ul>
+    </li>
+    <li>Microsoft Entra ID
+      <ul>
+        <li>Cloud-based identity and access management solution</li>
+      </ul>
+    </li>
   </ul>
 </section>
 <section>
@@ -40,30 +43,32 @@
 <section>
   <h2>Automated Assignment</h2>
   <ul>
-    <li>AWS Identity Center needs mapping</li>
-    <ul>
-      <li>
-        <em>Account / OU</em> &#8596; <em>User / Group</em> &#8596;
-        <em>Permission Set</em>
-      </li>
-    </ul>
+    <li>AWS Identity Center needs mapping
+      <ul>
+        <li>
+          <em>Account / OU</em> &#8596; <em>User / Group</em> &#8596;
+          <em>Permission Set</em>
+        </li>
+      </ul>
+    </li>
     <li>
       We used
       <a href="https://github.com/aws-samples/assignment-automation-4-aws-sso"
         >aws-samples/assignment-automation-4-aws-sso</a
       >
     </li>
-    <li>Create naming convention for Groups</li>
-    <ul>
-      <li>
-        <em>platform-read-only</em>
-      </li>
-      <li>
-        <em>domain-&lt;domain-name&gt;-eks-admin</em>
-      </li>
-      <li>
-        <em>workload-&lt;domain-name&gt;-&lt;workload-name&gt;-db-admin</em>
-      </li>
-    </ul>
+    <li>Create naming convention for Groups
+      <ul>
+        <li>
+          <em>platform-read-only</em>
+        </li>
+        <li>
+          <em>domain-&lt;domain-name&gt;-eks-admin</em>
+        </li>
+        <li>
+          <em>workload-&lt;domain-name&gt;-&lt;workload-name&gt;-db-admin</em>
+        </li>
+      </ul>
+    </li>
   </ul>
 </section>
