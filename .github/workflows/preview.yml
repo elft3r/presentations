@@ -2,7 +2,7 @@ name: Preview Deployment
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
   contents: read
@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   deploy-preview:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -78,4 +79,45 @@ jobs:
                 issue_number: context.issue.number,
                 body,
               });
+            }
+
+  cleanup-preview:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete preview deployments
+        uses: actions/github-script@v7
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PROJECT_NAME: ${{ github.event.repository.name }}
+          BRANCH_ALIAS: pr-${{ github.event.pull_request.number }}
+        with:
+          script: |
+            const baseUrl = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/pages/projects/${process.env.PROJECT_NAME}/deployments`;
+            const headers = {
+              'Authorization': `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
+              'Content-Type': 'application/json',
+            };
+
+            // List deployments and delete those matching this PR's branch alias
+            const res = await fetch(baseUrl, { headers });
+            const { result: deployments } = await res.json();
+
+            const prDeployments = deployments.filter(
+              d => d.deployment_trigger?.metadata?.branch === process.env.BRANCH_ALIAS
+            );
+
+            core.info(`Found ${prDeployments.length} deployment(s) for ${process.env.BRANCH_ALIAS}`);
+
+            for (const d of prDeployments) {
+              const delRes = await fetch(`${baseUrl}/${d.id}?force=true`, {
+                method: 'DELETE',
+                headers,
+              });
+              if (delRes.ok) {
+                core.info(`Deleted deployment ${d.id}`);
+              } else {
+                core.warning(`Failed to delete deployment ${d.id}: ${delRes.status}`);
+              }
             }
