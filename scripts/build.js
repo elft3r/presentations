@@ -65,4 +65,16 @@ for (const pres of PRESENTATIONS) {
   console.log(`  Done.`);
 }
 
-console.log('\nBuild complete!');
+// 5. Stage presentations into _site/ output directory
+const siteDir = path.join(ROOT, '_site');
+if (fs.existsSync(siteDir)) {
+  fs.rmSync(siteDir, { recursive: true });
+}
+fs.mkdirSync(siteDir, { recursive: true });
+
+for (const pres of PRESENTATIONS) {
+  console.log(`\nStaging ${pres} into _site/...`);
+  copyRecursive(path.join(ROOT, pres), path.join(siteDir, pres));
+}
+
+console.log('\nBuild complete! Output in _site/');
