@@ -1,4 +1,4 @@
-FROM library/node:21-slim
+FROM library/node:20-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update \
