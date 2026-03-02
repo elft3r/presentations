@@ -22,30 +22,22 @@
 <section>
   <h2>Cloud Evolution</h2>
 
-  <div style="float: left; position: relative; top: 0; left: 0">
-    <p style="position: relative; left: 0; top: 0">
+  <div class="grid grid-cols-3 gap-4">
+    <div>
       <a target="_blank" href="https://azure.microsoft.com/en-us/products">
-        <img class="rounded" src="imgs/azure-services-list.png" />
+        <img class="rounded shadow-2xl" src="imgs/azure-services-list.png" alt="Azure Services List" />
       </a>
-    </p>
-    <p style="position: absolute; left: 100px; top: 130px">
+    </div>
+    <div>
       <a target="_blank" href="https://aws.amazon.com/products/">
-        <img
-          class="rounded drop-shadow-2xl"
-          src="imgs/aws-services-list.png"
-          height="300vh"
-        />
+        <img class="rounded shadow-2xl" src="imgs/aws-services-list.png" alt="AWS Services List" />
       </a>
-    </p>
-    <p style="position: absolute; left: 200px; top: 260px">
+    </div>
+    <div>
       <a target="_blank" href="https://cloud.google.com/products">
-        <img
-          class="rounded drop-shadow-2xl"
-          src="imgs/gcp-services-list.png"
-          height="300vh"
-        />
+        <img class="rounded shadow-2xl" src="imgs/gcp-services-list.png" alt="GCP Services List" />
       </a>
-    </p>
+    </div>
   </div>
 </section>
 <section>
@@ -68,12 +60,20 @@
   <h2>Cloud</h2>
 
   <div>How do you know what you need?</div>
-  <ul>
-    <li class="fragment">Understand your business needs</li>
-    <li class="fragment">Understand your budget</li>
-    <li class="fragment">Understand your team</li>
-    <li class="fragment">Understand the services</li>
-  </ul>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="fragment">
+      <p>Understand your <em>business needs</em></p>
+    </div>
+    <div class="fragment">
+      <p>Understand your <em>budget</em></p>
+    </div>
+    <div class="fragment">
+      <p>Understand your <em>team</em></p>
+    </div>
+    <div class="fragment">
+      <p>Understand the <em>services</em></p>
+    </div>
+  </div>
 </section>
 <section>
   <h2>Cloud</h2>
@@ -116,12 +116,12 @@
 <section>
   <h2>Cloud Infrastructure</h2>
   <ul>
-    <li><b>Region</b>: A set of multiple availability zones</li>
+    <li><em>Region</em>: A set of multiple availability zones</li>
     <li>
-      <b>Availability Zone</b>: One or more independent data centers in a region
+      <em>Availability Zone</em>: One or more independent data centers in a region
     </li>
     <li>
-      <b>Edge Location</b>: Used as Content Delivery Network (CDN) delivery
+      <em>Edge Location</em>: Used as Content Delivery Network (CDN) delivery
       point
     </li>
   </ul>
