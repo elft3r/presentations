@@ -1,0 +1,20 @@
+{
+  "name": "presentations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reveal.js presentations",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start:cloud-migrations": "cd cloud-migrations && npx serve -l 8000",
+    "start:secure-landing-zones": "cd secure-landing-zones && npx serve -l 8000"
+  },
+  "dependencies": {
+    "reveal.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.3"
+  }
+}

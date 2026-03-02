@@ -1,0 +1,144 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build presentations
+        run: npm run build
+
+      - name: Create Cloudflare Pages project if needed
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create ${{ github.event.repository.name }} --production-branch=main
+        continue-on-error: true
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=${{ github.event.repository.name }} --branch=pr-${{ github.event.pull_request.number }}
+
+      - name: Comment preview URL on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `### Preview Deployment\n\nThis PR has been deployed for preview:\n\n` +
+              `| Presentation | URL |\n|---|---|\n` +
+              `| cloud-migrations | ${{ steps.deploy.outputs.deployment-url }}/cloud-migrations/ |\n` +
+              `| secure-landing-zones | ${{ steps.deploy.outputs.deployment-url }}/secure-landing-zones/ |\n`;
+
+            // Find existing bot comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('### Preview Deployment')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+  cleanup-preview:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete preview deployments
+        uses: actions/github-script@v7
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PROJECT_NAME: ${{ github.event.repository.name }}
+          BRANCH_ALIAS: pr-${{ github.event.pull_request.number }}
+        with:
+          script: |
+            const baseUrl = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/pages/projects/${process.env.PROJECT_NAME}/deployments`;
+            const headers = {
+              'Authorization': `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
+              'Content-Type': 'application/json',
+            };
+
+            // List deployments (with pagination) and delete those matching this PR's branch alias
+            const deployments = [];
+            let page = 1;
+            const perPage = 100;
+
+            while (true) {
+              const url = `${baseUrl}?page=${page}&per_page=${perPage}`;
+              const res = await fetch(url, { headers });
+              if (!res.ok) {
+                core.warning(`Failed to list deployments on page ${page}: ${res.status}`);
+                break;
+              }
+
+              const data = await res.json();
+              const pageDeployments = Array.isArray(data.result) ? data.result : [];
+              deployments.push(...pageDeployments);
+
+              const info = data.result_info;
+              if (!info || typeof info.total_pages !== 'number' || page >= info.total_pages) {
+                break;
+              }
+
+              page += 1;
+            }
+            const prDeployments = deployments.filter(
+              d => d.deployment_trigger?.metadata?.branch === process.env.BRANCH_ALIAS
+            );
+
+            core.info(`Found ${prDeployments.length} deployment(s) for ${process.env.BRANCH_ALIAS}`);
+
+            for (const d of prDeployments) {
+              const delRes = await fetch(`${baseUrl}/${d.id}?force=true`, {
+                method: 'DELETE',
+                headers,
+              });
+              if (delRes.ok) {
+                core.info(`Deleted deployment ${d.id}`);
+              } else {
+                core.warning(`Failed to delete deployment ${d.id}: ${delRes.status}`);
+              }
+            }
