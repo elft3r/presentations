@@ -102,12 +102,12 @@ jobs:
             };
 
             // List deployments (with pagination) and delete those matching this PR's branch alias
+            // Note: the Pages deployments API does not support the per_page parameter
             const deployments = [];
             let page = 1;
-            const perPage = 100;
 
             while (true) {
-              const url = `${baseUrl}?page=${page}&per_page=${perPage}`;
+              const url = `${baseUrl}?page=${page}`;
               const res = await fetch(url, { headers });
               if (!res.ok) {
                 core.warning(`Failed to list deployments on page ${page}: ${res.status}`);
