@@ -1,0 +1,67 @@
+<section><h1>Container History</h1></section>
+<section>
+  <h2>What are containers?</h2>
+  <ul>
+    <li>Collection of kernel features</li>
+    <li>OS specific
+      <ul>
+        <li>Windows container won't run on Linux</li>
+      </ul>
+    </li>
+    <li>Linux: "chroot on steroids" &mdash; J&eacute;r&ocirc;me Petazzoni</li>
+    <li><em>chroot</em></li>
+    <li><em>cgroups</em> &mdash; Limit amount of resources</li>
+    <li><em>namespaces</em> &mdash; Virtualize system resources</li>
+    <li>(copy-on-write storage)</li>
+  </ul>
+</section>
+<section>
+  <h2>Container History</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/container-history.png"
+      style="max-width: 60%"
+      alt="Container History Timeline"
+    />
+  </div>
+</section>
+<section>
+  <h2>Container History</h2>
+  <ul>
+    <li class="fragment"><em>1979</em> &mdash; chroot
+      <ul><li>Change the root directory of a running process</li></ul>
+    </li>
+    <li class="fragment"><em>2000</em> &mdash; FreeBSD jail
+      <ul><li>Similar to chroot, but with additional process sandboxing (filesystems, users, networks)</li></ul>
+    </li>
+    <li class="fragment"><em>2001</em> &mdash; Linux VServer
+      <ul><li>Similar jail mechanism for Linux</li></ul>
+    </li>
+  </ul>
+</section>
+<section>
+  <h2>Container History</h2>
+  <ul>
+    <li class="fragment"><em>2004</em> &mdash; Solaris Zones
+      <ul><li>Full user, process, and filesystem space</li></ul>
+    </li>
+    <li class="fragment"><em>2006</em> &mdash; Open VZ (Open Virtuzzo)</li>
+    <li class="fragment"><em>2006</em> &mdash; Process Containers
+      <ul><li>Announced by engineers at Google to isolate and limit resource usage</li></ul>
+    </li>
+    <li class="fragment"><em>2007</em> &mdash; Renamed to Control Groups (cgroups)</li>
+  </ul>
+</section>
+<section>
+  <h2>Container History</h2>
+  <ul>
+    <li class="fragment"><em>2008</em> &mdash; cgroups merged into Linux kernel 2.6.24
+      <ul><li>LXC (LinuX Containers) project created</li></ul>
+    </li>
+    <li class="fragment"><em>2011</em> &mdash; Warden (CloudFoundry)</li>
+    <li class="fragment"><em>2013</em> &mdash; Google open-sourced LMCTFY (Let Me Contain That For You)
+      <ul><li>Core concepts contributed to libcontainer in 2015</li></ul>
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,54 @@
+<section><h1>Docker Images</h1></section>
+<section>
+  <h2>Images &amp; Layers</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <pre><code class="language-dockerfile" data-trim>
+FROM ubuntu:15.04
+COPY . /app
+RUN make /app
+CMD python /app/app.py
+      </code></pre>
+    </div>
+    <div>
+      <img
+        class="rounded"
+        src="imgs/images-layers.png"
+        alt="Docker Images and Layers"
+      />
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Container Layer</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/container-layers.png"
+      style="max-width: 70%"
+      alt="Container Layers"
+    />
+  </div>
+</section>
+<section>
+  <h2>Image Layer Details</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/image-layer-detail1.jpeg"
+      style="max-width: 80%"
+      alt="Image Layer Details"
+    />
+  </div>
+</section>
+<section>
+  <h2>Image Layer Details</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/image-layer-detail2.jpeg"
+      style="max-width: 80%"
+      alt="Image Layer Details"
+    />
+  </div>
+</section>
