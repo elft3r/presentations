@@ -35,12 +35,6 @@ jobs:
       - name: Build presentations
         run: npm run build
 
-      - name: Assemble site directory
-        run: |
-          mkdir -p _site
-          cp README.md _site/
-          cp -r cloud-migrations secure-landing-zones _site/
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
