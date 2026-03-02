@@ -7,6 +7,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 concurrency:
   group: preview-${{ github.event.pull_request.number }}
@@ -100,10 +101,30 @@ jobs:
               'Content-Type': 'application/json',
             };
 
-            // List deployments and delete those matching this PR's branch alias
-            const res = await fetch(baseUrl, { headers });
-            const { result: deployments } = await res.json();
+            // List deployments (with pagination) and delete those matching this PR's branch alias
+            const deployments = [];
+            let page = 1;
+            const perPage = 100;
 
+            while (true) {
+              const url = `${baseUrl}?page=${page}&per_page=${perPage}`;
+              const res = await fetch(url, { headers });
+              if (!res.ok) {
+                core.warning(`Failed to list deployments on page ${page}: ${res.status}`);
+                break;
+              }
+
+              const data = await res.json();
+              const pageDeployments = Array.isArray(data.result) ? data.result : [];
+              deployments.push(...pageDeployments);
+
+              const info = data.result_info;
+              if (!info || typeof info.total_pages !== 'number' || page >= info.total_pages) {
+                break;
+              }
+
+              page += 1;
+            }
             const prDeployments = deployments.filter(
               d => d.deployment_trigger?.metadata?.branch === process.env.BRANCH_ALIAS
             );
