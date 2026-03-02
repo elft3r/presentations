@@ -77,4 +77,10 @@ for (const pres of PRESENTATIONS) {
   copyRecursive(path.join(ROOT, pres), path.join(siteDir, pres));
 }
 
+// Copy README.md to serve as the landing page
+const readme = path.join(ROOT, 'README.md');
+if (fs.existsSync(readme)) {
+  fs.copyFileSync(readme, path.join(siteDir, 'README.md'));
+}
+
 console.log('\nBuild complete! Output in _site/');
