@@ -57,9 +57,8 @@ for (const pres of PRESENTATIONS) {
 
   // 4. Build Tailwind CSS
   console.log('  Building Tailwind CSS...');
-  const contentGlob = `${pres}/index.{html,js},${pres}/sections/**/*.{html,js}`;
   execSync(
-    `npx tailwindcss -i src/tailwind.css -o ${pres}/dist/tailwind.css --content "${contentGlob}"`,
+    `npx @tailwindcss/cli -i src/tailwind.css -o ${pres}/dist/tailwind.css`,
     { cwd: ROOT, stdio: 'inherit' }
   );
 
