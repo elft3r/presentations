@@ -11,8 +11,5 @@
   },
   "dependencies": {
     "reveal.js": "^5.2.1"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.2.1"
   }
 }
