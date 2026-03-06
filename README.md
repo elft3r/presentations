@@ -6,3 +6,4 @@ In this repo, you will find all my presentations using [reveal.js](https://revea
 
 - [Cloud Migrations](https://elft3r.github.io/presentations/cloud-migrations/)
 - [Secure Landing Zones](https://elft3r.github.io/presentations/secure-landing-zones/)
+- [Docker Training](https://elft3r.github.io/presentations/docker-training/)
