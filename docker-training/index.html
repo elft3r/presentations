@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Docker Training - BFH</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+    <link rel="stylesheet" href="dist/tailwind.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides text-4xl">
+        <section data-external="sections/header.html"></section>
+        <section data-external="sections/jochen.html"></section>
+        <section data-external="sections/introduction.html"></section>
+        <section data-external="sections/why-docker.html"></section>
+        <section data-external="sections/cloud-native.html"></section>
+        <section data-external="sections/containers-vs-vms.html"></section>
+        <section data-external="sections/container-history.html"></section>
+        <section data-external="sections/docker-labs.html"></section>
+        <section data-external="sections/docker-desktop.html"></section>
+        <section data-external="sections/docker-commands.html"></section>
+        <section data-external="sections/docker-images.html"></section>
+        <section data-external="sections/docker-networking.html"></section>
+        <section data-external="sections/docker-volumes.html"></section>
+        <section data-external="sections/docker-compose.html"></section>
+        <section data-external="sections/devops-docker.html"></section>
+        <section data-external="sections/docker-swarm.html"></section>
+        <section data-external="sections/serverless.html"></section>
+        <section data-external="sections/docker-kubernetes.html"></section>
+        <section data-external="sections/monitoring.html"></section>
+        <section data-external="sections/resources.html"></section>
+        <section><h1>Thank You!</h1></section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "h/v",
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        dependencies: [
+          {
+            src: "plugin/external/external.js",
+            condition: function () {
+              return !!document.querySelector(
+                "[data-external],[data-external-replace]"
+              );
+            },
+          },
+        ],
+      });
+    </script>
+  </body>
+</html>
