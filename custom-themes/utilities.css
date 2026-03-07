@@ -41,3 +41,27 @@
 /* Object fit */
 .object-cover { object-fit: cover; }
 .object-contain { object-fit: contain; }
+
+/* Additional spacing */
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-0 { margin-bottom: 0; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+
+/* Text alignment */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+/* Additional typography */
+.text-base { font-size: 1rem; line-height: 1.5rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.font-semibold { font-weight: 600; }
+.font-normal { font-weight: 400; }
+
+/* Width */
+.w-full { width: 100%; }
