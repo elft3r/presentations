@@ -390,7 +390,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 .reveal section.section-title {
   background: var(--r-accent-gradient);
-  border-radius: 0;
+  border-radius: 0.75em;
 }
 
 .reveal section.section-title h1,
