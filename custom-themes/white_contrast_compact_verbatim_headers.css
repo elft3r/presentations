@@ -455,21 +455,34 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   margin-left: 0;
 }
 
-.reveal ul.styled-list > li {
+.reveal ul.styled-list li {
   position: relative;
-  padding-left: 1.5em;
-  margin-bottom: 0.5em;
+  padding-left: 1.3em;
+  margin-bottom: 0.4em;
 }
 
-.reveal ul.styled-list > li::before {
+.reveal ul.styled-list li::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0.55em;
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.35em;
+  height: 0.35em;
   background: var(--r-accent-color);
   border-radius: 50%;
+}
+
+.reveal ul.styled-list ul {
+  list-style: none;
+  margin-left: 0;
+  margin-top: 0.3em;
+}
+
+.reveal ul.styled-list ul li::before {
+  width: 0.28em;
+  height: 0.28em;
+  background: var(--r-accent-color);
+  opacity: 0.6;
 }
 
 /*********************************************
