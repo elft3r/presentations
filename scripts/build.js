@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const REVEAL_DIR = path.join(ROOT, 'node_modules', 'reveal.js');
@@ -54,13 +53,6 @@ for (const pres of PRESENTATIONS) {
       );
     }
   }
-
-  // 4. Build Tailwind CSS
-  console.log('  Building Tailwind CSS...');
-  execSync(
-    `npx postcss css/tailwind.css -o dist/tailwind.css`,
-    { cwd: presDir, stdio: 'inherit' }
-  );
 
   console.log(`  Done.`);
 }
