@@ -386,9 +386,6 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 /*********************************************
- * PRINT BACKGROUND
- *********************************************/
-/*********************************************
  * SECTION TITLE SLIDES
  *********************************************/
 .reveal section.section-title {
@@ -401,6 +398,30 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   color: #fff;
   border-bottom: none;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal section.section-title h4 {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.reveal section.section-title .author {
+  color: #fff;
+}
+
+.reveal section.section-title .divider {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.reveal section.section-title .source {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.reveal section.section-title .source a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.reveal section.section-title .source a:hover {
+  color: #fff;
 }
 
 /*********************************************
