@@ -6,7 +6,7 @@ const REVEAL_DIR = path.join(ROOT, 'node_modules', 'reveal.js');
 
 const PRESENTATIONS = ['cloud-migrations', 'secure-landing-zones', 'docker-training'];
 
-const STOCK_PLUGINS = ['highlight', 'markdown', 'math', 'notes', 'search', 'zoom'];
+const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 
 function copyRecursive(src, dest) {
   if (!fs.existsSync(src)) return;
