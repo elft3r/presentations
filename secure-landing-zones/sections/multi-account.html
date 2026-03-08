@@ -1,7 +1,7 @@
-<section><h1>Multi-Account</h1></section>
+<section class="section-title"><h1>Multi-Account</h1></section>
 <section>
   <h2>Requirements</h2>
-  <ul>
+  <ul class="styled-list">
     <li>Support CID and non-CID Environments</li>
     <li>Support multitude of applications</li>
     <li>Support EKS Based Workload</li>
@@ -10,24 +10,24 @@
 </section>
 <section>
   <h2>Account Types</h2>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <ul>
+      <ul class="styled-list">
         <li class="fragment">Management Account</li>
         <li class="fragment">Platform Accounts</li>
         <li class="fragment">Application Accounts</li>
       </ul>
     </div>
-    <div class="col-span-1">
+    <div class="flex justify-center">
       <img
         class="rounded"
-        style="max-width: 100%"
+        style="max-width: 75%"
         src="imgs/gruntwork-landing-zone.png"
         alt="Gruntwork Landing Zone Account Structure"
       />
     </div>
   </div>
-  <span class="text-sm">
+  <div class="source">
     <a
       href="https://docs.gruntwork.io/guides/production-framework/ingredients/landing-zone/"
       target="_blank"
@@ -35,43 +35,52 @@
     >
       Gruntwork Landing Zone
     </a>
-  </span>
+  </div>
 </section>
 <section>
   <h2>Questions?</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="fragment">
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-hashtag"></i></span>
       <p>How many accounts?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-sitemap"></i></span>
       <p>What account structure?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-server"></i></span>
       <p>What environments?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-dharmachakra"></i></span>
       <p>How many EKS Clusters?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-users"></i></span>
       <p>Responsibility</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-ellipsis"></i></span>
       <p>...</p>
     </div>
   </div>
 </section>
 <section>
   <h2>Account Types</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="fragment">
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-layer-group"></i></span>
       <h3><em>Platform</em></h3>
       <p>One account per specific functionality</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-sitemap"></i></span>
       <h3><em>Domain</em></h3>
       <p>Shared accounts to run the applications</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-cube"></i></span>
       <h3><em>Workload</em></h3>
       <p>Services used by the application</p>
     </div>
