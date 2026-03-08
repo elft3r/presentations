@@ -50,7 +50,6 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal-viewport {
   background: var(--r-background-color);
-  background-color: var(--r-background-color);
 }
 
 .reveal {
@@ -100,13 +99,13 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal h1 {
   font-size: var(--r-heading1-size);
+  text-shadow: var(--r-heading1-text-shadow);
 }
 
 .reveal h2 {
   font-size: var(--r-heading2-size);
   padding-bottom: 0.3em;
   border-bottom: 3px solid var(--r-accent-color);
-  display: block;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -119,10 +118,6 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal h4 {
   font-size: var(--r-heading4-size);
-}
-
-.reveal h1 {
-  text-shadow: var(--r-heading1-text-shadow);
 }
 
 /*********************************************
@@ -202,18 +197,22 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   margin-left: 40px;
 }
 
-.reveal blockquote {
-  display: block;
-  position: relative;
-  width: 70%;
-  margin: var(--r-block-margin) auto;
-  padding: 1em 1.5em;
+.reveal blockquote,
+.reveal q {
   font-style: italic;
   background: var(--r-accent-light);
   border-left: 4px solid var(--r-accent-color);
   border-radius: 0 0.5em 0.5em 0;
-  box-shadow: none;
+  margin: var(--r-block-margin) auto;
   color: var(--r-heading-color);
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  padding: 1em 1.5em;
+  box-shadow: none;
 }
 
 .reveal blockquote p:first-child,
@@ -222,16 +221,10 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 .reveal q {
-  font-style: italic;
   display: block;
-  padding: 0.8em 1.2em;
-  background: var(--r-accent-light);
-  border-left: 4px solid var(--r-accent-color);
-  border-radius: 0 0.5em 0.5em 0;
-  margin: var(--r-block-margin) auto;
   width: 80%;
+  padding: 0.8em 1.2em;
   text-align: left;
-  color: var(--r-heading-color);
 }
 
 .reveal pre {
@@ -274,7 +267,6 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal table {
   margin: auto;
   border-collapse: collapse;
-  border-spacing: 0;
   border-radius: 0.5em;
   overflow: hidden;
 }
@@ -415,10 +407,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   background: rgba(255, 255, 255, 0.5);
 }
 
-.reveal section.section-title .source {
-  color: rgba(255, 255, 255, 0.7);
-}
-
+.reveal section.section-title .source,
 .reveal section.section-title .source a {
   color: rgba(255, 255, 255, 0.7);
 }
