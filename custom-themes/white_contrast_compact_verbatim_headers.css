@@ -385,7 +385,14 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 .reveal section.section-title {
   background: var(--r-accent-gradient);
-  border-radius: 0.75em;
+  height: 100%;
+  width: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+  top: 0 !important;
 }
 
 .reveal section.section-title h1,
