@@ -1,10 +1,10 @@
-<section>
+<section class="section-title">
   <h1>Migration of Regulated Company</h1>
   <h2>Use Case</h2>
 </section>
 <section>
   <h2>Use Case</h2>
-  <ul>
+  <ul class="styled-list">
     <li>FINMA Regulated Company</li>
     <li>Multiple In-House Development Teams</li>
     <li>Manage everything In-House</li>
@@ -13,12 +13,12 @@
 </section>
 <section>
   <h2>Requirements</h2>
-  <ul>
+  <ul class="styled-list">
     <li>Support CID and non-CID Environments</li>
     <li>Support multitude of applications</li>
     <li>Support EKS Based Workload</li>
     <li>Reflect organization structure</li>
-    <li>Timeline: ~9 months</li>
+    <li>Timeline: <span class="badge">~9 months</span></li>
   </ul>
 </section>
 <section>
@@ -35,14 +35,12 @@
     >In military terminology a landing zone (LZ) is an area where aircraft can
     land.</q
   >
-  <div>
-    <span class="text-sm">
-      <a href="https://en.wikipedia.org/wiki/Landing_zone" target="_blank" rel="noopener noreferrer"
-        >Wikipedia - Landing Zone</a
-      >
-    </span>
+  <div class="source">
+    <a href="https://en.wikipedia.org/wiki/Landing_zone" target="_blank" rel="noopener noreferrer"
+      >Wikipedia - Landing Zone</a
+    >
   </div>
-  <div class="flex justify-center">
+  <div class="flex justify-center mt-4">
     <img
       class="rounded"
       src="./imgs/landing-zone-air-zermatt.jpeg"
@@ -50,14 +48,14 @@
       alt="Air Zermatt - Landing Zones"
     />
   </div>
-  <span class="text-sm">
+  <div class="source">
     <a
       href="https://www.air-zermatt.ch/en/training/know-how-transfer"
       target="_blank" rel="noopener noreferrer"
     >
       Air Zermatt - Landing Zone
     </a>
-  </span>
+  </div>
 </section>
 <section>
   <h2>Cloud Landing Zone</h2>
@@ -65,31 +63,31 @@
     >A landing zone is a well-architected, multi-account AWS environment that is
     scalable and secure.</q
   >
-  <div>
-    <span class="text-sm">
-      <a
-        href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-aws-environment/understanding-landing-zones.html"
-        target="_blank" rel="noopener noreferrer"
-        >AWS Prescriptive Guidance - What is a landing zone?</a
-      >
-    </span>
+  <div class="source">
+    <a
+      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-aws-environment/understanding-landing-zones.html"
+      target="_blank" rel="noopener noreferrer"
+      >AWS Prescriptive Guidance - What is a landing zone?</a
+    >
   </div>
 </section>
 <section>
   <h2>Cloud Landing Zone</h2>
-  <ul>
-    <li><em>It's a concept, not a product</em></li>
-    <li>well-architected</li>
-    <li>multi-account</li>
-    <li>scalable</li>
-    <li>secure</li>
-  </ul>
+  <div class="card" style="max-width: 70%; margin: 0 auto;">
+    <ul class="styled-list">
+      <li><em>It's a concept, not a product</em></li>
+      <li>well-architected</li>
+      <li>multi-account</li>
+      <li>scalable</li>
+      <li>secure</li>
+    </ul>
+  </div>
 </section>
 <section>
   <h2>Account Types</h2>
   <div class="grid grid-cols-2 gap-4">
     <div class="col-span-1">
-      <ul>
+      <ul class="styled-list">
         <li class="fragment">Management Account</li>
         <li class="fragment">Platform Accounts</li>
         <li class="fragment">Application Accounts</li>
@@ -104,50 +102,53 @@
       />
     </div>
   </div>
-  <span class="text-sm">
+  <div class="source">
     <a
       href="https://docs.gruntwork.io/guides/production-framework/ingredients/landing-zone/"
       target="_blank" rel="noopener noreferrer"
     >
       Gruntwork Landing Zone
     </a>
-  </span>
+  </div>
 </section>
 <section>
   <h2>Questions?</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="fragment">
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
       <p>How many accounts?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <p>What account structure?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <p>What environments?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <p>How many EKS Clusters?</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <p>Responsibility</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <p>...</p>
     </div>
   </div>
 </section>
 <section>
   <h2>Account Types</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="fragment">
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-layer-group"></i></span>
       <h3><em>Platform</em></h3>
       <p>One account per specific functionality</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-sitemap"></i></span>
       <h3><em>Domain</em></h3>
       <p>Shared accounts to run the applications</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-cube"></i></span>
       <h3><em>Workload</em></h3>
       <p>Services used by the application</p>
     </div>
@@ -166,16 +167,16 @@
 </section>
 <section>
   <h2>What Migration Strategies to use?</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="fragment">
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
       <h3><em>Retain</em></h3>
       <p>Core Banking Platform</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <h3><em>Rehost</em></h3>
       <p>Migrate workload from OpenShift to AWS EKS</p>
     </div>
-    <div class="fragment">
+    <div class="card fragment">
       <h3><em>Replatform</em></h3>
       <p>Migrate DBs, Caches, ... to Managed Services</p>
     </div>
