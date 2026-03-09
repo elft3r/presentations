@@ -388,6 +388,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   background: var(--r-accent-gradient);
   border-radius: 0.75em;
   padding: 1.2em;
+  box-sizing: border-box;
 }
 
 .reveal section.section-title h1,
