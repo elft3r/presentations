@@ -10,3 +10,42 @@
     />
   </div>
 </section>
+<section>
+  <h2>Monitoring Single Tenant</h2>
+  <div class="flex justify-center items-center gap-6" style="font-size: 0.65em">
+    <div class="card">
+      <h3><em>Docker Host</em></h3>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="card"><p>Containers</p></div>
+        <div class="card"><p>Containers</p></div>
+        <div class="card"><p>Containers</p></div>
+      </div>
+      <div class="grid grid-cols-2 gap-2" style="margin-top: 0.5rem">
+        <div class="card"><p>cAdvisor</p><p class="text-base">Container metrics</p></div>
+        <div class="card"><p>Node-Exporter</p><p class="text-base">Host Metrics</p></div>
+      </div>
+    </div>
+    <div style="font-size: 2em">&rarr;</div>
+    <div class="grid grid-cols-1 gap-2">
+      <div class="card"><p>Prometheus</p><p class="text-base">Scraped Endpoints</p></div>
+      <div class="card"><p>Grafana</p></div>
+      <div class="card"><p>AlertManager</p><p class="text-base">Push Alerts</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Monitoring Multiple Tenants</h2>
+  <div class="flex justify-center items-center gap-6" style="font-size: 0.65em">
+    <div class="grid grid-cols-1 gap-2">
+      <div class="card"><p>Tenant 1</p></div>
+      <div class="card"><p>Tenant 2</p></div>
+      <div class="card"><p>Tenant 3</p></div>
+    </div>
+    <div style="font-size: 2em">&rarr;</div>
+    <div class="grid grid-cols-1 gap-2">
+      <div class="card"><p>Prometheus</p></div>
+      <div class="card"><p>Grafana</p></div>
+      <div class="card"><p>AlertManager</p></div>
+    </div>
+  </div>
+</section>
