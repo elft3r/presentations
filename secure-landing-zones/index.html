@@ -48,9 +48,14 @@
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
       // - https://revealjs.com/config/
+      var isMobile =
+        new URLSearchParams(window.location.search).has("mobile");
+
       Reveal.initialize({
         hash: true,
         slideNumber: "h/v",
+        width: isMobile ? 540 : 960,
+        height: isMobile ? 960 : 700,
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
