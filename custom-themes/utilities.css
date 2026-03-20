@@ -45,3 +45,55 @@
 /* Object fit */
 .object-cover { object-fit: cover; }
 .object-contain { object-fit: contain; }
+
+/*********************************************
+ * PORTRAIT MODE OVERRIDES
+ *
+ * Applied via a .portrait class on .reveal,
+ * toggled automatically for portrait screens
+ * or manually via ?mobile query parameter.
+ * Reveal.js uses a fixed canvas so regular
+ * media queries do not reflect slide dimensions.
+ *********************************************/
+
+/* Stack all multi-column grids into a single column */
+.reveal.portrait .grid-cols-2,
+.reveal.portrait .grid-cols-3,
+.reveal.portrait .grid-cols-5 {
+  grid-template-columns: 1fr;
+}
+
+/* Reset column spans (meaningless in single-column) */
+.reveal.portrait .col-span-2 {
+  grid-column: auto;
+}
+
+/* Tighten gaps for the narrower canvas */
+.reveal.portrait .gap-6 { gap: 0.75rem; }
+.reveal.portrait .gap-4 { gap: 0.5rem; }
+
+/* Let images fill the available width */
+.reveal.portrait img {
+  max-width: 100% !important;
+}
+
+/* Wider blockquotes and quotes */
+.reveal.portrait blockquote { width: 90%; }
+.reveal.portrait q { width: 95%; }
+
+/* Code blocks: full width, smaller font */
+.reveal.portrait pre {
+  width: 100%;
+  font-size: 0.45em;
+}
+
+/* Scale down profile image for portrait */
+.reveal.portrait .h-48 { height: 8rem; }
+.reveal.portrait .w-48 { width: 8rem; }
+
+/* Responsive iframes via aspect-ratio */
+.reveal.portrait iframe {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+}

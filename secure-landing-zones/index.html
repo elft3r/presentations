@@ -48,16 +48,27 @@
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
       // - https://revealjs.com/config/
-      var isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      var isMobile =
-        new URLSearchParams(window.location.search).has("mobile") ||
-        isPortrait;
+      var portraitQuery = window.matchMedia("(orientation: portrait)");
+      var forcePortrait =
+        new URLSearchParams(window.location.search).has("mobile");
+
+      function isPortrait() {
+        return forcePortrait || portraitQuery.matches;
+      }
+
+      // Toggle .portrait class on .reveal for CSS overrides
+      var revealEl = document.querySelector(".reveal");
+      if (isPortrait()) revealEl.classList.add("portrait");
+
+      portraitQuery.addEventListener("change", function () {
+        revealEl.classList.toggle("portrait", isPortrait());
+      });
 
       Reveal.initialize({
         hash: true,
         slideNumber: "h/v",
-        width: isMobile ? 540 : 960,
-        height: isMobile ? 960 : 700,
+        width: isPortrait() ? 540 : 960,
+        height: isPortrait() ? 960 : 700,
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
