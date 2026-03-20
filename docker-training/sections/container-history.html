@@ -16,18 +16,26 @@
   </ul>
 </section>
 <section>
-  <h2>Container History</h2>
+  <h2>What are containers?</h2>
   <div class="flex justify-center">
     <img
       class="rounded"
-      src="imgs/container-history.png"
+      src="imgs/container-stack.png"
       style="max-width: 60%"
-      alt="Container History Timeline"
+      alt="Container Architecture Stack"
     />
   </div>
 </section>
 <section>
   <h2>Container History</h2>
+  <div class="flex justify-center" style="margin-bottom: 1rem">
+    <img
+      class="rounded"
+      src="imgs/container-history.png"
+      style="max-width: 50%"
+      alt="Container History Timeline"
+    />
+  </div>
   <ul class="styled-list">
     <li class="fragment"><em>1979</em> &mdash; chroot
       <ul><li>Change the root directory of a running process</li></ul>
@@ -44,7 +52,11 @@
   <h2>Container History</h2>
   <ul class="styled-list">
     <li class="fragment"><em>2004</em> &mdash; Solaris Zones
-      <ul><li>Full user, process, and filesystem space</li></ul>
+      <ul>
+        <li>Full user, process, and filesystem space</li>
+        <li>Access to hardware</li>
+        <li>Application can only see what is within the zone</li>
+      </ul>
     </li>
     <li class="fragment"><em>2006</em> &mdash; Open VZ (Open Virtuzzo)</li>
     <li class="fragment"><em>2006</em> &mdash; Process Containers
@@ -57,7 +69,10 @@
   <h2>Container History</h2>
   <ul class="styled-list">
     <li class="fragment"><em>2008</em> &mdash; cgroups merged into Linux kernel 2.6.24
-      <ul><li>LXC (LinuX Containers) project created</li></ul>
+      <ul>
+        <li>LXC (LinuX Containers) project created</li>
+        <li>OS-level virtualization &mdash; multiple isolated Linux environments on a shared kernel</li>
+      </ul>
     </li>
     <li class="fragment"><em>2011</em> &mdash; Warden (CloudFoundry)</li>
     <li class="fragment"><em>2013</em> &mdash; Google open-sourced LMCTFY (Let Me Contain That For You)
