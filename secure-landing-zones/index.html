@@ -44,13 +44,18 @@
     <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
+    <script src="portrait.js"></script>
     <script>
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
       // - https://revealjs.com/config/
+      var dims = portraitSetup();
+
       Reveal.initialize({
         hash: true,
         slideNumber: "h/v",
+        width: dims.width,
+        height: dims.height,
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
