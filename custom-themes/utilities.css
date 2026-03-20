@@ -109,8 +109,8 @@
   margin: 0.3em 0;
 }
 
-/* Cap height only for images inside grids (stacked in portrait) */
-.reveal.portrait .grid img {
+/* Cap height only for content images inside grids (stacked in portrait) */
+.reveal.portrait .grid img:not(.rounded-full) {
   max-height: 260px;
   object-fit: contain;
 }
@@ -132,8 +132,8 @@
 .reveal.portrait li { margin-bottom: 0.15em; }
 
 /* Scale down profile image */
-.reveal.portrait .h-48 { height: 6rem; }
-.reveal.portrait .w-48 { width: 6rem; }
+.reveal.portrait .h-48 { height: 8rem; }
+.reveal.portrait .w-48 { width: 8rem; }
 
 /* Compact spacing helpers */
 .reveal.portrait .mt-4 { margin-top: 0.5rem; }
