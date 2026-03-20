@@ -103,11 +103,15 @@
   margin-bottom: 0.15em;
 }
 
-/* Let images fill the available width but cap height so stacked images fit */
+/* Let images fill the available width */
 .reveal.portrait img {
   max-width: 100% !important;
-  max-height: 260px;
   margin: 0.3em 0;
+}
+
+/* Cap height only for images inside grids (stacked in portrait) */
+.reveal.portrait .grid img {
+  max-height: 260px;
   object-fit: contain;
 }
 
