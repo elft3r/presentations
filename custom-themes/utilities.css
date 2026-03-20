@@ -105,7 +105,7 @@
 
 /* Let images fill the available width */
 .reveal.portrait img {
-  max-width: 100% !important;
+  max-width: 100%;
   margin: 0.3em 0;
 }
 

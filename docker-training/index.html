@@ -73,7 +73,13 @@
       if (isPortrait()) revealEl.classList.add("portrait");
 
       portraitQuery.addEventListener("change", function () {
-        revealEl.classList.toggle("portrait", isPortrait());
+        var portrait = isPortrait();
+        revealEl.classList.toggle("portrait", portrait);
+        Reveal.configure({
+          width: portrait ? 540 : 960,
+          height: portrait ? 960 : 700,
+        });
+        Reveal.layout();
       });
 
       Reveal.initialize({
