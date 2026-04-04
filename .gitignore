@@ -21,3 +21,4 @@ _site/
 */plugin/notes/
 */plugin/search/
 */plugin/zoom/
+.claude/settings.local.json

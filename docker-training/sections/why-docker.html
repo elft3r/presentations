@@ -1,31 +1,90 @@
 <section class="section-title"><h1>Why Docker / Containers?</h1></section>
 <section>
   <h2>A Brief History Lesson</h2>
-  <div class="grid grid-cols-5 gap-6">
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-server" aria-hidden="true"></i></span>
-      <h3><em>~2000</em></h3>
-      <p>Data Centers</p>
+  <div style="display: flex; align-items: flex-end; justify-content: center; gap: 0.6em; height: 380px;">
+    <div class="fragment" data-fragment-index="0" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
+      <div style="width: 100%; height: 80px; background: linear-gradient(180deg, #718096, #4a5568); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+        Data Centers
+      </div>
+      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 0.3em 0 0 0.3em; margin-top: 0.3em;">
+        ~2000
+      </div>
     </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-cloud" aria-hidden="true"></i></span>
-      <h3><em>2006</em></h3>
-      <p>IaaS</p>
+    <div class="fragment" data-fragment-index="1" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
+      <div style="width: 100%; height: 130px; background: linear-gradient(180deg, #5a8a7a, #3D7A6D); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+        IaaS
+      </div>
+      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+        2006
+      </div>
     </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
-      <h3><em>2007</em></h3>
-      <p>PaaS</p>
+    <div class="fragment" data-fragment-index="2" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
+      <div style="width: 100%; height: 185px; background: linear-gradient(180deg, #3D7A6D, #24584C); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+        PaaS
+      </div>
+      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+        2007
+      </div>
     </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-cube" aria-hidden="true"></i></span>
-      <h3><em>2013</em></h3>
-      <p>Containers</p>
+    <div class="fragment" data-fragment-index="3" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
+      <div style="width: 100%; height: 240px; background: linear-gradient(180deg, #C9B48A, #B39A6A); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+        Containers
+      </div>
+      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+        2013
+      </div>
     </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
-      <h3><em>2015</em></h3>
-      <p>Serverless</p>
+    <div class="fragment" data-fragment-index="4" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
+      <div style="width: 100%; height: 300px; background: linear-gradient(180deg, #2d3748, #1a202c); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+        Serverless
+      </div>
+      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+        2015
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>The Modern Technology Stack</h2>
+  <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0;">Containers are the foundation of today's higher-level abstractions</p>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 0.4em; width: 75%; margin-left: auto; margin-right: auto;">
+    <!-- Top layer: Serverless + PaaS side by side -->
+    <div class="fragment" data-fragment-index="3" style="display: flex; gap: 0.4em; width: 100%;">
+      <div style="flex: 1; background: linear-gradient(135deg, #2d3748, #1a202c); color: #fff; border-radius: 0.4em 0.4em 0 0; padding: 0.35em 0.4em; text-align: center;">
+        <div style="font-weight: 600; font-size: 0.8em;">Serverless</div>
+        <div style="font-size: 0.55em; opacity: 0.85;">AWS Lambda, Cloud Functions</div>
+      </div>
+      <div style="flex: 1; background: linear-gradient(135deg, #3D7A6D, #24584C); color: #fff; border-radius: 0.4em 0.4em 0 0; padding: 0.35em 0.4em; text-align: center;">
+        <div style="font-weight: 600; font-size: 0.8em;">PaaS</div>
+        <div style="font-size: 0.55em; opacity: 0.85;">Cloud Run, Azure Container Apps</div>
+      </div>
+    </div>
+    <!-- Arrow -->
+    <div class="fragment" data-fragment-index="2" style="font-size: 0.55em; color: var(--r-muted-color); padding: 0.1em 0;">
+      <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> built on
+    </div>
+    <!-- Middle layer: Containers -->
+    <div class="fragment" data-fragment-index="2" style="width: 100%; background: linear-gradient(135deg, #C9B48A, #B39A6A); color: #fff; border-radius: 0.4em; padding: 0.5em; text-align: center; border: 3px solid #fff; box-shadow: 0 0 0 3px var(--r-link-color);">
+      <div style="font-weight: 700; font-size: 1em;"><i class="fa-solid fa-cube" aria-hidden="true" style="margin-right: 0.3em;"></i>Containers</div>
+      <div style="font-size: 0.55em; opacity: 0.9;">Docker, containerd, OCI runtimes</div>
+    </div>
+    <!-- Arrow -->
+    <div class="fragment" data-fragment-index="1" style="font-size: 0.55em; color: var(--r-muted-color); padding: 0.1em 0;">
+      <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> runs on
+    </div>
+    <!-- IaaS layer -->
+    <div class="fragment" data-fragment-index="1" style="width: 100%; background: linear-gradient(135deg, #5a8a7a, #3D7A6D); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
+      <div style="font-weight: 600; font-size: 0.8em;">IaaS / VMs</div>
+      <div style="font-size: 0.55em; opacity: 0.85;">AWS EC2, Azure VMs, GCE</div>
+    </div>
+    <!-- Arrow -->
+    <div class="fragment" data-fragment-index="0" style="font-size: 0.55em; color: var(--r-muted-color); padding: 0.1em 0;">
+      <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> hosted in
+    </div>
+    <!-- Bottom layer: Data Centers -->
+    <div class="fragment" data-fragment-index="0" style="width: 100%; background: linear-gradient(135deg, #718096, #4a5568); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
+      <div style="font-weight: 600; font-size: 0.8em;">Data Centers</div>
+      <div style="font-size: 0.55em; opacity: 0.85;">Physical infrastructure</div>
     </div>
   </div>
 </section>
@@ -187,6 +246,17 @@
     <a href="https://insights.stackoverflow.com/survey/2021" target="_blank" rel="noopener noreferrer"
       >Stack Overflow Developer Survey 2021</a
     >
+  </div>
+</section>
+<section>
+  <h2>Docker Innovation</h2>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/docker-innovation.png"
+      style="max-width: 70%"
+      alt="Docker Innovation"
+    />
   </div>
 </section>
 <section>
