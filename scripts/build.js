@@ -9,19 +9,10 @@ const PRESENTATIONS = ['cloud-migrations', 'secure-landing-zones', 'docker-train
 const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 
 function copyRecursive(src, dest) {
-  const lstat = fs.lstatSync(src, { throwIfNoEntry: false });
-  if (!lstat) return;
+  if (!fs.existsSync(src)) return;
 
-  if (lstat.isSymbolicLink()) {
-    const resolved = fs.realpathSync(src);
-    const targetStat = fs.statSync(resolved);
-    if (targetStat.isDirectory()) {
-      copyRecursive(resolved, dest);
-    } else {
-      fs.mkdirSync(path.dirname(dest), { recursive: true });
-      fs.copyFileSync(resolved, dest);
-    }
-  } else if (lstat.isDirectory()) {
+  const stat = fs.statSync(src);
+  if (stat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true });
     for (const entry of fs.readdirSync(src)) {
       copyRecursive(path.join(src, entry), path.join(dest, entry));
@@ -60,6 +51,20 @@ for (const pres of PRESENTATIONS) {
         path.join(customThemeDir, file),
         path.join(distDir, 'theme', file)
       );
+    }
+  }
+
+  // 4. Copy shared JS files (e.g. portrait.js)
+  const sharedDir = path.join(ROOT, 'shared');
+  if (fs.existsSync(sharedDir)) {
+    console.log('  Copying shared JS...');
+    for (const file of fs.readdirSync(sharedDir)) {
+      if (file.endsWith('.js')) {
+        fs.copyFileSync(
+          path.join(sharedDir, file),
+          path.join(presDir, file)
+        );
+      }
     }
   }
 

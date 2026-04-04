@@ -21,4 +21,5 @@ _site/
 */plugin/notes/
 */plugin/search/
 */plugin/zoom/
+*/portrait.js
 .claude/settings.local.json
