@@ -54,19 +54,11 @@ for (const pres of PRESENTATIONS) {
     }
   }
 
-  // 4. Copy shared JS files (e.g. portrait.js)
+  // 4. Copy shared files (JS, sections) from shared/ directory
   const sharedDir = path.join(ROOT, 'shared');
   if (fs.existsSync(sharedDir)) {
-    console.log('  Copying shared JS...');
-    for (const file of fs.readdirSync(sharedDir)) {
-      if (file.endsWith('.js')) {
-        const dest = path.join(presDir, file);
-        // Remove any existing file/symlink to avoid copyFileSync failures
-        const lstat = fs.lstatSync(dest, { throwIfNoEntry: false });
-        if (lstat) fs.unlinkSync(dest);
-        fs.copyFileSync(path.join(sharedDir, file), dest);
-      }
-    }
+    console.log('  Copying shared files...');
+    copyRecursive(sharedDir, presDir);
   }
 
   console.log(`  Done.`);
