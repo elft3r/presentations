@@ -21,3 +21,9 @@ _site/
 */plugin/notes/
 */plugin/search/
 */plugin/zoom/
+
+# Shared files copied by build (source of truth: shared/)
+*/portrait.js
+*/sections/jochen.html
+
+.claude/settings.local.json

@@ -19,6 +19,9 @@ function copyRecursive(src, dest) {
     }
   } else {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
+    // Remove any existing symlink at dest (copyFileSync can't overwrite broken symlinks)
+    const destLstat = fs.lstatSync(dest, { throwIfNoEntry: false });
+    if (destLstat && destLstat.isSymbolicLink()) fs.unlinkSync(dest);
     fs.copyFileSync(src, dest);
   }
 }
@@ -52,6 +55,13 @@ for (const pres of PRESENTATIONS) {
         path.join(distDir, 'theme', file)
       );
     }
+  }
+
+  // 4. Copy shared files (JS, sections) from shared/ directory
+  const sharedDir = path.join(ROOT, 'shared');
+  if (fs.existsSync(sharedDir)) {
+    console.log('  Copying shared files...');
+    copyRecursive(sharedDir, presDir);
   }
 
   console.log(`  Done.`);

@@ -1,118 +1,39 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## Project Overview
 
-A collection of [Reveal.js](https://revealjs.com/) presentations by Jochen Zehnder, deployed to GitHub Pages with PR previews on Cloudflare Pages.
+A Reveal.js (v5.2.1) presentation repository containing multiple HTML slide decks deployed to GitHub Pages, with PR preview deployments via Cloudflare Pages.
+
+## Common Commands
+
+- **Build all presentations:** `npm run build` — copies reveal.js dist/plugins from node_modules into each presentation, copies custom themes, then stages everything into `_site/`
+- **Serve locally:** `npm run start:cloud-migrations`, `npm run start:docker-training`, `npm run start:secure-landing-zones` — serves on port 8000 via `npx serve`
+- **Install deps:** `npm install`
+
+## Architecture
 
 ### Presentations
 
-| Name | Directory | Description |
-|---|---|---|
-| Cloud Migrations | `cloud-migrations/` | Best Practices & Learnings for cloud migrations |
-| Secure Landing Zones | `secure-landing-zones/` | Secure Landing Zones in highly regulated sectors |
-| Docker Training | `docker-training/` | Docker training material (BFH) |
+Three independent presentations live in top-level directories: `cloud-migrations/`, `docker-training/`, `secure-landing-zones/`. Each contains:
+- `index.html` — main entry point with Reveal.js initialization
+- `sections/` — individual slide HTML files loaded dynamically via the custom `plugin/external/external.js` plugin using `data-external` attributes
+- `dist/` — reveal.js core files (copied by build, gitignored)
+- `plugin/` — reveal.js plugins (stock ones copied by build + custom `external/` and `title-footer/`)
+- `imgs/` — presentation-specific images
 
-## Tech Stack
+### Build System
 
-- **Framework:** Reveal.js 5.2.x
-- **Runtime:** Node.js 24 LTS
-- **Styling:** Custom CSS themes (no Tailwind/preprocessors)
-- **Icons:** Font Awesome 7.x (CDN)
-- **CI/CD:** GitHub Actions → GitHub Pages (prod), Cloudflare Pages (PR previews)
+`scripts/build.js` is the sole build script. It iterates over the `PRESENTATIONS` array, copies reveal.js dist and plugins from `node_modules/`, overlays custom themes from `custom-themes/`, and stages output into `_site/`. To add a new presentation, add its directory name to the `PRESENTATIONS` array in this file and add a corresponding `start:` script in `package.json`.
 
-## Repository Structure
+### Shared Theming
 
-```
-├── cloud-migrations/          # Presentation: each has index.html + sections/ + imgs/
-├── secure-landing-zones/
-├── docker-training/
-├── shared/                    # Shared assets (e.g. author bio) symlinked into presentations
-│   └── sections/jochen.html
-├── custom-themes/             # Custom Reveal.js CSS themes copied into dist/theme/ at build
-│   ├── white_contrast_compact_verbatim_headers.css
-│   └── utilities.css          # Lightweight utility classes (flex, grid, gap, etc.)
-├── scripts/build.js           # Build script: copies reveal.js + plugins + themes → _site/
-├── .github/workflows/
-│   ├── deploy.yml             # Deploy main → GitHub Pages
-│   └── preview.yml            # Deploy PRs → Cloudflare Pages
-├── .devcontainer/             # VS Code dev container (Node 24 slim)
-└── package.json
-```
+`custom-themes/` contains shared CSS files copied into each presentation's `dist/theme/` at build time:
+- `white_contrast_compact_verbatim_headers.css` — main theme (accent: Mariposit Green `#24584C`, links: Metallic Gold `#B39A6A`). Includes component classes: `.section-title`, `.card`, `.badge`, `.styled-list`, `.source`, `.social-links`, `.divider`
+- `utilities.css` — Tailwind-like layout utilities (flex, grid, spacing, sizing, typography)
 
-### Presentation Directory Layout
+### CI/CD
 
-Each presentation follows the same structure:
-
-```
-<presentation>/
-├── index.html                 # Entry point with Reveal.js config
-├── sections/                  # Individual slide sections (HTML fragments)
-├── imgs/                      # Images (PNG, JPG, SVG)
-├── plugin/external/           # Custom external-content-loader plugin (checked in)
-├── dist/                      # Generated at build time (git-ignored)
-└── plugin/{highlight,markdown,notes}/  # Generated at build time (git-ignored)
-```
-
-## Commands
-
-```bash
-npm ci                                  # Install dependencies
-npm run build                           # Build all presentations into _site/
-npm run start:cloud-migrations          # Serve cloud-migrations on http://localhost:8000
-npm run start:secure-landing-zones      # Serve secure-landing-zones on http://localhost:8000
-npm run start:docker-training           # Serve docker-training on http://localhost:8000
-```
-
-There is no test suite or linter configured.
-
-## Build Process
-
-`scripts/build.js` does the following for each presentation:
-
-1. Copies `node_modules/reveal.js/dist/` → `<presentation>/dist/`
-2. Copies stock plugins (highlight, markdown, notes) → `<presentation>/plugin/`
-3. Copies `custom-themes/*.css` → `<presentation>/dist/theme/`
-4. Stages all three presentations into `_site/` for deployment
-
-## Key Conventions
-
-### Slide Authoring
-
-- Slides are **HTML fragments** in `sections/` directories, loaded at runtime via the custom `plugin/external/external.js` plugin using `<section data-external="sections/filename.html">`.
-- Add new slides by creating a new HTML file in `sections/` and adding a corresponding `<section data-external="...">` entry in `index.html`.
-- Shared content (like the author bio) lives in `shared/` and is **symlinked** into each presentation.
-
-### HTML & Accessibility
-
-- Links to external sites must use `target="_blank" rel="noopener noreferrer"`.
-- Use ARIA attributes (`aria-label`, `aria-hidden="true"` on decorative icons).
-- Use Font Awesome icons via `<i class="fa-solid fa-icon-name">`.
-
-### CSS & Theming
-
-- The main theme is `custom-themes/white_contrast_compact_verbatim_headers.css` with CSS variables (`--r-accent-color`, `--r-background-color`, etc.).
-- Utility classes are defined in `custom-themes/utilities.css` (flex, grid, gap, margin/padding helpers). Use these instead of inline styles.
-- Accent color: `#24584C` (green). Background: `#F8F9FA`. Text: `#2d3748`.
-
-### Code Style
-
-- **Formatting:** Prettier (auto-format on save via VS Code settings).
-- **Files:** Always end with a final newline; trailing whitespace is trimmed.
-- **JavaScript:** Vanilla JS, CommonJS in Node scripts. No transpilation.
-- **No minification or bundling** — files are served as-is.
-
-### Git-Ignored Build Outputs
-
-The following are generated by `npm run build` and must not be committed:
-
-- `*/dist/` — Reveal.js core files
-- `*/plugin/{highlight,markdown,notes}/` — Stock Reveal.js plugins
-- `_site/` — Final deployment artifact
-
-The custom `plugin/external/` directory **is** checked in and should be committed.
-
-## CI/CD
-
-- **Production deploy:** Push to `main` triggers `.github/workflows/deploy.yml` → builds and deploys to GitHub Pages.
-- **PR preview:** Opening/updating a PR triggers `.github/workflows/preview.yml` → builds and deploys to Cloudflare Pages, then comments preview URLs on the PR.
-- **Cleanup:** Closing a PR deletes the Cloudflare Pages preview deployment.
+- `.github/workflows/deploy.yml` — deploys `_site/` to GitHub Pages on push to main
+- `.github/workflows/preview.yml` — deploys PR previews to Cloudflare Pages with bot comment

@@ -1,49 +1,151 @@
 <section class="section-title"><h1>Cloud Native</h1></section>
 <section>
   <h2>What is Cloud Native?</h2>
-  <q>
-    Cloud native technologies empower organizations to build and run scalable
-    applications in modern, dynamic environments such as public, private, and
-    hybrid clouds. Containers, service meshes, microservices, immutable
-    infrastructure, and declarative APIs exemplify this approach.
+  <q style="font-size: 0.7em; width: 85%;">
+    Cloud native practices empower organizations to develop, build, and deploy
+    workloads in computing environments (public, private, hybrid cloud) to meet
+    their organizational needs <strong>at scale</strong> in a <strong>programmatic
+    and repeatable</strong> manner. These are characterized by
+    <strong>loosely coupled systems</strong> that interoperate in a manner that is
+    <em>secure, resilient, manageable, sustainable,</em> and <em>observable</em>.
+    <br /><br />
+    Cloud native technologies typically consist of some combination of
+    <strong>containers, service meshes, multi-tenancy, microservices, immutable
+    infrastructure, serverless,</strong> and <strong>declarative APIs</strong>.
+    Combined with robust automation, they enable organizations to make
+    <strong>high-impact changes frequently, predictably, with minimal toil</strong>
+    and clear separation of concerns.
   </q>
   <div class="source">
     <a
       href="https://github.com/cncf/toc/blob/main/DEFINITION.md"
       target="_blank"
       rel="noopener noreferrer"
-      >CNCF Cloud Native Definition</a
-    >
+      >CNCF Cloud Native Definition v1.1</a>
   </div>
 </section>
 <section>
-  <h2>What is Cloud Native?</h2>
-  <p>Cloud native computing uses an open source software stack to be:</p>
-  <ul class="styled-list">
-    <li class="fragment"><em>Containerized</em></li>
-    <li class="fragment"><em>Dynamically orchestrated</em></li>
-    <li class="fragment"><em>Microservices oriented</em></li>
-  </ul>
-</section>
-<section>
-  <h2>CNCF Landscape</h2>
-  <div class="flex justify-center">
-    <img
-      class="rounded"
-      src="imgs/cncf-landscape.png"
-      style="max-width: 90%"
-      alt="CNCF Landscape"
-    />
+  <h2>Cloud Native Building Blocks</h2>
+  <p style="font-size: 0.65em; color: var(--r-muted-color); margin: 0 0 0.4em;">Programmable, repeatable systems built from these building blocks</p>
+  <div style="display: flex; gap: 1em; width: 90%; margin: 0 auto; font-size: 0.65em;">
+    <!-- Characteristics -->
+    <div class="fragment" style="flex: 1;">
+      <h4 style="margin: 0 0 0.3em; font-size: 0.85em;"><i class="fa-solid fa-shield-halved" aria-hidden="true" style="color: var(--r-accent-color); margin-right: 0.3em;"></i>Key Characteristics</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.25em;">
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-lock" aria-hidden="true" style="color: var(--r-accent-color); width: 1.2em;"></i>
+          <span><strong>Secure</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true" style="color: var(--r-accent-color); width: 1.2em;"></i>
+          <span><strong>Resilient</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-sliders" aria-hidden="true" style="color: var(--r-accent-color); width: 1.2em;"></i>
+          <span><strong>Manageable</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-leaf" aria-hidden="true" style="color: var(--r-accent-color); width: 1.2em;"></i>
+          <span><strong>Sustainable</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-eye" aria-hidden="true" style="color: var(--r-accent-color); width: 1.2em;"></i>
+          <span><strong>Observable</strong></span>
+        </div>
+      </div>
+    </div>
+    <!-- Technologies -->
+    <div class="fragment" style="flex: 1;">
+      <h4 style="margin: 0 0 0.3em; font-size: 0.85em;"><i class="fa-solid fa-toolbox" aria-hidden="true" style="color: var(--r-link-color); margin-right: 0.3em;"></i>Core Technologies</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.25em;">
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-box" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Containers</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-cubes" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Microservices</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-diagram-project" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Service Meshes</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-bolt" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Serverless</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-code" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Declarative APIs</strong></span>
+        </div>
+        <div class="card" style="display: flex; align-items: center; gap: 0.6em; padding: 0.3em 0.7em;">
+          <i class="fa-solid fa-server" aria-hidden="true" style="color: var(--r-link-color); width: 1.2em;"></i>
+          <span><strong>Immutable Infrastructure</strong></span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section>
   <h2>CNCF Trail Map</h2>
+  <p style="font-size: 0.65em; color: var(--r-muted-color); margin: 0 0 0.3em;">A recommended path for adopting cloud native technologies</p>
   <div class="flex justify-center">
     <img
       class="rounded"
       src="imgs/cncf-trail-map.png"
-      style="max-width: 70%"
+      style="max-width: 40%; max-height: 380px;"
       alt="CNCF Trail Map"
     />
+  </div>
+  <div class="source">
+    <a href="https://www.cncf.io/blog/2018/03/08/introducing-the-cloud-native-trail-map/" target="_blank" rel="noopener noreferrer">CNCF Trail Map</a>
+  </div>
+</section>
+<section>
+  <h2>CNCF Landscape</h2>
+  <p style="font-size: 0.65em; color: var(--r-muted-color); margin: 0 0 0.3em;">The full ecosystem &mdash; you don't need all of this</p>
+  <div class="flex justify-center">
+    <img
+      class="rounded"
+      src="imgs/cncf-landscape.png"
+      style="max-width: 80%"
+      alt="CNCF Landscape"
+    />
+  </div>
+  <div class="source">
+    <a href="https://landscape.cncf.io/" target="_blank" rel="noopener noreferrer">landscape.cncf.io</a>
+  </div>
+</section>
+<section>
+  <h2>Where Docker Fits In</h2>
+  <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0 0 0.5em;">Containerization is step 1 on the cloud native journey</p>
+  <div style="display: flex; flex-direction: column; gap: 0.3em; width: 80%; margin: 0 auto; font-size: 0.7em;">
+    <div class="card" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 1em;">
+      <span style="font-size: 1.3em; flex-shrink: 0;"><i class="fa-brands fa-docker" aria-hidden="true" style="color: var(--r-link-color);"></i></span>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">Docker is the entry point</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Package your application once, run it anywhere &mdash; the foundation for everything cloud native</div>
+      </div>
+    </div>
+    <div class="fragment" style="display: flex; justify-content: center; color: var(--r-muted-color); font-size: 0.8em;">
+      <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+    </div>
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 1em;">
+      <span style="font-size: 1.3em; flex-shrink: 0;"><i class="fa-solid fa-dharmachakra" aria-hidden="true" style="color: var(--r-accent-color);"></i></span>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">Then orchestrate</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Kubernetes, Docker Swarm &mdash; manage containers at scale</div>
+      </div>
+    </div>
+    <div class="fragment" style="display: flex; justify-content: center; color: var(--r-muted-color); font-size: 0.8em;">
+      <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+    </div>
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 1em;">
+      <span style="font-size: 1.3em; flex-shrink: 0;"><i class="fa-solid fa-layer-group" aria-hidden="true" style="color: var(--r-accent-color);"></i></span>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">Then add the ecosystem</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Observability, service meshes, CI/CD &mdash; step by step, not all at once</div>
+      </div>
+    </div>
   </div>
 </section>
