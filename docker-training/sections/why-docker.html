@@ -1,5 +1,131 @@
 <section class="section-title"><h1>Why Docker / Containers?</h1></section>
 <section>
+  <h2>Common IT Struggles</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></span>
+      <p>Cloud Migration / Transformation</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></span>
+      <p>Manual Deployment &amp; Operations</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span>
+      <p>Legacy Applications</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i></span>
+      <p>Runaway Cloud Costs</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Software is your Core Business</h2>
+  <div class="grid grid-cols-2 gap-4" style="margin-top: 0.6em; font-size: 0.7em;">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-users-gear" aria-hidden="true"></i></span>
+      <h3><em>Developers drive value</em></h3>
+      <p>Engineers deliver core business value &mdash; all other roles support them</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>
+      <h3><em>How do we enable them?</em></h3>
+      <p>Cloud Engineers need native tools closest to their target environment</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-toolbox" aria-hidden="true"></i></span>
+      <h3><em>Native Tools</em></h3>
+      <p>If your product runs on Linux, your platform should too</p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-brands fa-docker" aria-hidden="true"></i></span>
+      <h3><em>Containers</em></h3>
+      <p>Provide a consistent, portable development and deployment environment</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>The application landscape is changing</h2>
+  <div style="display: flex; align-items: center; margin: 0.3em auto 0.6em; width: 85%;">
+    <span style="font-weight: 600; font-size: 0.7em; color: var(--r-muted-color); white-space: nowrap;">~2000</span>
+    <div style="flex: 1; height: 3px; background: linear-gradient(to right, var(--r-muted-color), var(--r-accent-color)); margin: 0 0.5em; position: relative;">
+      <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 10px solid var(--r-accent-color); border-top: 5.5px solid transparent; border-bottom: 5.5px solid transparent;"></div>
+    </div>
+    <span style="font-weight: 600; font-size: 0.7em; color: var(--r-accent-color); white-space: nowrap;">Today</span>
+  </div>
+  <div style="display: flex; align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
+    <div style="flex: 1; text-align: center;">
+      <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
+        <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.4em; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5em;">
+          <i class="fa-solid fa-building" style="color: #fff; font-size: 2.5em;" aria-hidden="true"></i>
+        </div>
+        <div style="font-size: 0.65em; text-align: left;">
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-cube" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Monolithic architecture</p>
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-server" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Big Servers</p>
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-clock" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Slow changing</p>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; font-size: 1.5em; color: var(--r-accent-color);">
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </div>
+    <div style="flex: 1; text-align: center;">
+      <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 120px; margin-bottom: 0.5em;">
+          <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #2d3748, #1a202c); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+        </div>
+        <div style="font-size: 0.65em; text-align: left;">
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-cubes" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Loosely Coupled Services</p>
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-server" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Many Small Servers</p>
+          <p style="margin: 0.2em 0;"><i class="fa-solid fa-bolt" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Rapidly updated</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>The Evolution of Software Architecture</h2>
+  <div style="display: flex; flex-direction: column; gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+      <div style="font-size: 1.4em; flex-shrink: 0;">🍝</div>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">1990s &mdash; Spaghetti</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Copy &amp; paste &mdash; tangled, tightly coupled code</div>
+      </div>
+    </div>
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+      <div style="font-size: 1.4em; flex-shrink: 0;">🫓</div>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">2000s &mdash; Lasagna</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Layered monoliths &mdash; structured but hard to change</div>
+      </div>
+    </div>
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+      <div style="font-size: 1.4em; flex-shrink: 0;">🥟</div>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">2010s &mdash; Ravioli</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Microservices &mdash; small, self-contained, independently deployable</div>
+      </div>
+    </div>
+    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+      <div style="font-size: 1.4em; flex-shrink: 0;">🍕</div>
+      <div style="text-align: left;">
+        <strong style="color: var(--r-accent-color);">What's next?</strong>
+        <div style="font-size: 0.8em; color: var(--r-muted-color);">Probably pizza-oriented architecture</div>
+      </div>
+    </div>
+  </div>
+  <div class="source">Credit: @benorama</div>
+</section>
+<section>
   <h2>A Brief History Lesson</h2>
   <div style="display: flex; align-items: flex-end; justify-content: center; gap: 0.6em; height: 380px;">
     <div class="fragment" data-fragment-index="0" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
@@ -82,152 +208,8 @@
   </div>
 </section>
 <section>
-  <h2>Container as a Service (CaaS)</h2>
-  <div class="flex justify-center">
-    <img
-      class="rounded"
-      src="imgs/caas.png"
-      style="max-width: 70%"
-      alt="Container as a Service"
-    />
-  </div>
-</section>
-<section>
-  <h2>Common IT Struggles</h2>
-  <div class="grid grid-cols-2 gap-6">
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></span>
-      <p>Cloud Migration / Transformation</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></span>
-      <p>Manual Deployment &amp; Operations</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span>
-      <p>Legacy Applications</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i></span>
-      <p>Runaway Cloud Costs</p>
-    </div>
-  </div>
-</section>
-<section>
-  <h2>Software is your Core Business</h2>
-  <div class="grid grid-cols-2 gap-4" style="margin-top: 0.6em; font-size: 0.7em;">
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-users-gear" aria-hidden="true"></i></span>
-      <h3><em>Developers drive value</em></h3>
-      <p>Engineers deliver core business value &mdash; all other roles support them</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>
-      <h3><em>How do we enable them?</em></h3>
-      <p>Cloud Engineers need native tools closest to their target environment</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-toolbox" aria-hidden="true"></i></span>
-      <h3><em>Native Tools</em></h3>
-      <p>If your product runs on Linux, your platform should too</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-brands fa-docker" aria-hidden="true"></i></span>
-      <h3><em>Containers</em></h3>
-      <p>Provide a consistent, portable development and deployment environment</p>
-    </div>
-  </div>
-</section>
-<section>
-  <h2>The application landscape is changing</h2>
-  <!-- Timeline arrow -->
-  <div style="display: flex; align-items: center; margin: 0.3em auto 0.6em; width: 85%;">
-    <span style="font-weight: 600; font-size: 0.7em; color: var(--r-muted-color); white-space: nowrap;">~2000</span>
-    <div style="flex: 1; height: 3px; background: linear-gradient(to right, var(--r-muted-color), var(--r-accent-color)); margin: 0 0.5em; position: relative;">
-      <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 10px solid var(--r-accent-color); border-top: 5.5px solid transparent; border-bottom: 5.5px solid transparent;"></div>
-    </div>
-    <span style="font-weight: 600; font-size: 0.7em; color: var(--r-accent-color); white-space: nowrap;">Today</span>
-  </div>
-  <div style="display: flex; align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
-    <!-- Monolith side -->
-    <div style="flex: 1; text-align: center;">
-      <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
-        <!-- Visual: one big block -->
-        <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.4em; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5em;">
-          <i class="fa-solid fa-building" style="color: #fff; font-size: 2.5em;" aria-hidden="true"></i>
-        </div>
-        <div style="font-size: 0.65em; text-align: left;">
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-cube" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Monolithic architecture</p>
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-server" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Big Servers</p>
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-clock" style="color: var(--r-muted-color); width: 1.2em;" aria-hidden="true"></i> Slow changing</p>
-        </div>
-      </div>
-    </div>
-    <!-- Arrow in the middle -->
-    <div style="display: flex; align-items: center; font-size: 1.5em; color: var(--r-accent-color);">
-      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-    </div>
-    <!-- Microservices side -->
-    <div style="flex: 1; text-align: center;">
-      <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
-        <!-- Visual: many small blocks -->
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 120px; margin-bottom: 0.5em;">
-          <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #2d3748, #1a202c); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-        </div>
-        <div style="font-size: 0.65em; text-align: left;">
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-cubes" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Loosely Coupled Services</p>
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-server" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Many Small Servers</p>
-          <p style="margin: 0.2em 0;"><i class="fa-solid fa-bolt" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Rapidly updated</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section>
-  <h2>The Evolution of Software Architecture</h2>
-  <div style="display: flex; flex-direction: column; gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
-      <div style="font-size: 1.4em; flex-shrink: 0;">🍝</div>
-      <div style="text-align: left;">
-        <strong style="color: var(--r-accent-color);">1990s &mdash; Spaghetti</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Copy &amp; paste &mdash; tangled, tightly coupled code</div>
-      </div>
-    </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
-      <div style="font-size: 1.4em; flex-shrink: 0;">🫓</div>
-      <div style="text-align: left;">
-        <strong style="color: var(--r-accent-color);">2000s &mdash; Lasagna</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Layered monoliths &mdash; structured but hard to change</div>
-      </div>
-    </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
-      <div style="font-size: 1.4em; flex-shrink: 0;">🥟</div>
-      <div style="text-align: left;">
-        <strong style="color: var(--r-accent-color);">2010s &mdash; Ravioli</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Microservices &mdash; small, self-contained, independently deployable</div>
-      </div>
-    </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
-      <div style="font-size: 1.4em; flex-shrink: 0;">🍕</div>
-      <div style="text-align: left;">
-        <strong style="color: var(--r-accent-color);">What's next?</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Probably pizza-oriented architecture</div>
-      </div>
-    </div>
-  </div>
-  <div class="source">Credit: @benorama</div>
-</section>
-<section>
   <h2>Containers are the catalyst</h2>
   <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3em; margin-top: 0.3em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.65em;">
-    <!-- Applications -->
     <div class="fragment" data-fragment-index="0" style="width: 100%;">
       <h4 style="margin: 0 0 0.3em; font-size: 0.85em; color: var(--r-muted-color);"><i class="fa-solid fa-code" aria-hidden="true" style="margin-right: 0.3em;"></i>Any Application</h4>
       <div style="display: flex; flex-wrap: wrap; gap: 0.3em; justify-content: center;">
@@ -240,20 +222,16 @@
         <span class="badge">API Endpoint</span>
       </div>
     </div>
-    <!-- Connector arrows top -->
     <div class="fragment" data-fragment-index="2" style="color: var(--r-link-color); font-size: 1.2em;">
       <i class="fa-solid fa-arrows-down-to-line" aria-hidden="true"></i>
     </div>
-    <!-- Container bridge -->
     <div class="fragment" data-fragment-index="2" style="width: 100%; background: linear-gradient(135deg, #C9B48A, #B39A6A); color: #fff; border-radius: 0.5em; padding: 0.5em 1em; text-align: center; border: 3px solid #fff; box-shadow: 0 0 0 3px var(--r-link-color);">
       <div style="font-weight: 700; font-size: 1.3em;"><i class="fa-brands fa-docker" aria-hidden="true" style="margin-right: 0.3em;"></i>Containers</div>
       <div style="font-size: 0.8em; opacity: 0.9;">Build once, run anywhere</div>
     </div>
-    <!-- Connector arrows bottom -->
     <div class="fragment" data-fragment-index="2" style="color: var(--r-link-color); font-size: 1.2em;">
       <i class="fa-solid fa-arrows-down-to-line" aria-hidden="true" style="transform: rotate(180deg); display: inline-block;"></i>
     </div>
-    <!-- Environments -->
     <div class="fragment" data-fragment-index="1" style="width: 100%;">
       <h4 style="margin: 0 0 0.3em; font-size: 0.85em; color: var(--r-muted-color);"><i class="fa-solid fa-server" aria-hidden="true" style="margin-right: 0.3em;"></i>Any Environment</h4>
       <div style="display: flex; flex-wrap: wrap; gap: 0.3em; justify-content: center;">
@@ -276,7 +254,7 @@
       class="rounded"
       src="imgs/docker-hub-stats.png"
       style="max-width: 85%"
-      alt="Docker Hub Statistics"
+      alt="Build, Ship, Run - Any App, Anywhere"
     />
   </div>
 </section>
