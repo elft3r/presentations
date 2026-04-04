@@ -60,10 +60,11 @@ for (const pres of PRESENTATIONS) {
     console.log('  Copying shared JS...');
     for (const file of fs.readdirSync(sharedDir)) {
       if (file.endsWith('.js')) {
-        fs.copyFileSync(
-          path.join(sharedDir, file),
-          path.join(presDir, file)
-        );
+        const dest = path.join(presDir, file);
+        // Remove any existing file/symlink to avoid copyFileSync failures
+        const lstat = fs.lstatSync(dest, { throwIfNoEntry: false });
+        if (lstat) fs.unlinkSync(dest);
+        fs.copyFileSync(path.join(sharedDir, file), dest);
       }
     }
   }
