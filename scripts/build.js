@@ -19,6 +19,9 @@ function copyRecursive(src, dest) {
     }
   } else {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
+    // Remove any existing symlink at dest (copyFileSync can't overwrite broken symlinks)
+    const destLstat = fs.lstatSync(dest, { throwIfNoEntry: false });
+    if (destLstat && destLstat.isSymbolicLink()) fs.unlinkSync(dest);
     fs.copyFileSync(src, dest);
   }
 }
