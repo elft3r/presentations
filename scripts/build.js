@@ -9,10 +9,19 @@ const PRESENTATIONS = ['cloud-migrations', 'secure-landing-zones', 'docker-train
 const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 
 function copyRecursive(src, dest) {
-  if (!fs.existsSync(src)) return;
+  const lstat = fs.lstatSync(src, { throwIfNoEntry: false });
+  if (!lstat) return;
 
-  const stat = fs.statSync(src);
-  if (stat.isDirectory()) {
+  if (lstat.isSymbolicLink()) {
+    const resolved = fs.realpathSync(src);
+    const targetStat = fs.statSync(resolved);
+    if (targetStat.isDirectory()) {
+      copyRecursive(resolved, dest);
+    } else {
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(resolved, dest);
+    }
+  } else if (lstat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true });
     for (const entry of fs.readdirSync(src)) {
       copyRecursive(path.join(src, entry), path.join(dest, entry));
