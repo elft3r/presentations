@@ -1,108 +1,173 @@
 <section class="section-title"><h1>Containers vs VMs</h1></section>
 <section>
   <h2>Containers vs VMs</h2>
-  <div class="flex justify-center">
+  <div style="position: relative; max-width: 70%; margin: 0 auto;">
     <img
       class="rounded"
       src="imgs/containers-vs-vms.png"
-      style="max-width: 80%"
-      alt="Containers vs Virtual Machines"
+      style="width: 100%"
+      alt="Matrix red pill blue pill meme — VM vs Container"
     />
+    <div style="position: absolute; bottom: 15%; left: 25%; transform: translateX(-50%); color: white; font-weight: 700; font-size: 1.1em; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">VM</div>
+    <div style="position: absolute; bottom: 15%; left: 75%; transform: translateX(-50%); color: white; font-weight: 700; font-size: 1.1em; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">Container</div>
   </div>
 </section>
 <section>
   <h2>Containers vs VMs</h2>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6" style="max-width: 85%; margin: 0 auto;">
     <div>
-      <h3><em>Containers</em></h3>
+      <h3 style="text-align: center;"><em>Container</em></h3>
       <img
         class="rounded"
         src="imgs/container-stack.png"
-        alt="Container Stack"
+        alt="Container Stack: Infrastructure → Host OS → Docker → Apps"
       />
     </div>
     <div>
-      <h3><em>VMs</em></h3>
+      <h3 style="text-align: center;"><em>VM</em></h3>
       <img
         class="rounded"
         src="imgs/vm-stack.png"
-        alt="VM Stack"
+        alt="VM Stack: Infrastructure → Hypervisor → Guest OS → Apps"
       />
     </div>
   </div>
   <div class="source">
     <a href="https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/" target="_blank" rel="noopener noreferrer"
-      >https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/</a
-    >
+      >docs.docker.com</a>
   </div>
 </section>
 <section>
-  <h2>Long vs Short Lived Apps/Containers</h2>
-  <div class="grid grid-cols-2 gap-6">
-    <div>
+  <h2>Key Differences</h2>
+  <div style="max-width: 85%; margin: 0 auto; font-size: 0.75em;">
+    <div class="grid grid-cols-3 gap-4" style="text-align: center; margin-bottom: 0.8rem;">
+      <div class="card" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Startup</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>seconds</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: minutes</p>
+      </div>
+      <div class="card fragment" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Size</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>MBs</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: GBs</p>
+      </div>
+      <div class="card fragment" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Isolation</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>process level</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: full OS</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4" style="text-align: center;">
+      <div class="card fragment" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">OS</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>shared kernel</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: own OS</p>
+      </div>
+      <div class="card fragment" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Density</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>100s per host</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: 10s per host</p>
+      </div>
+      <div class="card fragment" style="border-top: 4px solid var(--r-accent-color);">
+        <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Portability</h3>
+        <p style="margin: 0; font-size: 0.85em;">Containers: <strong>image = artifact</strong></p>
+        <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: large disk images</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Long vs Short Lived Containers</h2>
+  <div class="grid grid-cols-2 gap-6" style="max-width: 85%; margin: 0 auto;">
+    <div style="text-align: center;">
       <h3><em>Long Lived</em></h3>
       <img
         class="rounded"
         src="imgs/long-lived-apps.png"
-        alt="Long Lived Applications"
+        style="max-width: 90%"
+        alt="Long Lived Applications — stacked shipping containers"
       />
+      <p style="font-size: 0.65em; color: var(--r-muted-color); margin-top: 0.5rem;">Databases, web servers, APIs</p>
     </div>
-    <div>
+    <div style="text-align: center;">
       <h3><em>Short Lived</em></h3>
       <img
         class="rounded"
         src="imgs/short-lived-apps.png"
-        alt="Short Lived Applications"
+        style="max-width: 90%"
+        alt="Short Lived Applications — containers being moved"
       />
+      <p style="font-size: 0.65em; color: var(--r-muted-color); margin-top: 0.5rem;">Batch jobs, CI builds, cron tasks</p>
     </div>
   </div>
 </section>
 <section>
-  <h2>Use Case</h2>
-  <div class="grid grid-cols-3 gap-6" style="font-size: 0.65em">
-    <div class="card fragment">
-      <h3><em>Traditional VMs</em></h3>
+  <h2>Use Case &mdash; Scaling with Containers</h2>
+  <div class="flex justify-center items-center gap-6" style="font-size: 0.7em; margin-top: 1rem;">
+    <div class="card" style="padding: 1rem; text-align: center; min-width: 8rem;">
+      <h3 style="margin: 0 0 0.5rem; font-size: 1em;"><em>1 VM, 1 App</em></h3>
       <div class="grid grid-cols-1 gap-2">
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><strong>VM</strong></p>
-          <p><i class="fa-solid fa-cube" aria-hidden="true"></i> App</p>
-        </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><strong>VM</strong></p>
-          <p><i class="fa-solid fa-cube" aria-hidden="true"></i> App</p>
-        </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><strong>VM</strong></p>
-          <p><i class="fa-solid fa-cube" aria-hidden="true"></i> App</p>
+        <div class="card" style="background: var(--r-accent-light); padding: 0.4rem;">
+          <p style="margin: 0;"><i class="fa-solid fa-cube" aria-hidden="true"></i> App</p>
         </div>
       </div>
+      <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0.5rem 0 0;">1 VM per service</p>
     </div>
-    <div class="card fragment">
-      <h3><em><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></em></h3>
-      <p>Containerize apps</p>
-      <p>Decouple from VMs</p>
-      <p>Run multiple per host</p>
+    <div class="fragment" style="font-size: 2em;" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+    <div class="card fragment" style="padding: 1rem; text-align: center; min-width: 8rem;">
+      <h3 style="margin: 0 0 0.5rem; font-size: 1em;"><em>1 VM, 3 Apps</em></h3>
+      <div class="grid grid-cols-1 gap-2">
+        <div class="card" style="background: var(--r-accent-light); padding: 0.4rem;">
+          <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i> App</p>
+        </div>
+        <div class="card" style="background: var(--r-accent-light); padding: 0.4rem;">
+          <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i> App</p>
+        </div>
+        <div class="card" style="background: var(--r-accent-light); padding: 0.4rem;">
+          <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i> App</p>
+        </div>
+      </div>
+      <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0.5rem 0 0;">Containerized</p>
     </div>
-    <div class="card fragment">
-      <h3><em>Containers</em></h3>
-      <div class="grid grid-cols-3 gap-2">
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+    <div class="fragment" style="font-size: 2em;" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+    <div class="card fragment" style="padding: 1rem; text-align: center; min-width: 12rem;">
+      <h3 style="margin: 0 0 0.5rem; font-size: 1em;"><em>Scale out</em></h3>
+      <div class="grid grid-cols-3 gap-4">
+        <!-- Host 1 -->
+        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div style="border-top: 2px solid var(--r-accent-color); padding-top: 0.3rem; font-size: 0.75em;">
+            <i class="fa-solid fa-server" aria-hidden="true"></i> Host 1
+          </div>
         </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+        <!-- Host 2 -->
+        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div style="border-top: 2px solid var(--r-accent-color); padding-top: 0.3rem; font-size: 0.75em;">
+            <i class="fa-solid fa-server" aria-hidden="true"></i> Host 2
+          </div>
         </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
-        </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
-        </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
-        </div>
-        <div class="card" style="background: rgba(0,0,0,0.05)">
-          <p><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+        <!-- Host 3 -->
+        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
+            <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
+          </div>
+          <div style="border-top: 2px solid var(--r-accent-color); padding-top: 0.3rem; font-size: 0.75em;">
+            <i class="fa-solid fa-server" aria-hidden="true"></i> Host 3
+          </div>
         </div>
       </div>
     </div>
