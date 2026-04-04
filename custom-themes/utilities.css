@@ -45,3 +45,104 @@
 /* Object fit */
 .object-cover { object-fit: cover; }
 .object-contain { object-fit: contain; }
+
+/*********************************************
+ * PORTRAIT MODE OVERRIDES
+ *
+ * Applied via a .portrait class on .reveal,
+ * toggled automatically for portrait screens
+ * or manually via ?mobile query parameter.
+ * Reveal.js uses a fixed canvas so regular
+ * media queries do not reflect slide dimensions.
+ *********************************************/
+
+/* Scale down base font for the narrower canvas */
+.reveal.portrait {
+  font-size: 18px;
+}
+
+/* Smaller headings */
+.reveal.portrait h1 { font-size: 1.8em; }
+.reveal.portrait h2 { font-size: 1.2em; }
+.reveal.portrait h3 { font-size: 1em; }
+
+/* Override text-4xl applied on .slides */
+.reveal.portrait .text-4xl {
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+/* Compact paragraphs and block margins */
+.reveal.portrait p { margin: 0.4em 0; }
+.reveal.portrait .slides section { padding: 10px; }
+
+/* Stack multi-column grids into single column */
+.reveal.portrait .grid-cols-2,
+.reveal.portrait .grid-cols-3,
+.reveal.portrait .grid-cols-5 {
+  grid-template-columns: 1fr;
+}
+
+/* Reset column spans (meaningless in single-column) */
+.reveal.portrait .col-span-2 {
+  grid-column: auto;
+}
+
+/* Tighten gaps */
+.reveal.portrait .gap-6 { gap: 0.4rem; }
+.reveal.portrait .gap-4 { gap: 0.3rem; }
+
+/* Compact cards */
+.reveal.portrait .card {
+  padding: 0.5em 0.8em;
+}
+
+/* Smaller icons */
+.reveal.portrait .icon-accent {
+  font-size: 1em;
+  margin-bottom: 0.15em;
+}
+
+/* Let images fill the available width */
+.reveal.portrait img {
+  max-width: 100%;
+  margin: 0.3em 0;
+}
+
+/* Cap height only for content images inside grids (stacked in portrait) */
+.reveal.portrait .grid img:not(.rounded-full) {
+  max-height: 260px;
+  object-fit: contain;
+}
+
+/* Wider blockquotes and quotes */
+.reveal.portrait blockquote { width: 90%; padding: 0.5em 0.8em; }
+.reveal.portrait q { width: 95%; }
+
+/* Code blocks: full width, smaller font */
+.reveal.portrait pre {
+  width: 100%;
+  font-size: 0.45em;
+}
+
+/* Compact lists */
+.reveal.portrait ul, .reveal.portrait ol {
+  margin-left: 0.6em;
+}
+.reveal.portrait li { margin-bottom: 0.15em; }
+
+/* Scale down profile image */
+.reveal.portrait .h-48 { height: 8rem; }
+.reveal.portrait .w-48 { width: 8rem; }
+
+/* Compact spacing helpers */
+.reveal.portrait .mt-4 { margin-top: 0.5rem; }
+.reveal.portrait .mt-8 { margin-top: 1rem; }
+.reveal.portrait .mt-12 { margin-top: 1.5rem; }
+
+/* Responsive iframes */
+.reveal.portrait iframe {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+}
