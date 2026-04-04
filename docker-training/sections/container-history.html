@@ -1,82 +1,242 @@
 <section class="section-title"><h1>Container History</h1></section>
 <section>
   <h2>What are containers?</h2>
-  <ul class="styled-list">
-    <li>Collection of kernel features</li>
-    <li>OS specific
-      <ul>
-        <li>Windows container won't run on Linux</li>
-      </ul>
-    </li>
-    <li>Linux: "chroot on steroids" &mdash; J&eacute;r&ocirc;me Petazzoni</li>
-    <li><em>chroot</em></li>
-    <li><em>cgroups</em> &mdash; Limit amount of resources</li>
-    <li><em>namespaces</em> &mdash; Virtualize system resources</li>
-    <li>(copy-on-write storage)</li>
-  </ul>
+  <p style="font-size: 1.1em; margin-bottom: 0.3rem;">A collection of <strong>kernel features</strong></p>
+
+  <!-- Quote -->
+  <div style="border-left: 4px solid var(--r-link-color); padding: 0.4rem 1rem; margin: 0 auto 1.2rem; max-width: 70%; background: var(--r-accent-light); border-radius: 0 0.4rem 0.4rem 0;">
+    <p style="margin: 0; font-size: 0.85em; font-style: italic;">"chroot on steroids"</p>
+    <p style="margin: 0.1rem 0 0; font-size: 0.6em; color: var(--r-muted-color);">&mdash; J&eacute;r&ocirc;me Petazzoni</p>
+  </div>
+
+  <!-- Kernel features -->
+  <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap: 0.7rem; max-width: 90%; margin: 0 auto 1rem;">
+    <div class="card" style="padding: 0.7rem 0.5rem; border-top: 4px solid var(--r-accent-color); text-align: center;">
+      <h3 style="margin: 0 0 0.2rem; font-size: 0.95em;">chroot</h3>
+      <p style="margin: 0; font-size: 0.6em; color: var(--r-muted-color);">Isolate the filesystem</p>
+    </div>
+    <div class="card" style="padding: 0.7rem 0.5rem; border-top: 4px solid var(--r-accent-color); text-align: center;">
+      <h3 style="margin: 0 0 0.2rem; font-size: 0.95em;">cgroups</h3>
+      <p style="margin: 0; font-size: 0.6em; color: var(--r-muted-color);">Limit resources<br>(CPU, memory, I/O)</p>
+    </div>
+    <div class="card" style="padding: 0.7rem 0.5rem; border-top: 4px solid var(--r-accent-color); text-align: center;">
+      <h3 style="margin: 0 0 0.2rem; font-size: 0.95em;">namespaces</h3>
+      <p style="margin: 0; font-size: 0.6em; color: var(--r-muted-color);">Virtualize resources<br>(PID, network, users)</p>
+    </div>
+    <div class="card" style="padding: 0.7rem 0.5rem; border-top: 4px solid var(--r-muted-color); text-align: center;">
+      <h3 style="margin: 0 0 0.2rem; font-size: 0.95em;">copy-on-write</h3>
+      <p style="margin: 0; font-size: 0.6em; color: var(--r-muted-color);">Efficient layered<br>filesystem</p>
+    </div>
+  </div>
+
+  <!-- OS specific callout -->
+  <div class="fragment" style="max-width: 70%; margin: 0 auto; padding: 0.5rem 1rem; background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5rem; border-left: 4px solid #c53030; text-align: center;">
+    <p style="margin: 0; font-size: 0.8em;"><strong>OS specific</strong> &mdash; containers rely on the host kernel</p>
+    <p style="margin: 0.15rem 0 0; font-size: 0.6em; color: var(--r-muted-color);">A Windows container won't run on Linux and vice versa</p>
+  </div>
 </section>
 <section>
   <h2>What are containers?</h2>
   <div class="flex justify-center">
     <img
       class="rounded"
-      src="imgs/container-stack.png"
-      style="max-width: 60%"
-      alt="Container Architecture Stack"
+      src="imgs/linux-namespaces.png"
+      style="max-width: 65%"
+      alt="Linux namespaces demo showing App, Wireshark, and VNC containers with shared and isolated namespaces"
     />
   </div>
 </section>
 <section>
-  <h2>Container History</h2>
-  <div class="flex justify-center" style="margin-bottom: 1rem">
+  <h2>chroot &mdash; Where It All Started</h2>
+  <div class="flex justify-center" style="margin-bottom: 0.5rem">
     <img
       class="rounded"
       src="imgs/container-history.png"
-      style="max-width: 50%"
-      alt="Container History Timeline"
+      style="max-width: 40%"
+      alt="chroot filesystem diagram showing a nested root directory"
     />
   </div>
   <ul class="styled-list">
-    <li class="fragment"><em>1979</em> &mdash; chroot
-      <ul><li>Change the root directory of a running process</li></ul>
-    </li>
-    <li class="fragment"><em>2000</em> &mdash; FreeBSD jail
-      <ul><li>Similar to chroot, but with additional process sandboxing (filesystems, users, networks)</li></ul>
-    </li>
-    <li class="fragment"><em>2001</em> &mdash; Linux VServer
-      <ul><li>Similar jail mechanism for Linux</li></ul>
-    </li>
+    <li>Unix V7, <em>1979</em> &mdash; changes the apparent root directory for a process</li>
+    <li>The process sees its own <code>/bin</code>, <code>/etc</code>, <code>/usr</code>, &hellip; &mdash; first form of filesystem isolation</li>
+    <li class="fragment"><strong>Limitations:</strong> no process isolation, no resource limits, root can escape</li>
   </ul>
 </section>
+
+<!-- Era 1: Filesystem Isolation -->
 <section>
   <h2>Container History</h2>
-  <ul class="styled-list">
-    <li class="fragment"><em>2004</em> &mdash; Solaris Zones
-      <ul>
-        <li>Full user, process, and filesystem space</li>
-        <li>Access to hardware</li>
-        <li>Application can only see what is within the zone</li>
-      </ul>
-    </li>
-    <li class="fragment"><em>2006</em> &mdash; Open VZ (Open Virtuzzo)</li>
-    <li class="fragment"><em>2006</em> &mdash; Process Containers
-      <ul><li>Announced by engineers at Google to isolate and limit resource usage</li></ul>
-    </li>
-    <li class="fragment"><em>2007</em> &mdash; Renamed to Control Groups (cgroups)</li>
-  </ul>
+
+  <!-- Timeline: bar center at 8px from top of container -->
+  <div style="position: relative; max-width: 80%; margin: 0.3rem auto 1.2rem; height: 3.2rem;">
+    <div style="position: absolute; top: 7px; left: 5%; right: 5%; height: 3px; background: var(--r-card-border); border-radius: 2px;"></div>
+    <div style="position: absolute; top: 7px; left: 5%; width: 12%; height: 3px; background: var(--r-accent-color); border-radius: 2px;"></div>
+    <!-- Active dot: 14px + 2*2px box-shadow outline = centers at 8px from top -->
+    <div style="position: absolute; left: 5%; top: 1px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 14px; height: 14px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; border: 3px solid var(--r-background-color); box-shadow: 0 0 0 2px var(--r-accent-color);"></div>
+      <div style="font-size: 0.55em; font-weight: 600; margin-top: 0.25rem; white-space: nowrap;">1979&ndash;2001</div>
+      <div style="font-size: 0.45em; color: var(--r-muted-color); white-space: nowrap;">Filesystem Isolation</div>
+    </div>
+    <!-- Inactive dots: 10px, centered at 8px → top = 3px -->
+    <div style="position: absolute; left: 35%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2005&ndash;2008</div>
+    </div>
+    <div style="position: absolute; left: 65%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2011&ndash;2013</div>
+    </div>
+    <div style="position: absolute; left: 95%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2014&ndash;2017</div>
+    </div>
+  </div>
+
+  <!-- Block -->
+  <div style="max-width: 80%; margin: 0 auto;">
+    <div class="card" style="padding: 0.6rem 1.2rem; border-left: 4px solid var(--r-accent-color);">
+      <h3 style="margin: 0; font-size: 1em;">Filesystem Isolation</h3>
+      <p style="margin: 0.2rem 0 0; font-size: 0.75em; color: var(--r-muted-color);">Separating filesystems and processes</p>
+    </div>
+    <ul class="styled-list" style="margin-top: 0.8rem;">
+      <li class="fragment"><em>1979</em> &mdash; chroot &mdash; change the root directory of a running process</li>
+      <li class="fragment"><em>2000</em> &mdash; FreeBSD Jail &mdash; adds process sandboxing (filesystems, users, networks)</li>
+      <li class="fragment"><em>2001</em> &mdash; Linux VServer &mdash; similar jail mechanism for Linux</li>
+    </ul>
+  </div>
 </section>
+
+<!-- Era 2: Resource Control -->
 <section>
   <h2>Container History</h2>
-  <ul class="styled-list">
-    <li class="fragment"><em>2008</em> &mdash; cgroups merged into Linux kernel 2.6.24
-      <ul>
-        <li>LXC (LinuX Containers) project created</li>
-        <li>OS-level virtualization &mdash; multiple isolated Linux environments on a shared kernel</li>
-      </ul>
-    </li>
-    <li class="fragment"><em>2011</em> &mdash; Warden (CloudFoundry)</li>
-    <li class="fragment"><em>2013</em> &mdash; Google open-sourced LMCTFY (Let Me Contain That For You)
-      <ul><li>Core concepts contributed to libcontainer in 2015</li></ul>
-    </li>
-  </ul>
+
+  <div style="position: relative; max-width: 80%; margin: 0.3rem auto 1.2rem; height: 3.2rem;">
+    <div style="position: absolute; top: 7px; left: 5%; right: 5%; height: 3px; background: var(--r-card-border); border-radius: 2px;"></div>
+    <div style="position: absolute; top: 7px; left: 5%; width: 30%; height: 3px; background: var(--r-accent-color); border-radius: 2px;"></div>
+    <div style="position: absolute; left: 5%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">1979&ndash;2001</div>
+    </div>
+    <div style="position: absolute; left: 35%; top: 1px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 14px; height: 14px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; border: 3px solid var(--r-background-color); box-shadow: 0 0 0 2px var(--r-accent-color);"></div>
+      <div style="font-size: 0.55em; font-weight: 600; margin-top: 0.25rem; white-space: nowrap;">2005&ndash;2008</div>
+      <div style="font-size: 0.45em; color: var(--r-muted-color); white-space: nowrap;">Resource Control</div>
+    </div>
+    <div style="position: absolute; left: 65%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2011&ndash;2013</div>
+    </div>
+    <div style="position: absolute; left: 95%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2014&ndash;2017</div>
+    </div>
+  </div>
+
+  <div style="max-width: 80%; margin: 0 auto;">
+    <div class="card" style="padding: 0.35rem 1.2rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Filesystem Isolation</h3>
+    </div>
+    <div class="card" style="padding: 0.6rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-accent-color);">
+      <h3 style="margin: 0; font-size: 1em;">Resource Control &amp; Full Isolation</h3>
+      <p style="margin: 0.2rem 0 0; font-size: 0.75em; color: var(--r-muted-color);">Real resource limits and environment isolation</p>
+    </div>
+    <ul class="styled-list" style="margin-top: 0.8rem;">
+      <li class="fragment"><em>2005</em> &mdash; Solaris Zones &mdash; full user, process, filesystem space with hardware access</li>
+      <li class="fragment"><em>2006</em> &mdash; OpenVZ &amp; Process Containers (Google) &mdash; resource limits</li>
+      <li class="fragment"><em>2007&ndash;08</em> &mdash; cgroups merged into Linux kernel &mdash; LXC project created</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Era 3: Developer Experience -->
+<section>
+  <h2>Container History</h2>
+
+  <div style="position: relative; max-width: 80%; margin: 0.3rem auto 1.2rem; height: 3.2rem;">
+    <div style="position: absolute; top: 7px; left: 5%; right: 5%; height: 3px; background: var(--r-card-border); border-radius: 2px;"></div>
+    <div style="position: absolute; top: 7px; left: 5%; width: 60%; height: 3px; background: var(--r-accent-color); border-radius: 2px;"></div>
+    <div style="position: absolute; left: 5%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">1979&ndash;2001</div>
+    </div>
+    <div style="position: absolute; left: 35%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2005&ndash;2008</div>
+    </div>
+    <div style="position: absolute; left: 65%; top: 1px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 14px; height: 14px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; border: 3px solid var(--r-background-color); box-shadow: 0 0 0 2px var(--r-accent-color);"></div>
+      <div style="font-size: 0.55em; font-weight: 600; margin-top: 0.25rem; white-space: nowrap;">2011&ndash;2013</div>
+      <div style="font-size: 0.45em; color: var(--r-muted-color); white-space: nowrap;">Developer Experience</div>
+    </div>
+    <div style="position: absolute; left: 95%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-card-border); border-radius: 50%; margin: 0 auto;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2014&ndash;2017</div>
+    </div>
+  </div>
+
+  <div style="max-width: 80%; margin: 0 auto;">
+    <div class="card" style="padding: 0.35rem 1.2rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Filesystem Isolation</h3>
+    </div>
+    <div class="card" style="padding: 0.35rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Resource Control &amp; Full Isolation</h3>
+    </div>
+    <div class="card" style="padding: 0.6rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-accent-color);">
+      <h3 style="margin: 0; font-size: 1em;">Developer Experience</h3>
+      <p style="margin: 0.2rem 0 0; font-size: 0.75em; color: var(--r-muted-color);">Making containers usable</p>
+    </div>
+    <ul class="styled-list" style="margin-top: 0.8rem;">
+      <li class="fragment"><em>2011</em> &mdash; Warden (CloudFoundry)</li>
+      <li class="fragment"><em>2013</em> &mdash; LMCTFY (Google) &mdash; core concepts became libcontainer</li>
+      <li class="fragment"><em>2013</em> &mdash; Docker open-sourced &mdash; containers accessible to the masses</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Era 4: Ecosystem & Standards -->
+<section>
+  <h2>Container History</h2>
+
+  <div style="position: relative; max-width: 80%; margin: 0.3rem auto 1.2rem; height: 3.2rem;">
+    <div style="position: absolute; top: 7px; left: 5%; right: 5%; height: 3px; background: var(--r-card-border); border-radius: 2px;"></div>
+    <div style="position: absolute; top: 7px; left: 5%; width: 90%; height: 3px; background: linear-gradient(to right, var(--r-accent-color), var(--r-link-color)); border-radius: 2px;"></div>
+    <div style="position: absolute; left: 5%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">1979&ndash;2001</div>
+    </div>
+    <div style="position: absolute; left: 35%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2005&ndash;2008</div>
+    </div>
+    <div style="position: absolute; left: 65%; top: 3px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 10px; height: 10px; background: var(--r-accent-color); border-radius: 50%; margin: 0 auto; opacity: 0.5;"></div>
+      <div style="font-size: 0.5em; color: var(--r-muted-color); margin-top: 0.35rem; white-space: nowrap;">2011&ndash;2013</div>
+    </div>
+    <div style="position: absolute; left: 95%; top: 1px; text-align: center; transform: translateX(-50%);">
+      <div style="width: 14px; height: 14px; background: var(--r-link-color); border-radius: 50%; margin: 0 auto; border: 3px solid var(--r-background-color); box-shadow: 0 0 0 2px var(--r-link-color);"></div>
+      <div style="font-size: 0.55em; font-weight: 600; margin-top: 0.25rem; white-space: nowrap;">2014&ndash;2017</div>
+      <div style="font-size: 0.45em; color: var(--r-muted-color); white-space: nowrap;">Ecosystem &amp; Standards</div>
+    </div>
+  </div>
+
+  <div style="max-width: 80%; margin: 0 auto;">
+    <div class="card" style="padding: 0.35rem 1.2rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Filesystem Isolation</h3>
+    </div>
+    <div class="card" style="padding: 0.35rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Resource Control &amp; Full Isolation</h3>
+    </div>
+    <div class="card" style="padding: 0.35rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-muted-color); opacity: 0.5;">
+      <h3 style="margin: 0; font-size: 0.8em;">Developer Experience</h3>
+    </div>
+    <div class="card" style="padding: 0.6rem 1.2rem; margin-top: 0.3rem; border-left: 4px solid var(--r-link-color);">
+      <h3 style="margin: 0; font-size: 1em;">Ecosystem &amp; Standards</h3>
+      <p style="margin: 0.2rem 0 0; font-size: 0.75em; color: var(--r-muted-color);">Orchestration, open standards, and maturity</p>
+    </div>
+    <ul class="styled-list" style="margin-top: 0.8rem;">
+      <li class="fragment"><em>2014</em> &mdash; Kubernetes &mdash; orchestration inspired by Google's Borg</li>
+      <li class="fragment"><em>2015</em> &mdash; OCI founded &mdash; open standards, runc as reference runtime</li>
+      <li class="fragment"><em>2017</em> &mdash; containerd donated to CNCF &mdash; Moby Project launched</li>
+    </ul>
+  </div>
 </section>
