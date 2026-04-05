@@ -64,15 +64,15 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 | Lists | `ul.styled-list` for content lists | Plain `<ul>` without `styled-list` — acceptable only inside cards or for very short lists |
 | Icons | `.icon-accent` wrapping `<i class="fa-solid fa-...">` | Icon `<span>` without `.icon-accent` class |
 | Badges/pills | `.badge` | Inline-styled pills that should use `.badge` |
-| Source attribution | `<div class="source"><a href="..." target="_blank">...</a></div>` | Missing `target="_blank"` on source links; missing `.source` wrapper |
+| Source attribution | `<div class="source"><a href="..." target="_blank" rel="noopener noreferrer">...</a></div>` | Missing `target="_blank"` or `rel="noopener noreferrer"` on source links; missing `.source` wrapper |
 | Dividers | `<hr class="divider">` | Styled `<hr>` without `.divider` class |
 | Social links | `.social-links` container with circular icon links | Missing `.social-links` wrapper |
 
 ### Layout Patterns
 
 - **Prefer utility classes** over inline styles: `.flex`, `.grid`, `.grid-cols-2`, `.grid-cols-3`, `.gap-4`, `.gap-6`, `.items-center`, `.justify-center`, `.mt-4`, `.mt-8`, `.mt-12`, `.mb-0`, `.rounded`, `.rounded-full`, `.shadow-2xl`, `.object-cover`, `.object-contain`
-- **Flag** inline `display: flex`, `display: grid`, `grid-template-columns`, `gap:`, `align-items: center`, `justify-content: center`, `margin-top:`, `border-radius:` when an equivalent utility class exists.
-- **Acceptable inline styles**: `max-width`, `font-size` adjustments, absolute positioning for overlays, `border-top: 4px solid var(--r-accent-color)` for card accents. These have no utility class equivalents.
+- **Flag** inline `display: flex`, `display: grid`, `grid-template-columns`, `gap:`, `align-items: center`, `justify-content: center`, `border-radius:`, and inline `margin-top:` only when an equivalent utility class will actually apply. Do **not** recommend `.mt-*` for elements with more specific existing margin rules (e.g., `.source` is styled by `.reveal .source { margin-top: ... }` which overrides utilities); instead suggest wrapping in another container or updating the CSS rule.
+- **Acceptable inline styles**: `max-width`, `font-size` adjustments, absolute positioning for overlays, `border-top: 4px solid var(--r-accent-color)` for card accents, and `margin-top` on elements like `.source` where higher-specificity CSS would override spacing utility classes. These have no safe utility-class equivalent in those cases.
 
 ### Typography & Heading Hierarchy
 
