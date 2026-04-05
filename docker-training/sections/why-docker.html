@@ -47,17 +47,17 @@
 </section>
 <section>
   <h2>The application landscape is changing</h2>
-  <div style="display: flex; align-items: center; margin: 0.3em auto 0.6em; width: 85%;">
+  <div class="flex items-center" style="margin: 0.3em auto 0.6em; width: 85%;">
     <span style="font-weight: 600; font-size: 0.7em; color: var(--r-muted-color); white-space: nowrap;">~2000</span>
     <div style="flex: 1; height: 3px; background: linear-gradient(to right, var(--r-muted-color), var(--r-accent-color)); margin: 0 0.5em; position: relative;">
       <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 10px solid var(--r-accent-color); border-top: 5.5px solid transparent; border-bottom: 5.5px solid transparent;"></div>
     </div>
     <span style="font-weight: 600; font-size: 0.7em; color: var(--r-accent-color); white-space: nowrap;">Today</span>
   </div>
-  <div style="display: flex; align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
+  <div class="flex" style="align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
     <div style="flex: 1; text-align: center;">
       <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
-        <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.4em; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5em;">
+        <div style="background: linear-gradient(135deg, var(--r-muted-color), var(--r-heading-color)); border-radius: 0.4em; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5em;">
           <i class="fa-solid fa-building" style="color: #fff; font-size: 2.5em;" aria-hidden="true"></i>
         </div>
         <div style="font-size: 0.65em; text-align: left;">
@@ -74,12 +74,12 @@
       <div style="background: var(--r-card-bg); border: 1px solid var(--r-card-border); border-radius: 0.5em; padding: 0.8em; box-shadow: var(--r-card-shadow);">
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 120px; margin-bottom: 0.5em;">
           <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #3D7A6D, var(--r-accent-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
           <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
           <div style="background: linear-gradient(135deg, #3D7A6D, #24584C); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
           <div style="background: linear-gradient(135deg, #C9B48A, #B39A6A); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #718096, #4a5568); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: linear-gradient(135deg, #5a8a7a, #3D7A6D); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, var(--r-muted-color), var(--r-heading-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div style="background: linear-gradient(135deg, #3D7A6D, var(--r-accent-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
           <div style="background: linear-gradient(135deg, #2d3748, #1a202c); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
         </div>
         <div style="font-size: 0.65em; text-align: left;">
@@ -93,7 +93,7 @@
 </section>
 <section>
   <h2>The Evolution of Software Architecture</h2>
-  <div style="display: flex; flex-direction: column; gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
+  <div class="flex flex-col" style="gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
     <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
       <div style="font-size: 1.4em; flex-shrink: 0;">🍝</div>
       <div style="text-align: left;">
@@ -129,7 +129,7 @@
   <h2>A Brief History Lesson</h2>
   <div style="display: flex; align-items: flex-end; justify-content: center; gap: 0.6em; height: 380px;">
     <div class="fragment" data-fragment-index="0" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 80px; background: linear-gradient(180deg, #718096, #4a5568); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+      <div style="width: 100%; height: 80px; background: linear-gradient(180deg, var(--r-muted-color), var(--r-heading-color)); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         Data Centers
       </div>
       <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 0.3em 0 0 0.3em; margin-top: 0.3em;">
@@ -137,7 +137,7 @@
       </div>
     </div>
     <div class="fragment" data-fragment-index="1" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 130px; background: linear-gradient(180deg, #5a8a7a, #3D7A6D); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+      <div style="width: 100%; height: 130px; background: linear-gradient(180deg, #3D7A6D, var(--r-accent-color)); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         IaaS
       </div>
       <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
@@ -173,7 +173,7 @@
 <section>
   <h2>The Modern Technology Stack</h2>
   <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0;">Containers are the foundation of today's higher-level abstractions</p>
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 0.4em; width: 75%; margin-left: auto; margin-right: auto;">
+  <div class="flex flex-col items-center" style="gap: 0; margin-top: 0.4em; width: 75%; margin-left: auto; margin-right: auto;">
     <div class="fragment" data-fragment-index="3" style="display: flex; gap: 0.4em; width: 100%;">
       <div style="flex: 1; background: linear-gradient(135deg, #2d3748, #1a202c); color: #fff; border-radius: 0.4em 0.4em 0 0; padding: 0.35em 0.4em; text-align: center;">
         <div style="font-weight: 600; font-size: 0.8em;">Serverless</div>
@@ -194,14 +194,14 @@
     <div class="fragment" data-fragment-index="1" style="font-size: 0.55em; color: var(--r-muted-color); padding: 0.1em 0;">
       <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> runs on
     </div>
-    <div class="fragment" data-fragment-index="1" style="width: 100%; background: linear-gradient(135deg, #5a8a7a, #3D7A6D); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
+    <div class="fragment" data-fragment-index="1" style="width: 100%; background: linear-gradient(135deg, #3D7A6D, var(--r-accent-color)); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
       <div style="font-weight: 600; font-size: 0.8em;">IaaS / VMs</div>
       <div style="font-size: 0.55em; opacity: 0.85;">AWS EC2, Azure VMs, GCE</div>
     </div>
     <div class="fragment" data-fragment-index="0" style="font-size: 0.55em; color: var(--r-muted-color); padding: 0.1em 0;">
       <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> hosted in
     </div>
-    <div class="fragment" data-fragment-index="0" style="width: 100%; background: linear-gradient(135deg, #718096, #4a5568); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
+    <div class="fragment" data-fragment-index="0" style="width: 100%; background: linear-gradient(135deg, var(--r-muted-color), var(--r-heading-color)); color: #fff; border-radius: 0.4em; padding: 0.35em 0.4em; text-align: center;">
       <div style="font-weight: 600; font-size: 0.8em;">Data Centers</div>
       <div style="font-size: 0.55em; opacity: 0.85;">Physical infrastructure</div>
     </div>
@@ -209,7 +209,7 @@
 </section>
 <section>
   <h2>Containers are the catalyst</h2>
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3em; margin-top: 0.3em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.65em;">
+  <div class="flex flex-col items-center" style="gap: 0.3em; margin-top: 0.3em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.65em;">
     <div class="fragment" data-fragment-index="0" style="width: 100%;">
       <h4 style="margin: 0 0 0.3em; font-size: 0.85em; color: var(--r-muted-color);"><i class="fa-solid fa-code" aria-hidden="true" style="margin-right: 0.3em;"></i>Any Application</h4>
       <div style="display: flex; flex-wrap: wrap; gap: 0.3em; justify-content: center;">
@@ -316,7 +316,7 @@
 </section>
 <section>
   <h2>One journey for all applications</h2>
-  <div style="display: flex; flex-direction: column; gap: 0.4em; margin-top: 0.5em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
+  <div class="flex flex-col" style="gap: 0.4em; margin-top: 0.5em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
     <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 0.8em;">
       <div style="background: var(--r-muted-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">1</div>
       <div style="flex: 1; text-align: left;">
