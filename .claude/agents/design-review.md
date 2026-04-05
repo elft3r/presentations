@@ -114,7 +114,7 @@ For multi-step visual progressions (bar charts, technology stacks, timelines), t
 - **Current/active**: `.card` with `background: var(--r-accent-light)` at full opacity and full size
 - The timeline bar itself may use `linear-gradient(to right, var(--r-accent-color), var(--r-link-color))` for the progress fill and `var(--r-card-border)` for the remaining track.
 
-**Flag (WARNING)**: Off-palette colors in progression elements — all steps must be derived from the accent→link gradient via `color-mix()` or use the exact endpoint values. Timeline cards using only `opacity` as the state differentiator without a background or other visual cue.
+**Flag (WARNING)**: Off-palette colors in progression elements — all steps must be derived from the accent→link gradient via `color-mix()` or use the exact endpoint values. For timeline era cards, reduced opacity is acceptable for past/completed items, but flag timelines where the current/active card is not additionally highlighted (e.g., no `var(--r-accent-light)` background) and opacity alone is used to convey state.
 
 ### Responsive / Portrait Mode
 
@@ -174,7 +174,7 @@ The theme includes a `@media print` block that sets the background color. Be awa
 
 #### Flag Summary
 - **CRITICAL**: Icon-only links missing `aria-label`; images missing `alt`; tables without headers
-- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback; inline accent borders on `.card` elements; off-palette colors in progression elements; timeline cards using only opacity as differentiator
+- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback; inline accent borders on `.card` elements; progression steps not derived from accent→link `color-mix()`; active timeline cards not highlighted beyond opacity
 - **INFO**: Section slides that could benefit from `aria-label`; dense `.grid-cols-5` layouts that may be problematic in portrait mode; slides relying solely on gradient background to convey structure; images missing `loading="lazy"`
 
 ---
@@ -193,7 +193,7 @@ For each file, produce:
 
 Severity levels:
 - **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern, missing `alt` on images, icon-only links without `aria-label`, tables without proper headers
-- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>` or `aria-label`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`, inline accent borders on `.card` elements, off-palette colors in progression elements, timeline cards using only opacity as differentiator
+- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>` or `aria-label`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`, inline accent borders on `.card` elements, progression steps not derived from accent→link `color-mix()`, active timeline cards not highlighted beyond opacity
 - **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, portrait mode layout concerns, print-unfriendly structures, images missing `loading="lazy"`
 
 End with a **Summary** section:
