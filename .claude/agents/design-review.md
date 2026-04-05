@@ -103,6 +103,7 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 For multi-step visual progressions (bar charts, technology stacks, timelines), the design system uses a **two-endpoint gradient** interpolated between `--r-accent-color` (`#24584C`) and `--r-link-color` (`#B39A6A`). The number of steps determines the spacing:
 
 - Use `color-mix(in srgb, var(--r-accent-color) <pct>%, var(--r-link-color))` to compute intermediate steps. For N steps, each step i (0-based) uses `pct = 100 - (i * 100 / (N - 1))`.
+- **Browser fallback**: Always provide `background: var(--r-accent-color)` (or another on-palette solid) before the `color-mix()` declaration. Browsers that don't support `color-mix()` will use the fallback. Example: `background: var(--r-accent-color); background: color-mix(in srgb, ...);`
 - Example for 5 steps: 100% accent → 75% → 50% → 25% → 0% (= link color).
 - **Text**: Always use white (`#fff`) text on progression fills for visual consistency.
 - These colored fills should be used on block/bar elements, **not** on `.card` components (cards use the standard card styling).
