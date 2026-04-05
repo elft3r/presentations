@@ -61,7 +61,7 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 |---|---|---|
 | Title slides | `<section class="section-title">...</section>` with nested `.title-slide` content (e.g., `*/sections/header.html`, typically using `<h2>`) | Flagging valid header/title slides for not using the simple divider pattern |
 | Section dividers | `<section class="section-title"><h1>...</h1></section>` | Missing `section-title` class on divider slides; using the divider `<h1>` rule to flag title slides |
-| Cards | `.card` on container div | Missing `.card` class; manually re-creating card styles inline |
+| Cards | `.card` on container div | Missing `.card` class; manually re-creating card styles inline; adding inline accent borders (`border-top`, `border-left`) — the base `.card` styling (border + shadow) is sufficient |
 | Lists | `ul.styled-list` for content lists | Plain `<ul>` without `styled-list` — acceptable only inside cards or for very short lists |
 | Icons | `.icon-accent` wrapping `<i class="fa-solid fa-...">` | Icon `<span>` without `.icon-accent` class |
 | Badges/pills | `.badge` | Inline-styled pills that should use `.badge` |
@@ -73,7 +73,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 - **Prefer utility classes** over inline styles: `.flex`, `.grid`, `.grid-cols-2`, `.grid-cols-3`, `.gap-4`, `.gap-6`, `.items-center`, `.justify-center`, `.mt-4`, `.mt-8`, `.mt-12`, `.mb-0`, `.rounded`, `.rounded-full`, `.shadow-2xl`, `.object-cover`, `.object-contain`
 - **Flag** inline `display: flex`, `display: grid`, `grid-template-columns`, `gap:`, `align-items: center`, `justify-content: center`, `border-radius:`, and inline `margin-top:` only when an equivalent utility class will actually apply. Do **not** recommend `.mt-*` for elements with more specific existing margin rules (e.g., `.source` is styled by `.reveal .source { margin-top: ... }` which overrides utilities); instead suggest wrapping in another container or updating the CSS rule.
-- **Acceptable inline styles**: `max-width`, `font-size` adjustments, absolute positioning for overlays, `border-top: 4px solid var(--r-accent-color)` for card accents, and `margin-top` on elements like `.source` where higher-specificity CSS would override spacing utility classes. These have no safe utility-class equivalent in those cases.
+- **Acceptable inline styles**: `max-width`, `font-size` adjustments, absolute positioning for overlays, and `margin-top` on elements like `.source` where higher-specificity CSS would override spacing utility classes. These have no safe utility-class equivalent in those cases.
+- **Do not use** inline accent borders on cards (`border-top`, `border-left` with accent/muted/link colors). The base `.card` component already provides a consistent border and shadow. **Flag** inline accent borders on `.card` elements as **WARNING**.
 
 ### Typography & Heading Hierarchy
 
@@ -89,7 +90,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 - Large images should have a `max-width` constraint (typically `style="max-width: 70%"`).
 - Images from external sources should have `.source` attribution below them.
 - For presentations with many sections loaded via `data-external`, consider adding `loading="lazy"` to off-screen images for better initial load performance.
-- **Flag**: `<img>` without `.rounded` or `.rounded-full`; large images without `max-width`; images in later sections missing `loading="lazy"` (INFO).
+- **Flag**: `<img>` without `.rounded` or `.rounded-full`; large images without `max-width`.
+- **Flag (INFO)**: Images in later sections missing `loading="lazy"`.
 
 ### Fragment Animations
 
@@ -154,8 +156,8 @@ The theme includes a `@media print` block that sets the background color. Be awa
 
 #### Flag Summary
 - **CRITICAL**: Icon-only links missing `aria-label`; images missing `alt`; tables without headers
-- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback
-- **INFO**: Section slides that could benefit from `aria-label`; dense `.grid-cols-5` layouts that may be problematic in portrait mode; slides relying solely on gradient background to convey structure
+- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback; inline accent borders on `.card` elements
+- **INFO**: Section slides that could benefit from `aria-label`; dense `.grid-cols-5` layouts that may be problematic in portrait mode; slides relying solely on gradient background to convey structure; images missing `loading="lazy"`
 
 ---
 
@@ -173,8 +175,8 @@ For each file, produce:
 
 Severity levels:
 - **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern, missing `alt` on images, icon-only links without `aria-label`, tables without proper headers
-- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`
-- **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, portrait mode layout concerns, print-unfriendly structures
+- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>` or `aria-label`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`, inline accent borders on `.card` elements
+- **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, portrait mode layout concerns, print-unfriendly structures, images missing `loading="lazy"`
 
 End with a **Summary** section:
 - Total issues by severity
