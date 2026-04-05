@@ -104,8 +104,9 @@ For multi-step visual progressions (bar charts, technology stacks, timelines), t
 
 - Use `color-mix(in srgb, var(--r-accent-color) <pct>%, var(--r-link-color))` to compute intermediate steps. For N steps, each step i (0-based) uses `pct = 100 - (i * 100 / (N - 1))`.
 - Example for 5 steps: 100% accent → 75% → 50% → 25% → 0% (= link color).
-- **Text contrast**: Use white (`#fff`) text on steps where accent is >= 50%. Use dark text (`var(--r-heading-color)`) on lighter steps (accent < 50%) to maintain WCAG AA contrast.
+- **Text**: Always use white (`#fff`) text on progression fills for visual consistency.
 - These colored fills should be used on block/bar elements, **not** on `.card` components (cards use the standard card styling).
+- When the same service/concept appears on multiple slides (e.g., a bar chart and a stack diagram), it must use the same `color-mix()` percentage to maintain color consistency across the presentation.
 
 **Timeline era cards** — For stepped timeline slides where cards represent past/current eras:
 - **Past/completed**: `.card` with `opacity: 0.5` and reduced padding/font-size
