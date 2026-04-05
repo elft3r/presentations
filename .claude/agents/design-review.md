@@ -88,24 +88,51 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 - All content images should have `.rounded` (exception: profile photos use `.rounded-full`).
 - Large images should have a `max-width` constraint (typically `style="max-width: 70%"`).
 - Images from external sources should have `.source` attribution below them.
-- **Flag**: `<img>` without `.rounded` or `.rounded-full`; large images without `max-width`.
+- For presentations with many sections loaded via `data-external`, consider adding `loading="lazy"` to off-screen images for better initial load performance.
+- **Flag**: `<img>` without `.rounded` or `.rounded-full`; large images without `max-width`; images in later sections missing `loading="lazy"` (INFO).
 
 ### Fragment Animations
 
 - Cards in a grid should use `class="card fragment"` for progressive reveal.
 - **Flag**: Inconsistent fragment usage within the same grid (some cards have `fragment`, others don't).
 
+### Responsive / Portrait Mode
+
+The design system includes a full portrait mode override system (activated via a `.portrait` class on `.reveal`). When reviewing slides, check for content that may break in portrait layout:
+
+- **Grids**: `.grid-cols-2`, `.grid-cols-3`, and `.grid-cols-5` collapse to single-column in portrait. Ensure grid items make sense when stacked vertically (e.g., side-by-side comparisons may lose their meaning).
+- **Images**: In portrait mode, `max-width` constraints are overridden to `100%` and grid images are capped at `max-height: 260px`. Slides with very tall images or images relying on exact `max-width` proportions may render differently.
+- **Column spans**: `.col-span-2` resets to `auto` in portrait. Layouts relying on asymmetric column spans should still be coherent in single-column flow.
+- **Flag (INFO)**: Grid layouts with more than 3 columns (`.grid-cols-5`) that contain dense content — these may become excessively long when stacked in portrait.
+
+### Print Considerations
+
+The theme includes a `@media print` block that sets the background color. Be aware that:
+
+- Gradient backgrounds (`.section-title`) will not render in most print contexts. Section title slides should still be identifiable without the gradient (e.g., through heading hierarchy).
+- **Flag (INFO)**: Slides that rely solely on background color/gradient to convey structure or meaning, with no textual or structural alternative.
+
 ### Accessibility
 
 #### Basic Requirements
 - All `<img>` tags must have an `alt` attribute. Use descriptive text for informational images; use `alt=""` for purely decorative images (and add `aria-hidden="true"`).
 - External links must have `target="_blank"` and should include `rel="noopener noreferrer"`.
+- The root `index.html` of each presentation must have a `lang` attribute on the `<html>` element (e.g., `<html lang="en">`). This is a WCAG 3.1.1 requirement. **Flag** as **WARNING** if missing.
 
 #### ARIA Landmarks & Roles
 - Decorative icons (`<i class="fa-solid fa-...">`) that convey no meaning should have `aria-hidden="true"` so screen readers skip them.
 - If an icon is the **only** content of a clickable element (e.g., social links), the parent `<a>` must have an `aria-label` describing the action: `<a href="..." aria-label="LinkedIn profile"><i class="fa-solid fa-linkedin" aria-hidden="true"></i></a>`.
 - Avoid redundant ARIA — do not add `role="img"` to `<img>` or `role="link"` to `<a>`. Native semantics are sufficient.
 - Section title slides (`<section class="section-title">`) should use `aria-label` on the `<section>` to identify them as chapter dividers when the heading alone is ambiguous.
+
+#### Motion & Reduced Motion
+- Fragment animations and CSS transitions should respect the `prefers-reduced-motion` media query. Reveal.js does not automatically disable all animations for users who prefer reduced motion.
+- **Flag (WARNING)**: Custom CSS transitions or animations applied via inline styles (e.g., `transition:`, `animation:`) without a corresponding `prefers-reduced-motion` fallback. Standard Reveal.js fragment classes are acceptable as they are framework-managed.
+
+#### Focus Indicators & Keyboard Navigation
+- Interactive elements (links, buttons) must have a visible focus indicator for keyboard users. Browser defaults are acceptable, but if custom styles override the outline (e.g., `outline: none`), an alternative focus style must be provided.
+- Social link icons (`.social-links a`) use custom hover styles — verify that `:focus` is equally visible. The theme styles hover but does not explicitly style `:focus`, so browser default outlines should be preserved.
+- **Flag (WARNING)**: Any `outline: none` or `outline: 0` on interactive elements without an alternative `:focus` style.
 
 #### Interactive Elements & Live Regions
 - Fragment animations (`class="fragment"`) hide content visually. Ensure `aria-hidden` is managed properly — Reveal.js handles this automatically, so **do not** manually add `aria-hidden` to fragments (it conflicts with Reveal's toggling).
@@ -117,7 +144,7 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 - Muted text (`--r-muted-color: #718096`) on the page background (`#F8F9FA`) has a contrast ratio of ~3.8:1 — acceptable for large text only. **Flag** muted-colored text at small sizes (`font-size` below `1em`).
 
 #### Tables & Data
-- All `<table>` elements should have a `<caption>` or `aria-label` summarizing the table's purpose.
+- All `<table>` elements should have a `<caption>` or `aria-label` summarizing the table's purpose. This is important for screen reader users to understand table context (WCAG 1.3.1). **Flag** as **WARNING** if missing.
 - Use `<th scope="col">` for column headers and `<th scope="row">` for row headers. Do not use `<td>` styled as bold in place of `<th>`.
 
 #### Language & Structure
@@ -127,8 +154,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 #### Flag Summary
 - **CRITICAL**: Icon-only links missing `aria-label`; images missing `alt`; tables without headers
-- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links
-- **INFO**: Section slides that could benefit from `aria-label`; tables missing `<caption>`
+- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback
+- **INFO**: Section slides that could benefit from `aria-label`; dense `.grid-cols-5` layouts that may be problematic in portrait mode; slides relying solely on gradient background to convey structure
 
 ---
 
@@ -146,8 +173,8 @@ For each file, produce:
 
 Severity levels:
 - **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern, missing `alt` on images, icon-only links without `aria-label`, tables without proper headers
-- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list
-- **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, tables missing `<caption>`
+- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`
+- **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, portrait mode layout concerns, print-unfriendly structures
 
 End with a **Summary** section:
 - Total issues by severity
