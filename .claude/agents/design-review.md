@@ -96,8 +96,38 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 ### Accessibility
 
-- All `<img>` tags should have an `alt` attribute.
-- External links should have `target="_blank"`.
+#### Basic Requirements
+- All `<img>` tags must have an `alt` attribute. Use descriptive text for informational images; use `alt=""` for purely decorative images (and add `aria-hidden="true"`).
+- External links must have `target="_blank"` and should include `rel="noopener noreferrer"`.
+
+#### ARIA Landmarks & Roles
+- Decorative icons (`<i class="fa-solid fa-...">`) that convey no meaning should have `aria-hidden="true"` so screen readers skip them.
+- If an icon is the **only** content of a clickable element (e.g., social links), the parent `<a>` must have an `aria-label` describing the action: `<a href="..." aria-label="LinkedIn profile"><i class="fa-solid fa-linkedin" aria-hidden="true"></i></a>`.
+- Avoid redundant ARIA — do not add `role="img"` to `<img>` or `role="link"` to `<a>`. Native semantics are sufficient.
+- Section title slides (`<section class="section-title">`) should use `aria-label` on the `<section>` to identify them as chapter dividers when the heading alone is ambiguous.
+
+#### Interactive Elements & Live Regions
+- Fragment animations (`class="fragment"`) hide content visually. Ensure `aria-hidden` is managed properly — Reveal.js handles this automatically, so **do not** manually add `aria-hidden` to fragments (it conflicts with Reveal's toggling).
+- If a slide contains a tabbed or toggled UI built with custom HTML, use `role="tablist"`, `role="tab"`, `role="tabpanel"`, and `aria-selected` appropriately.
+
+#### Text & Contrast
+- Avoid conveying meaning through color alone. If badges or cards use color to indicate status (e.g., green for success, red for error), also include a text label or icon.
+- Text on the accent gradient background (`linear-gradient(135deg, #24584C, #3D7A6D)`) must be white (`#fff`) to meet WCAG AA contrast (current ratio ~8.5:1 — compliant).
+- Muted text (`--r-muted-color: #718096`) on the page background (`#F8F9FA`) has a contrast ratio of ~3.8:1 — acceptable for large text only. **Flag** muted-colored text at small sizes (`font-size` below `1em`).
+
+#### Tables & Data
+- All `<table>` elements should have a `<caption>` or `aria-label` summarizing the table's purpose.
+- Use `<th scope="col">` for column headers and `<th scope="row">` for row headers. Do not use `<td>` styled as bold in place of `<th>`.
+
+#### Language & Structure
+- If a slide contains content in a language different from the presentation default, use `lang="..."` on the containing element.
+- Do not skip heading levels (h2 → h4). Assistive tech uses heading hierarchy for navigation.
+- Lists of content should use semantic `<ul>`/`<ol>`, not `<div>` with visual bullet characters.
+
+#### Flag Summary
+- **CRITICAL**: Icon-only links missing `aria-label`; images missing `alt`; tables without headers
+- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links
+- **INFO**: Section slides that could benefit from `aria-label`; tables missing `<caption>`
 
 ---
 
@@ -114,9 +144,9 @@ For each file, produce:
    - **Fix**: `<suggested fix>`
 
 Severity levels:
-- **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern
-- **WARNING**: Missing utility class (inline style works but inconsistent), missing `alt` attribute
-- **INFO**: Style improvement suggestion, minor inconsistency
+- **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern, missing `alt` on images, icon-only links without `aria-label`, tables without proper headers
+- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list
+- **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, tables missing `<caption>`
 
 End with a **Summary** section:
 - Total issues by severity
