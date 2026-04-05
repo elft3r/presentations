@@ -111,7 +111,7 @@ The design system includes a full portrait mode override system (activated via a
 
 The theme includes a `@media print` block that sets the background color. Be aware that:
 
-- Gradient backgrounds (`.section-title`) will not render in most print contexts. Section title slides should still be identifiable without the gradient (e.g., through heading hierarchy).
+- Gradient backgrounds (`.section-title`) may be omitted in print unless the browser/user has background graphics enabled. Section title slides should still be identifiable without the gradient (e.g., through heading hierarchy).
 - **Flag (INFO)**: Slides that rely solely on background color/gradient to convey structure or meaning, with no textual or structural alternative.
 
 ### Accessibility
@@ -119,7 +119,7 @@ The theme includes a `@media print` block that sets the background color. Be awa
 #### Basic Requirements
 - All `<img>` tags must have an `alt` attribute. Use descriptive text for informational images; use `alt=""` for purely decorative images (and add `aria-hidden="true"`).
 - External links must have `target="_blank"` and should include `rel="noopener noreferrer"`.
-- The root `index.html` of each presentation must have a `lang` attribute on the `<html>` element (e.g., `<html lang="en">`). This is a WCAG 3.1.1 requirement. **Flag** as **WARNING** if missing.
+- The root `index.html` of each presentation must have a `lang` attribute on the `<html>` element (e.g., `<html lang="en">`). This is a WCAG 2.x Success Criterion 3.1.1 (Language of Page) requirement. **Flag** as **WARNING** if missing.
 
 #### ARIA Landmarks & Roles
 - Decorative icons (`<i class="fa-solid fa-...">`) that convey no meaning should have `aria-hidden="true"` so screen readers skip them.
