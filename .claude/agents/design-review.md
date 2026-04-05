@@ -41,7 +41,7 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 | Token | Value | Usage |
 |---|---|---|
 | `--r-accent-color` | `#24584C` | Headings h3, emphasis, icons, badges |
-| `--r-accent-light` | `#E8F0EE` | Badge backgrounds, subtle fills |
+| `--r-accent-light` | `#E8F0EE` | Badge backgrounds, subtle fills, active timeline card backgrounds |
 | `--r-accent-gradient` | `linear-gradient(135deg, #24584C, #3D7A6D)` | Section title backgrounds |
 | `--r-link-color` | `#B39A6A` | Links |
 | `--r-link-color-hover` | `#C9B48A` | Link hover |
@@ -97,6 +97,22 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 - Cards in a grid should use `class="card fragment"` for progressive reveal.
 - **Flag**: Inconsistent fragment usage within the same grid (some cards have `fragment`, others don't).
+
+### Progression / Timeline Patterns
+
+For multi-step visual progressions (bar charts, technology stacks, timelines), the design system uses a **two-endpoint gradient** interpolated between `--r-accent-color` (`#24584C`) and `--r-link-color` (`#B39A6A`). The number of steps determines the spacing:
+
+- Use `color-mix(in srgb, var(--r-accent-color) <pct>%, var(--r-link-color))` to compute intermediate steps. For N steps, each step i (0-based) uses `pct = 100 - (i * 100 / (N - 1))`.
+- Example for 5 steps: 100% accent → 75% → 50% → 25% → 0% (= link color).
+- **Text contrast**: Use white (`#fff`) text on steps where accent is >= 50%. Use dark text (`var(--r-heading-color)`) on lighter steps (accent < 50%) to maintain WCAG AA contrast.
+- These colored fills should be used on block/bar elements, **not** on `.card` components (cards use the standard card styling).
+
+**Timeline era cards** — For stepped timeline slides where cards represent past/current eras:
+- **Past/completed**: `.card` with `opacity: 0.5` and reduced padding/font-size
+- **Current/active**: `.card` with `background: var(--r-accent-light)` at full opacity and full size
+- The timeline bar itself may use `linear-gradient(to right, var(--r-accent-color), var(--r-link-color))` for the progress fill and `var(--r-card-border)` for the remaining track.
+
+**Flag (WARNING)**: Off-palette colors in progression elements — all steps must be derived from the accent→link gradient via `color-mix()` or use the exact endpoint values. Timeline cards using only `opacity` as the state differentiator without a background or other visual cue.
 
 ### Responsive / Portrait Mode
 
@@ -156,7 +172,7 @@ The theme includes a `@media print` block that sets the background color. Be awa
 
 #### Flag Summary
 - **CRITICAL**: Icon-only links missing `aria-label`; images missing `alt`; tables without headers
-- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback; inline accent borders on `.card` elements
+- **WARNING**: Decorative icons missing `aria-hidden="true"`; muted text at small sizes; `<div>` used instead of semantic list; missing `rel="noopener noreferrer"` on external links; tables missing `<caption>` or `aria-label`; missing `lang` attribute on root `<html>`; `outline: none` on interactive elements without alternative focus style; custom animations without `prefers-reduced-motion` fallback; inline accent borders on `.card` elements; off-palette colors in progression elements; timeline cards using only opacity as differentiator
 - **INFO**: Section slides that could benefit from `aria-label`; dense `.grid-cols-5` layouts that may be problematic in portrait mode; slides relying solely on gradient background to convey structure; images missing `loading="lazy"`
 
 ---
@@ -175,7 +191,7 @@ For each file, produce:
 
 Severity levels:
 - **CRITICAL**: Off-palette colors, wrong component class, broken layout pattern, missing `alt` on images, icon-only links without `aria-label`, tables without proper headers
-- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>` or `aria-label`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`, inline accent borders on `.card` elements
+- **WARNING**: Missing utility class (inline style works but inconsistent), decorative icons missing `aria-hidden="true"`, muted text at small sizes, missing `rel="noopener noreferrer"`, `<div>` used instead of semantic list, tables missing `<caption>` or `aria-label`, missing root `lang` attribute, removed focus indicators without alternative, custom animations ignoring `prefers-reduced-motion`, inline accent borders on `.card` elements, off-palette colors in progression elements, timeline cards using only opacity as differentiator
 - **INFO**: Style improvement suggestion, minor inconsistency, sections that could benefit from `aria-label`, portrait mode layout concerns, print-unfriendly structures, images missing `loading="lazy"`
 
 End with a **Summary** section:
