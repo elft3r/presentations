@@ -59,7 +59,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 | Component | Required Class | Common Mistakes |
 |---|---|---|
-| Chapter dividers | `<section class="section-title"><h1>...</h1></section>` | Missing `section-title` class on divider slides |
+| Title slides | `<section class="section-title">...</section>` with nested `.title-slide` content (e.g., `*/sections/header.html`, typically using `<h2>`) | Flagging valid header/title slides for not using the simple divider pattern |
+| Section dividers | `<section class="section-title"><h1>...</h1></section>` | Missing `section-title` class on divider slides; using the divider `<h1>` rule to flag title slides |
 | Cards | `.card` on container div | Missing `.card` class; manually re-creating card styles inline |
 | Lists | `ul.styled-list` for content lists | Plain `<ul>` without `styled-list` — acceptable only inside cards or for very short lists |
 | Icons | `.icon-accent` wrapping `<i class="fa-solid fa-...">` | Icon `<span>` without `.icon-accent` class |
@@ -79,8 +80,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 - Each content slide should have exactly one `<h2>` as its title (auto-styled with accent bottom border).
 - `<h3>` for sub-headings within slides (auto-colored in accent).
 - Use `<em>` inside headings for emphasis (renders italic + accent color).
-- Section-title divider slides use `<h1>`.
-- **Flag**: `<h1>` used outside of `.section-title`; heading levels skipped (h2 → h4); multiple `<h2>` in one `<section>`.
+- Title/divider slides may use a single heading inside `.section-title`: use `<h1>` for section dividers, and allow `<h2>` for header/title-slide templates that follow the established repository pattern (e.g., `*/sections/header.html`).
+- **Flag**: `<h1>` used on regular content slides or outside title/divider contexts; heading levels skipped (h2 → h4); multiple `<h2>` in one content `<section>`; `.section-title` slides with multiple top-level headings.
 
 ### Images
 
