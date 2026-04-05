@@ -1,4 +1,4 @@
-<section class="section-title"><h1>Containers vs VMs</h1></section>
+<section class="section-title" aria-label="Section: Containers vs VMs"><h1>Containers vs VMs</h1></section>
 <section>
   <h2>Containers vs VMs</h2>
   <div style="position: relative; max-width: 70%; margin: 0 auto;">
@@ -41,7 +41,7 @@
   <h2>Key Differences</h2>
   <div style="max-width: 85%; margin: 0 auto; font-size: 0.75em;">
     <div class="grid grid-cols-3 gap-4" style="text-align: center; margin-bottom: 0.8rem;">
-      <div class="card">
+      <div class="card fragment">
         <h3 style="margin: 0 0 0.3rem; font-size: 1em;">Startup</h3>
         <p style="margin: 0; font-size: 0.85em;">Containers: <strong>seconds</strong></p>
         <p style="margin: 0; font-size: 0.85em; color: var(--r-muted-color);">VMs: minutes</p>
@@ -86,6 +86,7 @@
         src="imgs/long-lived-apps.png"
         style="max-width: 90%"
         alt="Long Lived Applications — stacked shipping containers"
+        loading="lazy"
       />
       <p style="font-size: 0.65em; color: var(--r-muted-color); margin-top: 0.5rem;">Databases, web servers, APIs</p>
     </div>
@@ -96,6 +97,7 @@
         src="imgs/short-lived-apps.png"
         style="max-width: 90%"
         alt="Short Lived Applications — containers being moved"
+        loading="lazy"
       />
       <p style="font-size: 0.65em; color: var(--r-muted-color); margin-top: 0.5rem;">Batch jobs, CI builds, cron tasks</p>
     </div>
@@ -113,7 +115,7 @@
       </div>
       <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0.5rem 0 0;">1 VM per service</p>
     </div>
-    <div class="fragment" style="font-size: 2em;" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+    <div class="fragment" style="font-size: 2em;"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div>
     <div class="card fragment" style="padding: 1rem; text-align: center; min-width: 8rem;">
       <h3 style="margin: 0 0 0.5rem; font-size: 1em;"><em>1 VM, 3 Apps</em></h3>
       <div class="grid grid-cols-1 gap-2">
@@ -129,12 +131,12 @@
       </div>
       <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0.5rem 0 0;">Containerized</p>
     </div>
-    <div class="fragment" style="font-size: 2em;" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+    <div class="fragment" style="font-size: 2em;"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div>
     <div class="card fragment" style="padding: 1rem; text-align: center; min-width: 12rem;">
       <h3 style="margin: 0 0 0.5rem; font-size: 1em;"><em>Scale out</em></h3>
       <div class="grid grid-cols-3 gap-4">
         <!-- Host 1 -->
-        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+        <div class="flex flex-col" style="gap: 0.3rem;">
           <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
             <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
           </div>
@@ -146,7 +148,7 @@
           </div>
         </div>
         <!-- Host 2 -->
-        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+        <div class="flex flex-col" style="gap: 0.3rem;">
           <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
             <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
           </div>
@@ -158,7 +160,7 @@
           </div>
         </div>
         <!-- Host 3 -->
-        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+        <div class="flex flex-col" style="gap: 0.3rem;">
           <div class="card" style="background: var(--r-accent-light); padding: 0.3rem;">
             <p style="margin: 0;"><i class="fa-brands fa-docker" aria-hidden="true"></i></p>
           </div>

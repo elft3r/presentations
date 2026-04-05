@@ -1,4 +1,4 @@
-<section class="section-title"><h1>Why Docker / Containers?</h1></section>
+<section class="section-title" aria-label="Section: Why Docker / Containers?"><h1>Why Docker / Containers?</h1></section>
 <section>
   <h2>Common IT Struggles</h2>
   <div class="grid grid-cols-2 gap-6">
@@ -47,17 +47,17 @@
 </section>
 <section>
   <h2>The application landscape is changing</h2>
-  <div style="display: flex; align-items: center; margin: 0.3em auto 0.6em; width: 85%;">
+  <div class="flex items-center" style="margin: 0.3em auto 0.6em; width: 85%;">
     <span style="font-weight: 600; font-size: 0.7em; color: var(--r-muted-color); white-space: nowrap;">~2000</span>
     <div style="flex: 1; height: 3px; background: linear-gradient(to right, var(--r-muted-color), var(--r-accent-color)); margin: 0 0.5em; position: relative;">
       <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 10px solid var(--r-accent-color); border-top: 5.5px solid transparent; border-bottom: 5.5px solid transparent;"></div>
     </div>
     <span style="font-weight: 600; font-size: 0.7em; color: var(--r-accent-color); white-space: nowrap;">Today</span>
   </div>
-  <div style="display: flex; align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
+  <div class="flex" style="align-items: stretch; gap: 1.5em; width: 85%; margin: 0 auto;">
     <div style="flex: 1; text-align: center;">
       <div class="card" style="padding: 0.8em;">
-        <div style="background: var(--r-accent-color); border-radius: 0.4em; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5em;">
+        <div class="flex items-center justify-center" style="background: var(--r-accent-color); border-radius: 0.4em; height: 120px; margin-bottom: 0.5em;">
           <i class="fa-solid fa-building" style="color: #fff; font-size: 2.5em;" aria-hidden="true"></i>
         </div>
         <div style="font-size: 0.65em; text-align: left;">
@@ -67,20 +67,20 @@
         </div>
       </div>
     </div>
-    <div style="display: flex; align-items: center; font-size: 1.5em; color: var(--r-accent-color);">
+    <div class="flex items-center" style="font-size: 1.5em; color: var(--r-accent-color);">
       <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
     </div>
     <div style="flex: 1; text-align: center;">
       <div class="card" style="padding: 0.8em;">
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 120px; margin-bottom: 0.5em;">
-          <div style="background: var(--r-accent-color); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 85%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 70%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 55%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 40%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 10%, var(--r-link-color)); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
-          <div style="background: var(--r-link-color); border-radius: 0.25em; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 85%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 70%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 55%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 40%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 10%, var(--r-link-color)); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
+          <div class="flex items-center justify-center" style="background: var(--r-link-color); border-radius: 0.25em;"><i class="fa-solid fa-cube" style="color: #fff; font-size: 0.7em;" aria-hidden="true"></i></div>
         </div>
         <div style="font-size: 0.65em; text-align: left;">
           <p style="margin: 0.2em 0;"><i class="fa-solid fa-cubes" style="color: var(--r-accent-color); width: 1.2em;" aria-hidden="true"></i> Loosely Coupled Services</p>
@@ -93,33 +93,33 @@
 </section>
 <section>
   <h2>The Evolution of Software Architecture</h2>
-  <div style="display: flex; flex-direction: column; gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+  <div class="flex flex-col" style="gap: 0.25em; margin-top: 0.3em; width: 75%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.35em 0.8em;">
       <div style="font-size: 1.4em; flex-shrink: 0;">🍝</div>
       <div style="text-align: left;">
         <strong style="color: var(--r-accent-color);">1990s &mdash; Spaghetti</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Copy &amp; paste &mdash; tangled, tightly coupled code</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Copy &amp; paste &mdash; tangled, tightly coupled code</div>
       </div>
     </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.35em 0.8em;">
       <div style="font-size: 1.4em; flex-shrink: 0;">🫓</div>
       <div style="text-align: left;">
         <strong style="color: var(--r-accent-color);">2000s &mdash; Lasagna</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Layered monoliths &mdash; structured but hard to change</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Layered monoliths &mdash; structured but hard to change</div>
       </div>
     </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.35em 0.8em;">
       <div style="font-size: 1.4em; flex-shrink: 0;">🥟</div>
       <div style="text-align: left;">
         <strong style="color: var(--r-accent-color);">2010s &mdash; Ravioli</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Microservices &mdash; small, self-contained, independently deployable</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Microservices &mdash; small, self-contained, independently deployable</div>
       </div>
     </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.35em 0.8em;">
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.35em 0.8em;">
       <div style="font-size: 1.4em; flex-shrink: 0;">🍕</div>
       <div style="text-align: left;">
         <strong style="color: var(--r-accent-color);">What's next?</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Probably pizza-oriented architecture</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Probably pizza-oriented architecture</div>
       </div>
     </div>
   </div>
@@ -127,44 +127,44 @@
 </section>
 <section>
   <h2>A Brief History Lesson</h2>
-  <div style="display: flex; align-items: flex-end; justify-content: center; gap: 0.6em; height: 380px;">
-    <div class="fragment" data-fragment-index="0" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 80px; background: var(--r-accent-color); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+  <div class="flex" style="align-items: flex-end; justify-content: center; gap: 0.6em; height: 380px;">
+    <div class="fragment flex flex-col items-center" data-fragment-index="0" style="width: 15%;">
+      <div class="flex items-center justify-center" style="width: 100%; height: 80px; background: var(--r-accent-color); border-radius: 0.4em 0.4em 0 0; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         Data Centers
       </div>
       <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 0.3em 0 0 0.3em; margin-top: 0.3em;">
         ~2000
       </div>
     </div>
-    <div class="fragment" data-fragment-index="1" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 130px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 75%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+    <div class="fragment flex flex-col items-center" data-fragment-index="1" style="width: 15%;">
+      <div class="flex items-center justify-center" style="width: 100%; height: 130px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 75%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         IaaS
       </div>
-      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+      <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 75%, var(--r-link-color)); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
         2006
       </div>
     </div>
-    <div class="fragment" data-fragment-index="2" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 185px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 50%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+    <div class="fragment flex flex-col items-center" data-fragment-index="2" style="width: 15%;">
+      <div class="flex items-center justify-center" style="width: 100%; height: 185px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 50%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         PaaS
       </div>
-      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+      <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 50%, var(--r-link-color)); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
         2007
       </div>
     </div>
-    <div class="fragment" data-fragment-index="3" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 240px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+    <div class="fragment flex flex-col items-center" data-fragment-index="3" style="width: 15%;">
+      <div class="flex items-center justify-center" style="width: 100%; height: 240px; background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color)); border-radius: 0.4em 0.4em 0 0; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         Containers
       </div>
-      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+      <div style="background: var(--r-accent-color); background: color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color)); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
         2013
       </div>
     </div>
-    <div class="fragment" data-fragment-index="4" style="display: flex; flex-direction: column; align-items: center; width: 15%;">
-      <div style="width: 100%; height: 300px; background: var(--r-link-color); border-radius: 0.4em 0.4em 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
+    <div class="fragment flex flex-col items-center" data-fragment-index="4" style="width: 15%;">
+      <div class="flex items-center justify-center" style="width: 100%; height: 300px; background: var(--r-link-color); border-radius: 0.4em 0.4em 0 0; color: #fff; font-weight: 600; text-align: center; padding: 0.3em; font-size: 0.75em;">
         Serverless
       </div>
-      <div style="background: var(--r-accent-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
+      <div style="background: var(--r-link-color); color: #fff; width: 100%; text-align: center; padding: 0.2em 0; font-weight: 600; font-size: 0.65em; clip-path: polygon(6% 0, 88% 0, 100% 50%, 88% 100%, 6% 100%, 18% 50%); margin-top: 0.3em;">
         2015
       </div>
     </div>
@@ -173,7 +173,7 @@
 <section>
   <h2>The Modern Technology Stack</h2>
   <p style="font-size: 0.7em; color: var(--r-muted-color); margin: 0;">Containers are the foundation of today's higher-level abstractions</p>
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 0.4em; width: 75%; margin-left: auto; margin-right: auto;">
+  <div class="flex flex-col items-center" style="gap: 0; margin-top: 0.4em; width: 75%; margin-left: auto; margin-right: auto;">
     <div class="fragment" data-fragment-index="3" style="display: flex; gap: 0.4em; width: 100%;">
       <div style="flex: 1; background: var(--r-link-color); color: #fff; border-radius: 0.4em 0.4em 0 0; padding: 0.35em 0.4em; text-align: center;">
         <div style="font-weight: 600; font-size: 0.8em;">Serverless</div>
@@ -209,10 +209,10 @@
 </section>
 <section>
   <h2>Containers are the catalyst</h2>
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3em; margin-top: 0.3em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.65em;">
+  <div class="flex flex-col items-center" style="gap: 0.3em; margin-top: 0.3em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.65em;">
     <div class="fragment" data-fragment-index="0" style="width: 100%;">
       <h4 style="margin: 0 0 0.3em; font-size: 0.85em; color: var(--r-muted-color);"><i class="fa-solid fa-code" aria-hidden="true" style="margin-right: 0.3em;"></i>Any Application</h4>
-      <div style="display: flex; flex-wrap: wrap; gap: 0.3em; justify-content: center;">
+      <div class="flex" style="flex-wrap: wrap; gap: 0.3em; justify-content: center;">
         <span class="badge">Static Website</span>
         <span class="badge">Web Front End</span>
         <span class="badge">Background Workers</span>
@@ -234,7 +234,7 @@
     </div>
     <div class="fragment" data-fragment-index="1" style="width: 100%;">
       <h4 style="margin: 0 0 0.3em; font-size: 0.85em; color: var(--r-muted-color);"><i class="fa-solid fa-server" aria-hidden="true" style="margin-right: 0.3em;"></i>Any Environment</h4>
-      <div style="display: flex; flex-wrap: wrap; gap: 0.3em; justify-content: center;">
+      <div class="flex" style="flex-wrap: wrap; gap: 0.3em; justify-content: center;">
         <span class="badge">Development VM</span>
         <span class="badge">QA Server</span>
         <span class="badge">Public Cloud</span>
@@ -316,38 +316,38 @@
 </section>
 <section>
   <h2>One journey for all applications</h2>
-  <div style="display: flex; flex-direction: column; gap: 0.4em; margin-top: 0.5em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 0.8em;">
-      <div style="background: var(--r-muted-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">1</div>
+  <div class="flex flex-col" style="gap: 0.4em; margin-top: 0.5em; width: 85%; margin-left: auto; margin-right: auto; font-size: 0.7em;">
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.5em 0.8em;">
+      <div class="flex items-center justify-center" style="background: var(--r-muted-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">1</div>
       <div style="flex: 1; text-align: left;">
         <strong style="color: var(--r-accent-color);">Containerize Legacy Applications</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Lift and shift for portability and efficiency</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Lift and shift for portability and efficiency</div>
       </div>
-      <div style="display: flex; align-items: center; gap: 0.3em; flex-shrink: 0; color: var(--r-muted-color); font-size: 1.3em;">
+      <div class="flex items-center" style="gap: 0.3em; flex-shrink: 0; color: var(--r-muted-color); font-size: 1.3em;">
         <i class="fa-solid fa-server" aria-hidden="true"></i>
         <i class="fa-solid fa-arrow-right" aria-hidden="true" style="font-size: 0.6em;"></i>
         <i class="fa-solid fa-box" aria-hidden="true" style="color: var(--r-link-color);"></i>
       </div>
     </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 0.8em;">
-      <div style="background: var(--r-accent-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">2</div>
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.5em 0.8em;">
+      <div class="flex items-center justify-center" style="background: var(--r-accent-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">2</div>
       <div style="flex: 1; text-align: left;">
         <strong style="color: var(--r-accent-color);">Transform Legacy to Microservices</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Look for shared services to transform</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Look for shared services to transform</div>
       </div>
-      <div style="display: flex; align-items: center; gap: 0.3em; flex-shrink: 0; color: var(--r-muted-color); font-size: 1.3em;">
+      <div class="flex items-center" style="gap: 0.3em; flex-shrink: 0; color: var(--r-muted-color); font-size: 1.3em;">
         <i class="fa-solid fa-box" aria-hidden="true"></i>
         <i class="fa-solid fa-arrow-right" aria-hidden="true" style="font-size: 0.6em;"></i>
         <i class="fa-solid fa-cubes" aria-hidden="true" style="color: var(--r-accent-color);"></i>
       </div>
     </div>
-    <div class="card fragment" style="display: flex; align-items: center; gap: 0.8em; padding: 0.5em 0.8em;">
-      <div style="background: var(--r-link-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">3</div>
+    <div class="card fragment flex items-center" style="gap: 0.8em; padding: 0.5em 0.8em;">
+      <div class="flex items-center justify-center" style="background: var(--r-link-color); color: #fff; border-radius: 50%; width: 1.8em; height: 1.8em; font-weight: 700; font-size: 1.1em; flex-shrink: 0;">3</div>
       <div style="flex: 1; text-align: left;">
         <strong style="color: var(--r-accent-color);">Accelerate New Applications</strong>
-        <div style="font-size: 0.8em; color: var(--r-muted-color);">Greenfield innovation</div>
+        <div style="font-size: 0.85em; color: var(--r-muted-color);">Greenfield innovation</div>
       </div>
-      <div style="display: flex; align-items: center; gap: 0.2em; flex-shrink: 0; font-size: 1.3em;">
+      <div class="flex items-center" style="gap: 0.2em; flex-shrink: 0; font-size: 1.3em;">
         <i class="fa-solid fa-seedling" aria-hidden="true" style="color: var(--r-link-color);"></i>
         <i class="fa-solid fa-rocket" aria-hidden="true" style="color: var(--r-accent-color); font-size: 0.8em;"></i>
       </div>
