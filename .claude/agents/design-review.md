@@ -82,7 +82,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 - `<h3>` for sub-headings within slides (auto-colored in accent).
 - Use `<em>` inside headings for emphasis (renders italic + accent color).
 - Title/divider slides may use a single heading inside `.section-title`: use `<h1>` for section dividers, and allow `<h2>` for header/title-slide templates that follow the established repository pattern (e.g., `*/sections/header.html`).
-- **Flag**: `<h1>` used on regular content slides or outside title/divider contexts; heading levels skipped (h2 → h4); multiple `<h2>` in one content `<section>`; `.section-title` slides with multiple top-level headings.
+- **Title slide subtitles**: Inside `.title-slide`, use `<h4>` for the presentation subtitle (e.g., "Best Practices & Learnings"). The theme styles `.title-slide h4` with `color: var(--r-muted-color)` and `font-weight: 400`, and `.section-title h4` with `color: rgba(255, 255, 255, 0.8)` — giving it a lighter, secondary appearance on both light and dark backgrounds. The `h2 → h4` skip is **intentional** in this context and should **not** be flagged. Do **not** suggest changing the subtitle to `<h3>` (which would get accent color styling and break the visual hierarchy).
+- **Flag**: `<h1>` used on regular content slides or outside title/divider contexts; heading levels skipped (h2 → h4) **on content slides** (not title slides — see subtitle rule above); multiple `<h2>` in one content `<section>`; `.section-title` slides with multiple top-level headings.
 
 ### Images
 
