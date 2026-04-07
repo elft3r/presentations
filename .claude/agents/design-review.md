@@ -78,13 +78,14 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 ### Typography & Heading Hierarchy
 
-The presentations follow a strict heading hierarchy: `<h1>` (presentation title) → `<h2>` (section dividers / subtitle) → `<h3>` (content sub-headings).
+The presentations follow a heading hierarchy: `<h1>` (presentation title) → `<h2>` (section dividers / subtitle / content slide titles) → `<h3>` (content sub-headings). `<h4>` is used sparingly for decorative labels inside cards.
 
 - **`<h1>`**: Reserved exclusively for the **presentation title** on the title slide (inside `.title-slide`). There should be exactly one `<h1>` per presentation.
 - **`<h2>`**: Used for **section divider titles** (inside `.section-title`) and the **title slide subtitle** (inside `.title-slide`). Also used as the **main heading on content slides** (auto-styled with accent bottom border). The theme overrides `.section-title h2` to use the larger `--r-heading1-size` (2.5em) so section dividers remain visually prominent.
 - **`<h3>`**: Used for **sub-headings within content slides** (auto-colored in accent) and **section divider subtitles** (e.g., "Use Case" below the section title). The theme styles `.section-title h3` with `color: rgba(255, 255, 255, 0.8)` for a lighter secondary appearance.
+- **`<h4>`**: Used only for **decorative category labels** inside cards (e.g., icon + short label like "Key Characteristics"). These are styled inline at small sizes and are **not** structural headings. Do **not** flag `<h4>` usage inside `.card` elements.
 - Use `<em>` inside headings for emphasis (renders italic + accent color).
-- **Title slide structure**: Inside `.title-slide`, use `<h1>` for the main presentation title and `<h2>` for the subtitle. The theme styles `.title-slide h1` at 2.2em without a bottom border, and `.title-slide h2` with `color: var(--r-muted-color)`, `font-weight: 400`, and no bottom border.
+- **Title slide structure**: Inside `.title-slide`, use `<h1>` for the main presentation title and `<h2>` for the subtitle. The theme styles `.title-slide h1` at 2.2em without a bottom border, and `.title-slide h2` with `color: rgba(255, 255, 255, 0.8)`, `font-weight: 400`, and no bottom border.
 - **Flag**: `<h1>` used outside the title slide; heading levels skipped on content slides; multiple `<h2>` in one content `<section>`; `.section-title` divider slides using `<h1>` instead of `<h2>`; `.section-title` slides with multiple top-level headings.
 
 ### Images
