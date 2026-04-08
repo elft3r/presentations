@@ -395,11 +395,15 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal section.section-title h2 {
   color: #fff;
   border-bottom: none;
+  padding-bottom: 0;
+  width: auto;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: var(--r-heading1-size);
 }
 
-.reveal section.section-title h4 {
+.reveal section.section-title h3 {
   color: rgba(255, 255, 255, 0.8);
+  font-size: var(--r-heading4-size);
 }
 
 .reveal section.section-title .author {
@@ -502,15 +506,16 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 /*********************************************
  * TITLE SLIDE STYLING
  *********************************************/
-.reveal .title-slide h2 {
-  border-bottom: none;
+.reveal section.section-title .title-slide h1 {
   font-size: 2.2em;
   margin-bottom: 0.1em;
 }
 
-.reveal .title-slide h4 {
-  color: var(--r-muted-color);
+.reveal section.section-title .title-slide h2 {
+  color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
+  font-size: var(--r-heading2-size);
+  text-shadow: none;
 }
 
 .reveal .title-slide .author {

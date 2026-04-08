@@ -46,7 +46,7 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 | `--r-link-color` | `#B39A6A` | Links |
 | `--r-link-color-hover` | `#C9B48A` | Link hover |
 | `--r-main-color` | `#2d3748` | Body text |
-| `--r-heading-color` | `#1a202c` | Headings h1, h2 |
+| `--r-heading-color` | `#1a202c` | Headings h1, h2 (note: `.section-title` overrides to white) |
 | `--r-muted-color` | `#718096` | Source attribution, subtle text |
 | `--r-card-border` | `#e2e8f0` | Card and code block borders |
 | `--r-background-color` | `#F8F9FA` | Page background |
@@ -59,8 +59,8 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 | Component | Required Class | Common Mistakes |
 |---|---|---|
-| Title slides | `<section class="section-title">...</section>` with nested `.title-slide` content (e.g., `*/sections/header.html`, typically using `<h2>`) | Flagging valid header/title slides for not using the simple divider pattern |
-| Section dividers | `<section class="section-title"><h1>...</h1></section>` | Missing `section-title` class on divider slides; using the divider `<h1>` rule to flag title slides |
+| Title slides | `<section class="section-title">...</section>` with nested `.title-slide` content (e.g., `*/sections/header.html`, using `<h1>` for the main title and `<h2>` for the subtitle) | Flagging valid header/title slides for not using the simple divider pattern |
+| Section dividers | `<section class="section-title"><h2>...</h2></section>` | Missing `section-title` class on divider slides; using `<h1>` instead of `<h2>` for section dividers |
 | Cards | `.card` on container div | Missing `.card` class; manually re-creating card styles inline; adding inline accent borders (`border-top`, `border-left`) — the base `.card` styling (border + shadow) is sufficient |
 | Lists | `ul.styled-list` for content lists | Plain `<ul>` without `styled-list` — acceptable only inside cards or for very short lists |
 | Icons | `.icon-accent` wrapping `<i class="fa-solid fa-...">` | Icon `<span>` without `.icon-accent` class |
@@ -78,12 +78,15 @@ Only these colors should appear in slide HTML. Any hardcoded color not in this l
 
 ### Typography & Heading Hierarchy
 
-- Each content slide should have exactly one `<h2>` as its title (auto-styled with accent bottom border).
-- `<h3>` for sub-headings within slides (auto-colored in accent).
+The presentations follow a heading hierarchy: `<h1>` (presentation title) → `<h2>` (section dividers / subtitle / content slide titles) → `<h3>` (content sub-headings). `<h4>` is used sparingly for decorative labels inside cards.
+
+- **`<h1>`**: Reserved exclusively for the **presentation title** on the title slide (inside `.title-slide`). There should be exactly one `<h1>` per presentation.
+- **`<h2>`**: Used for **section divider titles** (inside `.section-title`) and the **title slide subtitle** (inside `.title-slide`). Also used as the **main heading on content slides** (auto-styled with accent bottom border). The theme overrides `.section-title h2` to use the larger `--r-heading1-size` (2.5em) so section dividers remain visually prominent.
+- **`<h3>`**: Used for **sub-headings within content slides** (auto-colored in accent) and **section divider subtitles** (e.g., "Use Case" below the section title). The theme styles `.section-title h3` with `color: rgba(255, 255, 255, 0.8)` for a lighter secondary appearance.
+- **`<h4>`**: Used only for **decorative category labels** inside cards (e.g., icon + short label like "Key Characteristics"). These are styled inline at small sizes and are **not** structural headings. Do **not** flag `<h4>` usage inside `.card` elements.
 - Use `<em>` inside headings for emphasis (renders italic + accent color).
-- Title/divider slides may use a single heading inside `.section-title`: use `<h1>` for section dividers, and allow `<h2>` for header/title-slide templates that follow the established repository pattern (e.g., `*/sections/header.html`).
-- **Title slide subtitles**: Inside `.title-slide`, use `<h4>` for the presentation subtitle (e.g., "Best Practices & Learnings"). The theme styles `.title-slide h4` with `color: var(--r-muted-color)` and `font-weight: 400`, and `.section-title h4` with `color: rgba(255, 255, 255, 0.8)` — giving it a lighter, secondary appearance on both light and dark backgrounds. The `h2 → h4` skip is **intentional** in this context and should **not** be flagged. Do **not** suggest changing the subtitle to `<h3>` (which would get accent color styling and break the visual hierarchy).
-- **Flag**: `<h1>` used on regular content slides or outside title/divider contexts; heading levels skipped (h2 → h4) **on content slides** (not title slides — see subtitle rule above); multiple `<h2>` in one content `<section>`; `.section-title` slides with multiple top-level headings.
+- **Title slide structure**: Inside `.title-slide`, use `<h1>` for the main presentation title and `<h2>` for the subtitle. The theme styles `.title-slide h1` at 2.2em without a bottom border, and `.title-slide h2` with `color: rgba(255, 255, 255, 0.8)`, `font-weight: 400`, and no bottom border.
+- **Flag**: `<h1>` used outside the title slide; heading levels skipped on content slides; multiple `<h2>` in one content `<section>`; `.section-title` divider slides using `<h1>` instead of `<h2>`; `.section-title` slides with multiple top-level headings.
 
 ### Images
 
@@ -170,7 +173,7 @@ The theme includes a `@media print` block that sets the background color. Be awa
 
 #### Language & Structure
 - If a slide contains content in a language different from the presentation default, use `lang="..."` on the containing element.
-- Do not skip heading levels (h2 → h4). Assistive tech uses heading hierarchy for navigation.
+- Do not skip heading levels on content slides. The proper hierarchy is h1 (title slide only) → h2 (section dividers + content slide titles) → h3 (sub-headings). Assistive tech uses heading hierarchy for navigation.
 - Lists of content should use semantic `<ul>`/`<ol>`, not `<div>` with visual bullet characters.
 
 #### Flag Summary
