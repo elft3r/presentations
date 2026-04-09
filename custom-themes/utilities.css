@@ -27,6 +27,16 @@
 .mt-12 { margin-top: 3rem; }
 .mb-0 { margin-bottom: 0; }
 
+/* Max-width */
+.max-w-50 { max-width: 50%; }
+.max-w-65 { max-width: 65%; }
+.max-w-70 { max-width: 70%; }
+.max-w-75 { max-width: 75%; }
+.max-w-80 { max-width: 80%; }
+
+/* Centering */
+.mx-auto { margin-left: auto; margin-right: auto; }
+
 /* Sizing */
 .h-48 { height: 12rem; }
 .w-48 { width: 12rem; }
@@ -103,10 +113,17 @@
   margin-bottom: 0.15em;
 }
 
-/* Let images fill the available width */
+/* Let images fill the available width — override max-w-* utilities */
 .reveal.portrait img {
   max-width: 100%;
   margin: 0.3em 0;
+}
+.reveal.portrait .max-w-50,
+.reveal.portrait .max-w-65,
+.reveal.portrait .max-w-70,
+.reveal.portrait .max-w-75,
+.reveal.portrait .max-w-80 {
+  max-width: 100%;
 }
 
 /* Cap height only for content images inside grids (stacked in portrait) */
