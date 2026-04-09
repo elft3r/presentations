@@ -118,11 +118,11 @@
   max-width: 100%;
   margin: 0.3em 0;
 }
-.reveal.portrait .max-w-50,
-.reveal.portrait .max-w-65,
-.reveal.portrait .max-w-70,
-.reveal.portrait .max-w-75,
-.reveal.portrait .max-w-80 {
+.reveal.portrait img.max-w-50,
+.reveal.portrait img.max-w-65,
+.reveal.portrait img.max-w-70,
+.reveal.portrait img.max-w-75,
+.reveal.portrait img.max-w-80 {
   max-width: 100%;
 }
 
