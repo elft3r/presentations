@@ -3,7 +3,6 @@
 </section>
 <section>
   <h2>Cloud Evolution</h2>
-
   <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-server" aria-hidden="true"></i></span>
@@ -21,8 +20,10 @@
       <p>On-Demand provisioning of services through APIs</p>
     </div>
   </div>
-
-  <div class="grid grid-cols-3 gap-4 mt-4 fragment">
+</section>
+<section>
+  <h2>Cloud Services</h2>
+  <div class="grid grid-cols-3 gap-4">
     <div>
       <a target="_blank" rel="noopener noreferrer" href="https://azure.microsoft.com/en-us/products">
         <img class="rounded shadow-2xl" src="imgs/azure-services-list.png" alt="Azure Services List" loading="lazy" />
@@ -42,7 +43,6 @@
 </section>
 <section>
   <h2>Understanding Your Needs</h2>
-
   <div class="grid grid-cols-4 gap-4">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></span>
@@ -61,12 +61,14 @@
       <p>Understand the <em>services</em></p>
     </div>
   </div>
-
-  <div class="flex justify-center mt-4 fragment">
+</section>
+<section>
+  <h2>Service Models</h2>
+  <div class="flex justify-center">
     <img
       class="rounded"
       src="imgs/redhat-iaas-paas-saas-diagram.png"
-      style="max-width: 55%"
+      style="max-width: 65%"
       alt="IaaS vs PaaS vs SaaS Comparison"
       loading="lazy"
     />
@@ -79,6 +81,35 @@
       IaaS vs PaaS vs SaaS
     </a>
   </div>
+</section>
+<section>
+  <h2>Service Models — Examples</h2>
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-server" aria-hidden="true"></i></span>
+      <h3>IaaS</h3>
+      <p>Virtual machines, networking, storage</p>
+      <p><small>e.g. EC2, Azure VMs, Google Compute Engine</small></p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-cubes" aria-hidden="true"></i></span>
+      <h3>PaaS</h3>
+      <p>Managed databases, app platforms, container services</p>
+      <p><small>e.g. RDS, Azure App Service, Cloud Run</small></p>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-browser" aria-hidden="true"></i></span>
+      <h3>SaaS</h3>
+      <p>Complete applications delivered as a service</p>
+      <p><small>e.g. Microsoft 365, Salesforce, GitHub</small></p>
+    </div>
+  </div>
+  <aside class="notes">
+    The service model maps to migration strategies later:
+    IaaS → Rehost (lift and shift)
+    PaaS → Replatform (use managed services)
+    SaaS → Repurchase (replace with SaaS alternative)
+  </aside>
 </section>
 <section>
   <h2>Cloud Infrastructure</h2>
