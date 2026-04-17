@@ -34,6 +34,8 @@ Static HTML/CSS inspection cannot see defects that depend on rendered fonts, ima
 - **contrast** — text below WCAG AA vs its effective background.
 - **resources** — HTTP 4xx/5xx responses for images, stylesheets, fonts, scripts. Dedup'd per URL+status.
 - **console** — page-level JS errors (`pageerror`) and `console.error` messages. Dedup'd per message.
+- **motion** — renders under `prefers-reduced-motion: reduce`; flags any animation still running on descendants of the slide and any visible `.gif` (GIFs don't honor the media query natively).
+- **focus** — programmatically focuses every interactive element (`a[href]`, `button`, `[tabindex]`, `input`, `select`, `textarea`) and flags any whose computed outline/box-shadow/border/background/color don't change at all.
 
 The checker runs each category in `landscape` and `portrait` viewports by default. Add `--viewport=all` (or `=print`) to also run under `@media print` emulation — useful for catching slides whose print styles blow past the 700 px box.
 
@@ -87,6 +89,8 @@ These are the categories. The CSS supplies the specifics.
 13. **WCAG color contrast.** Text must render against its effective background at ≥4.5:1 (normal text) or ≥3:1 (large text, ≥24 px or ≥18.66 px at ≥700 weight). Evidence comes from `scripts/check-render.js` (`category: "contrast"`), which samples computed `color` against the composite of ancestor backgrounds (including gradient endpoints). The report's `contrast.ratio` / `.required` / `.isLarge` / `.fg` / `.bg` / `.count` fields drive the finding. Muted token (`--r-muted-color`) on the body background is a recurring offender (~3.81:1, below AA for normal text); the gold link token (`--r-link-color`) on the body is even worse (~2.57:1). Fixes: increase font size past the large-text threshold, switch to a darker shade, or change the background.
 14. **Resource integrity.** Every image, stylesheet, font, and script must load without a 4xx/5xx response. Evidence: `category: "resources"` in the render report. Severity: CRITICAL for image / stylesheet / font / script / document (each breaks styling or content); WARNING otherwise. Dedup'd by URL+status — the `count` field records how many requests hit it. Fix: correct the path or remove the reference.
 15. **No console noise.** Reveal plugins and external scripts must not throw `pageerror`s or emit `console.error` messages. Evidence: `category: "console"` in the render report. `pageerror` → CRITICAL; `console.error` → WARNING. Dedup'd per message. Note: the sandboxed test env can surface cert errors for CDNs (Font Awesome etc.); treat those as test-env noise rather than a production defect.
+16. **Motion honors `prefers-reduced-motion`.** Under `reducedMotion: reduce`, no descendant of the current slide should still have a running non-zero-duration animation. Visible auto-play GIFs inside slides are inherently non-compliant (GIFs ignore the media query). Evidence: `category: "motion"`. Severity: WARNING per occurrence. Fix: wrap the animation in `@media (prefers-reduced-motion: no-preference) { ... }` or swap the GIF for a static poster with an opt-in play control.
+17. **Focus indicator.** Every focusable element must show a visible delta in outline / box-shadow / border / background / color on focus. Evidence: `category: "focus"`. Caveat: programmatic `.focus()` does not trigger `:focus-visible`; a slide that relies *only* on `:focus-visible` rules may also get flagged — cross-check by tabbing through the deck locally before disputing. Fix: add a `:focus` rule (in addition to any `:focus-visible`) or replace `outline: none` with a visible alternative.
 
 ---
 
@@ -133,9 +137,23 @@ For each console finding (`category: "console"`), cite it as:
 - **Source**: `scripts/check-render.js`
 - **Fix**: trace the error to its source; confirm whether it's a production issue or test-env noise (e.g. sandboxed CDN cert failures).
 
+For each motion finding (`category: "motion"`), cite it as:
+
+**[WARNING]** Line NN: auto-play `<kind>` (`<duration|src>`) under prefers-reduced-motion:reduce in `<viewport>` (slide h=H/v=V)
+- **Offender**: `<tag.classes snippet>`
+- **Source**: `scripts/check-render.js`
+- **Fix**: guard the animation with `@media (prefers-reduced-motion: no-preference)` or replace the GIF with a static poster + opt-in play control.
+
+For each focus finding (`category: "focus"`), cite it as:
+
+**[WARNING]** Line NN: no visible focus delta on `<tag.classes>` in `<viewport>` (slide h=H/v=V)
+- **Offender**: `<tag.classes snippet>`
+- **Source**: `scripts/check-render.js`
+- **Fix**: add a visible `:focus` style (not only `:focus-visible`) or drop `outline: none` without a replacement.
+
 End with a **Summary**:
 - Total issues by severity
 - Most common issue type
-- **Render check status**: per-category counts (overflow, contrast, resources, console — each `N critical / M warning`) — or "Render check passed" if zero
+- **Render check status**: per-category counts (overflow, contrast, resources, console, motion, focus — each `N critical / M warning`) — or "Render check passed" if zero
 - Overall design consistency grade (A/B/C/D)
 - If you found any drift between this prompt and `custom-themes/*.css`, note it so the prompt can be updated.

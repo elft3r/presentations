@@ -10,7 +10,7 @@ A Reveal.js (v5.2.1) presentation repository containing multiple HTML slide deck
 
 - **Build all presentations:** `npm run build` — copies reveal.js dist/plugins from node_modules into each presentation, copies custom themes, then stages everything into `_site/`
 - **Serve locally:** `npm run start:cloud-migrations`, `npm run start:docker-training`, `npm run start:secure-landing-zones` — serves on port 8000 via `npx serve`
-- **Check slide rendering:** `npm run check-render` — renders every slide headlessly in landscape and portrait (default) and runs render-based design checks. Active categories: **overflow**, **contrast**, **resources** (4xx/5xx responses), **console** (`pageerror` + `console.error`). Add deck names (`npm run check-render -- docker-training`), `-- --viewport=print` (or `--viewport=all` for landscape+portrait+print), or `-- --categories=contrast,overflow` to narrow. Output: `.claude/cache/render-report.{json,txt}`. (Further render-based categories — motion, focus, regression — land in follow-up commits.)
+- **Check slide rendering:** `npm run check-render` — renders every slide headlessly in landscape and portrait (default) and runs render-based design checks. Active categories: **overflow**, **contrast**, **resources** (4xx/5xx), **console** (`pageerror` + `console.error`), **motion** (`prefers-reduced-motion` compliance + auto-play GIFs), **focus** (visible focus indicator). Add deck names (`npm run check-render -- docker-training`), `-- --viewport=print` (or `--viewport=all` for landscape+portrait+print), or `-- --categories=contrast,overflow` to narrow. Output: `.claude/cache/render-report.{json,txt}`. (Opt-in visual regression — `--regression` — lands next.)
 - **Install deps:** `npm install`
 
 ## Architecture

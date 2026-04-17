@@ -49,7 +49,7 @@ function parsePosFloat(flag, raw) {
   return n;
 }
 
-const CATEGORIES_AVAILABLE = ['overflow', 'contrast', 'resources', 'console'];
+const CATEGORIES_AVAILABLE = ['overflow', 'contrast', 'resources', 'console', 'motion', 'focus'];
 
 function parseArgs(argv) {
   const opts = {
@@ -641,6 +641,170 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
     }
   }
 
+  // Motion: emulate prefers-reduced-motion and flag animations still running + visible GIFs.
+  if (opts.categories.includes('motion')) {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    // Disable Reveal's own slide-transition animation so it doesn't leak into motion findings.
+    await page.evaluate(() => window.Reveal.configure({ transition: 'none', backgroundTransition: 'none' }));
+    await page.waitForTimeout(100);
+    for (const s of slides) {
+      await page.evaluate(({ h, v }) => window.Reveal.slide(h, v), { h: s.h, v: s.v });
+      // Wait for any residual transitions to complete (Reveal's default is ~800 ms).
+      await page.waitForTimeout(900);
+      const sourceInfo = await (async () => {
+        let sf, sl;
+        if (s.external) {
+          sf = path.posix.join(deck, s.external);
+          sl = (buildSectionLineMap(path.join(ROOT, deck, s.external))[s.v]) || 1;
+        } else {
+          sf = `${deck}/index.html`;
+          sl = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
+        }
+        return { sourceFile: sf, sourceLine: sl };
+      })();
+      const base = { presentation: deck, viewport, h: s.h, v: s.v, ...sourceInfo };
+      const items = await page.evaluate(() => {
+        const section =
+          document.querySelector('.reveal .slides section.present section.present') ||
+          document.querySelector('.reveal .slides > section.present');
+        if (!section) return [];
+        const out = [];
+        // Running animations.
+        const seenAnim = new Set();
+        try {
+          const anims = document.getAnimations({ subtree: true });
+          for (const a of anims) {
+            const eff = a.effect;
+            if (!eff) continue;
+            const target = eff.target;
+            if (!target || !section.contains(target) || target === section) continue;
+            // Skip Reveal's own slide-wrapper elements (they animate on transition).
+            if (target.matches && target.matches('.reveal, .reveal .slides, .reveal .slides > section, .reveal .slides section')) continue;
+            if (a.playState !== 'running') continue;
+            const timing = eff.getTiming();
+            const dur = timing && timing.duration;
+            if (typeof dur !== 'number' || dur === 0) continue;
+            const key = target.tagName + '|' + (target.getAttribute('class') || '') + '|animation';
+            if (seenAnim.has(key)) continue;
+            seenAnim.add(key);
+            out.push({
+              kind: 'animation',
+              duration: dur,
+              offender: {
+                tag: target.tagName.toLowerCase(),
+                classes: target.getAttribute('class') || '',
+                snippet: (target.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
+              },
+            });
+          }
+        } catch (_) { /* getAnimations may not be available for all nodes; ignore */ }
+        // Visible GIFs — they don't honor prefers-reduced-motion natively.
+        for (const img of section.querySelectorAll('img')) {
+          const src = img.currentSrc || img.src || '';
+          if (!/\.gif(\?|$)/i.test(src)) continue;
+          const cs = getComputedStyle(img);
+          if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) continue;
+          out.push({
+            kind: 'gif',
+            src,
+            offender: {
+              tag: 'img',
+              classes: img.getAttribute('class') || '',
+              snippet: (img.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
+            },
+          });
+        }
+        return out;
+      });
+      for (const it of items) {
+        findings.push({
+          ...base,
+          category: 'motion',
+          severity: 'WARNING',
+          motion: it.kind === 'animation'
+            ? { kind: 'animation', duration: it.duration }
+            : { kind: 'gif', src: it.src },
+          offender: it.offender,
+        });
+      }
+    }
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    // Restore Reveal's default transitions for subsequent passes.
+    await page.evaluate(() => window.Reveal.configure({ transition: 'slide', backgroundTransition: 'fade' }));
+  }
+
+  // Focus: programmatic focus on interactive elements; flag missing visible focus delta.
+  if (opts.categories.includes('focus')) {
+    for (const s of slides) {
+      await page.evaluate(({ h, v }) => window.Reveal.slide(h, v), { h: s.h, v: s.v });
+      await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+      const sourceInfo = (() => {
+        let sf, sl;
+        if (s.external) {
+          sf = path.posix.join(deck, s.external);
+          sl = (buildSectionLineMap(path.join(ROOT, deck, s.external))[s.v]) || 1;
+        } else {
+          sf = `${deck}/index.html`;
+          sl = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
+        }
+        return { sourceFile: sf, sourceLine: sl };
+      })();
+      const base = { presentation: deck, viewport, h: s.h, v: s.v, ...sourceInfo };
+      const items = await page.evaluate(() => {
+        const section =
+          document.querySelector('.reveal .slides section.present section.present') ||
+          document.querySelector('.reveal .slides > section.present');
+        if (!section) return [];
+        const interactive = section.querySelectorAll(
+          'a[href], button, [tabindex]:not([tabindex="-1"]), input, select, textarea'
+        );
+        const keys = ['outline', 'outlineOffset', 'outlineColor', 'outlineStyle', 'outlineWidth', 'boxShadow', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor', 'backgroundColor', 'color'];
+        const snap = (el) => {
+          const cs = getComputedStyle(el);
+          const o = {};
+          for (const k of keys) o[k] = cs[k];
+          return o;
+        };
+        const seen = new Set();
+        const out = [];
+        const active = document.activeElement;
+        for (const el of interactive) {
+          const cls = el.getAttribute('class') || '';
+          const dedupKey = el.tagName + '|' + cls;
+          if (seen.has(dedupKey)) continue;
+          seen.add(dedupKey);
+          const before = snap(el);
+          el.focus({ preventScroll: true });
+          // Force reflow
+          el.offsetHeight;
+          const after = snap(el);
+          const same = keys.every((k) => before[k] === after[k]);
+          if (same) {
+            out.push({
+              offender: {
+                tag: el.tagName.toLowerCase(),
+                classes: cls,
+                snippet: (el.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
+                text: (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80),
+              },
+            });
+          }
+          el.blur();
+        }
+        if (active && active.focus) active.focus({ preventScroll: true });
+        return out;
+      });
+      for (const it of items) {
+        findings.push({
+          ...base,
+          category: 'focus',
+          severity: 'WARNING',
+          offender: it.offender,
+        });
+      }
+    }
+  }
+
   // Settle late async events (e.g. deferred image loads) before flushing.
   await page.waitForTimeout(100);
   for (const f of resourceBuckets.values()) findings.push(f);
@@ -736,6 +900,15 @@ async function run() {
     }
     if (f.category === 'console') {
       return `${prefix}: ${f.console.kind} "${f.console.message.replace(/\s+/g, ' ').slice(0, 160)}" (x${f.count})`;
+    }
+    if (f.category === 'motion') {
+      const body = f.motion.kind === 'gif'
+        ? `auto-play gif ${f.motion.src}`
+        : `running animation (${Math.round(f.motion.duration)}ms) under prefers-reduced-motion:reduce`;
+      return `${prefix}: ${body} — <${describeOffender(f.offender)}>`;
+    }
+    if (f.category === 'focus') {
+      return `${prefix}: no visible focus indicator — <${describeOffender(f.offender)}>`;
     }
     return prefix;
   };
