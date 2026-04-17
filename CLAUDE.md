@@ -10,6 +10,7 @@ A Reveal.js (v5.2.1) presentation repository containing multiple HTML slide deck
 
 - **Build all presentations:** `npm run build` — copies reveal.js dist/plugins from node_modules into each presentation, copies custom themes, then stages everything into `_site/`
 - **Serve locally:** `npm run start:cloud-migrations`, `npm run start:docker-training`, `npm run start:secure-landing-zones` — serves on port 8000 via `npx serve`
+- **Check slide overflow:** `npm run check-overflow` — renders every slide headlessly in landscape and portrait and reports content that exceeds the logical slide box. Add deck names (`npm run check-overflow -- docker-training`) or `-- --viewport=portrait` to narrow. Output: `.claude/cache/overflow-report.{json,txt}`.
 - **Install deps:** `npm install`
 
 ## Architecture
