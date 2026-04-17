@@ -49,7 +49,7 @@ function parsePosFloat(flag, raw) {
   return n;
 }
 
-const CATEGORIES_AVAILABLE = ['overflow', 'contrast'];
+const CATEGORIES_AVAILABLE = ['overflow', 'contrast', 'resources', 'console'];
 
 function parseArgs(argv) {
   const opts = {
@@ -327,13 +327,80 @@ const IN_PAGE_CONTRAST_HELPERS = `
 async function measurePage(page, url, deck, viewport, opts, thresholds, errors) {
   const runOverflow = opts.categories.includes('overflow');
   const runContrast = opts.categories.includes('contrast');
+  const runResources = opts.categories.includes('resources');
+  const runConsole = opts.categories.includes('console');
+
+  // Per-slide attribution. Updated inside the slide loop.
+  let currentSlide = {
+    h: null,
+    v: null,
+    sourceFile: `${deck}/index.html`,
+    sourceLine: 1,
+  };
+  const resourceBuckets = new Map();
+  const consoleBuckets = new Map();
+
+  const resourceSeverity = (type) =>
+    ['image', 'stylesheet', 'font', 'script', 'document'].includes(type) ? 'CRITICAL' : 'WARNING';
+
   page.on('response', (resp) => {
-    if (resp.status() === 404) {
-      errors.push({ presentation: deck, url: resp.url(), message: '404' });
+    const status = resp.status();
+    if (status < 400) return;
+    const u = resp.url();
+    if (status === 404) errors.push({ presentation: deck, url: u, message: '404' });
+    if (!runResources) return;
+    const type = (resp.request().resourceType && resp.request().resourceType()) || 'other';
+    const key = `${status}|${type}|${u}`;
+    if (resourceBuckets.has(key)) {
+      resourceBuckets.get(key).count += 1;
+      return;
     }
+    resourceBuckets.set(key, {
+      ...currentSlide,
+      presentation: deck,
+      viewport,
+      category: 'resources',
+      severity: resourceSeverity(type),
+      resource: { url: u, status, type },
+      count: 1,
+    });
   });
   page.on('pageerror', (err) => {
     errors.push({ presentation: deck, url, message: `pageerror: ${err.message}` });
+    if (!runConsole) return;
+    const key = `pageerror|${err.message}`;
+    if (consoleBuckets.has(key)) {
+      consoleBuckets.get(key).count += 1;
+      return;
+    }
+    consoleBuckets.set(key, {
+      ...currentSlide,
+      presentation: deck,
+      viewport,
+      category: 'console',
+      severity: 'CRITICAL',
+      console: { kind: 'pageerror', message: err.message },
+      count: 1,
+    });
+  });
+  page.on('console', (msg) => {
+    if (!runConsole) return;
+    if (msg.type() !== 'error') return;
+    const text = msg.text();
+    const key = `console|${text}`;
+    if (consoleBuckets.has(key)) {
+      consoleBuckets.get(key).count += 1;
+      return;
+    }
+    consoleBuckets.set(key, {
+      ...currentSlide,
+      presentation: deck,
+      viewport,
+      category: 'console',
+      severity: 'WARNING',
+      console: { kind: 'console.error', message: text },
+      count: 1,
+    });
   });
 
   await page.goto(url, { waitUntil: 'domcontentloaded' });
@@ -398,6 +465,7 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
       sourceLine = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
     }
     const base = { presentation: deck, viewport, h: s.h, v: s.v, sourceFile, sourceLine };
+    currentSlide = { h: s.h, v: s.v, sourceFile, sourceLine };
 
     if (runOverflow) {
       const m = await page.evaluate(
@@ -573,6 +641,11 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
     }
   }
 
+  // Settle late async events (e.g. deferred image loads) before flushing.
+  await page.waitForTimeout(100);
+  for (const f of resourceBuckets.values()) findings.push(f);
+  for (const f of consoleBuckets.values()) findings.push(f);
+
   return findings;
 }
 
@@ -643,8 +716,9 @@ async function run() {
   const txtPath = path.format({ dir: parsedOut.dir, name: parsedOut.name, ext: '.txt' });
   const describeOffender = (o) =>
     o ? `${o.tag}${o.classes ? '.' + o.classes.replace(/\s+/g, '.') : ''}` : '(unknown)';
+  const coord = (f) => `h=${f.h == null ? '-' : f.h}/v=${f.v == null ? '-' : f.v}`;
   const lineFor = (f) => {
-    const prefix = `[${f.severity.padEnd(8)}] [${f.category.padEnd(9)}] ${f.sourceFile}:${f.sourceLine} (${f.viewport}, h=${f.h}/v=${f.v})`;
+    const prefix = `[${f.severity.padEnd(8)}] [${f.category.padEnd(9)}] ${f.sourceFile}:${f.sourceLine} (${f.viewport}, ${coord(f)})`;
     if (f.category === 'overflow') {
       const worstAxis = Object.entries(f.overflow).sort((a, b) => b[1] - a[1])[0];
       return `${prefix}: ${worstAxis[0]} ${worstAxis[1]}px — <${describeOffender(f.offender)}>`;
@@ -652,6 +726,12 @@ async function run() {
     if (f.category === 'contrast') {
       const size = f.contrast.isLarge ? 'large' : 'normal';
       return `${prefix}: ${f.contrast.ratio}:1 ${f.contrast.fg} on ${f.contrast.bg} (${size}, req ${f.contrast.required}:1, x${f.contrast.count}) — <${describeOffender(f.offender)}>`;
+    }
+    if (f.category === 'resources') {
+      return `${prefix}: ${f.resource.status} ${f.resource.type} ${f.resource.url} (x${f.count})`;
+    }
+    if (f.category === 'console') {
+      return `${prefix}: ${f.console.kind} "${f.console.message.replace(/\s+/g, ' ').slice(0, 160)}" (x${f.count})`;
     }
     return prefix;
   };
