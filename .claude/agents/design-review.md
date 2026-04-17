@@ -27,13 +27,13 @@ Before opening any slide HTML, read these files. They — not this prompt — ar
 
 Derive the concrete values (which hex colors are on-palette, which utility classes exist, which `.section-title h2` overrides apply) from these files. If this prompt and the CSS disagree, **the CSS wins** — note the discrepancy in your report so the prompt can be updated.
 
-### Step 1: Run overflow detection
+### Step 1: Run render-based checks
 
-Static HTML/CSS inspection cannot see content that overflows the logical slide box (960×700 landscape, 540×960 portrait) — that depends on rendered fonts, images, and wrap behavior. Run the detector first so you have empirical layout data.
+Static HTML/CSS inspection cannot see defects that depend on rendered fonts, images, or computed colors. Run the render checker first so you have empirical data. Active categories: **overflow** (content exceeding the 960×700 / 540×960 slide box) and **contrast** (text below WCAG AA vs its effective background).
 
 1. Invoke: `node scripts/check-render.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
-2. Read the resulting report from `.claude/cache/overflow-report.json` (sibling `.txt` is easier to quote).
-3. Keep each finding's `(sourceFile, sourceLine, viewport, severity, overflow, offender)` — you will merge these into the per-file report in Step 4.
+2. Read the resulting report from `.claude/cache/render-report.json` (sibling `.txt` is easier to quote). Each entry carries a `category` field (`overflow` or `contrast`) and category-specific payload.
+3. Keep each finding's `(category, sourceFile, sourceLine, viewport, severity, offender, + category-specific fields)` — you will merge these into the per-file report in Step 4.
 
 If the script exits with code 2 (script failure), say so up front in your report and proceed with static-only review. Use `Bash` only to invoke `scripts/check-render.js`; do not use it for anything else.
 
@@ -77,7 +77,8 @@ These are the categories. The CSS supplies the specifics.
     - Muted text (`--r-muted-color`) at font-sizes below 1em is a contrast risk — flag it.
     - Use semantic `<ul>`/`<ol>` for lists, not styled `<div>`s.
     - Do not add `aria-hidden` manually to fragments — Reveal.js manages this.
-12. **Content fit (no overflow).** Slide content must render inside the logical slide box (960×700 landscape, 540×960 portrait). Evidence comes from `scripts/check-render.js` (Step 1), not visual guess. The report's `overflow.right` and `overflow.bottom` values determine severity. Landscape overflow applies to desktop viewing; portrait overflow applies to mobile viewing — both must pass. Portrait-only overflow is still a CRITICAL defect (mobile is a deploy target); the fix is usually collapsing `.grid-cols-*` to one column or shrinking text, not rewriting the slide.
+12. **Content fit (no overflow).** Slide content must render inside the logical slide box (960×700 landscape, 540×960 portrait). Evidence comes from `scripts/check-render.js` (`category: "overflow"`), not visual guess. The report's `overflow.right` / `.bottom` / `.left` / `.top` values determine severity. Landscape overflow applies to desktop viewing; portrait overflow applies to mobile viewing — both must pass. Portrait-only overflow is still a CRITICAL defect (mobile is a deploy target); the fix is usually collapsing `.grid-cols-*` to one column or shrinking text, not rewriting the slide.
+13. **WCAG color contrast.** Text must render against its effective background at ≥4.5:1 (normal text) or ≥3:1 (large text, ≥24 px or ≥18.66 px at ≥700 weight). Evidence comes from `scripts/check-render.js` (`category: "contrast"`), which samples computed `color` against the composite of ancestor backgrounds (including gradient endpoints). The report's `contrast.ratio` / `.required` / `.isLarge` / `.fg` / `.bg` / `.count` fields drive the finding. Muted token (`--r-muted-color`) on the body background is a recurring offender (~3.81:1, below AA for normal text); the gold link token (`--r-link-color`) on the body is even worse (~2.57:1). Fixes: increase font size past the large-text threshold, switch to a darker shade, or change the background.
 
 ---
 
@@ -94,20 +95,27 @@ For each audited file:
    - **Fix**: `<suggested fix>`
 
 **Severity levels**:
-- **CRITICAL** — off-palette color, wrong component class, broken layout, missing `alt`, icon-only link without `aria-label`, table without header semantics, **content overflow > 16 px in either axis in either viewport**
-- **WARNING** — missing utility class where one applies, missing `aria-hidden` on decorative icon, muted text below 1em, missing `rel="noopener noreferrer"`, `<div>` used for a list, table missing `<caption>`/`aria-label`, missing root `lang`, `outline: none` without replacement focus style, custom animation without reduced-motion fallback, inline accent border on `.card`, progression step not derived from the accent→link gradient, active timeline card not additionally highlighted, **content overflow 5–16 px in either axis in either viewport**
+- **CRITICAL** — off-palette color, wrong component class, broken layout, missing `alt`, icon-only link without `aria-label`, table without header semantics, **content overflow > 16 px in either axis in either viewport**, **contrast ratio < 3:1**
+- **WARNING** — missing utility class where one applies, missing `aria-hidden` on decorative icon, muted text below 1em, missing `rel="noopener noreferrer"`, `<div>` used for a list, table missing `<caption>`/`aria-label`, missing root `lang`, `outline: none` without replacement focus style, custom animation without reduced-motion fallback, inline accent border on `.card`, progression step not derived from the accent→link gradient, active timeline card not additionally highlighted, **content overflow 5–16 px in either axis in either viewport**, **contrast ratio ≥ 3:1 but below AA (normal text below 4.5:1 while above 3:1)**
 - **INFO** — stylistic inconsistency, section that would benefit from `aria-label`, dense `.grid-cols-5` with portrait concerns, slide relying solely on background gradient for structure, off-screen image missing `loading="lazy"`, **content overflow 1–4 px in either axis in either viewport (sub-pixel / thin-border effects)**
 
-For each overflow finding from Step 1, cite it as:
+For each overflow finding (`category: "overflow"`), cite it as:
 
 **[SEVERITY]** Line NN: `<axis>` overflow `<px>` px in `<landscape|portrait>` (slide h=H/v=V)
 - **Offender**: `<tag.classes snippet>`
 - **Source**: `scripts/check-render.js`
 - **Fix**: reduce card count, shrink headings, collapse to one column, move content to a nested vertical slide, or trim copy.
 
+For each contrast finding (`category: "contrast"`), cite it as:
+
+**[SEVERITY]** Line NN: contrast `<ratio>:1` (`<fg>` on `<bg>`, `<normal|large>`, required `<req>:1`) in `<landscape|portrait>` (slide h=H/v=V, x`<count>` occurrences)
+- **Offender**: `<tag.classes snippet>`
+- **Source**: `scripts/check-render.js`
+- **Fix**: darken the foreground token, widen the element past the large-text threshold (≥24 px or ≥18.66 px bold), or recolor the surrounding background.
+
 End with a **Summary**:
 - Total issues by severity
 - Most common issue type
-- **Overflow status**: N critical / M warning / K info across the audited decks (or "Overflow check passed" if zero)
+- **Render check status**: per-category counts (overflow: N critical / M warning, contrast: N critical / M warning) — or "Render check passed" if zero
 - Overall design consistency grade (A/B/C/D)
 - If you found any drift between this prompt and `custom-themes/*.css`, note it so the prompt can be updated.
