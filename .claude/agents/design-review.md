@@ -35,6 +35,8 @@ Static HTML/CSS inspection cannot see defects that depend on rendered fonts, ima
 - **resources** — HTTP 4xx/5xx responses for images, stylesheets, fonts, scripts. Dedup'd per URL+status.
 - **console** — page-level JS errors (`pageerror`) and `console.error` messages. Dedup'd per message.
 
+The checker runs each category in `landscape` and `portrait` viewports by default. Add `--viewport=all` (or `=print`) to also run under `@media print` emulation — useful for catching slides whose print styles blow past the 700 px box.
+
 1. Invoke: `node scripts/check-render.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
 2. Read the resulting report from `.claude/cache/render-report.json` (sibling `.txt` is easier to quote). Each entry carries a `category` field (`overflow` or `contrast`) and category-specific payload.
 3. Keep each finding's `(category, sourceFile, sourceLine, viewport, severity, offender, + category-specific fields)` — you will merge these into the per-file report in Step 4.

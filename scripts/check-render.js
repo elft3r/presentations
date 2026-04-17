@@ -88,8 +88,8 @@ function parseArgs(argv) {
     }
   }
   if (opts.decks.length === 0) opts.decks = [...PRESENTATIONS];
-  if (!['landscape', 'portrait', 'both'].includes(opts.viewport)) {
-    throw new Error(`--viewport must be landscape|portrait|both`);
+  if (!['landscape', 'portrait', 'print', 'both', 'all'].includes(opts.viewport)) {
+    throw new Error(`--viewport must be landscape|portrait|print|both|all`);
   }
   if (
     opts.thresholdInfo > opts.thresholdWarn ||
@@ -672,17 +672,21 @@ async function run() {
   process.on('SIGINT', () => { cleanup(); process.exit(130); });
   process.on('SIGTERM', () => { cleanup(); process.exit(143); });
 
-  const viewports =
-    opts.viewport === 'both' ? ['landscape', 'portrait'] : [opts.viewport];
+  let viewports;
+  if (opts.viewport === 'both') viewports = ['landscape', 'portrait'];
+  else if (opts.viewport === 'all') viewports = ['landscape', 'portrait', 'print'];
+  else viewports = [opts.viewport];
 
   const allFindings = [];
   const errors = [];
 
   for (const deck of opts.decks) {
     for (const vp of viewports) {
+      // Print mode reuses landscape dimensions; Chromium's print CSS applies via emulateMedia.
       const viewport = vp === 'portrait' ? { width: 540, height: 960 } : { width: 960, height: 700 };
       const context = await browser.newContext({ viewport });
       const page = await context.newPage();
+      if (vp === 'print') await page.emulateMedia({ media: 'print' });
       const url = `http://127.0.0.1:${port}/${deck}/index.html${vp === 'portrait' ? '?mobile' : ''}`;
       console.log(`  Checking ${deck} (${vp})...`);
       try {
