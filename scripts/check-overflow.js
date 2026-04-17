@@ -20,8 +20,24 @@ function loadPlaywright() {
   try {
     return require('playwright');
   } catch (_) {
-    return require(GLOBAL_PW);
+    try {
+      return require(GLOBAL_PW);
+    } catch (e) {
+      throw new Error(
+        `Playwright not found. Install locally with "npm i -D playwright" ` +
+          `or ensure the global install exists at ${GLOBAL_PW}. ` +
+          `Underlying error: ${e.message}`
+      );
+    }
   }
+}
+
+function parseNonNegInt(flag, raw) {
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < 0) {
+    throw new Error(`--${flag} must be a non-negative integer, got: ${raw}`);
+  }
+  return n;
 }
 
 function parseArgs(argv) {
@@ -40,10 +56,10 @@ function parseArgs(argv) {
       const [, k, v] = m;
       if (k === 'viewport') opts.viewport = v;
       else if (k === 'out') opts.out = path.resolve(v);
-      else if (k === 'threshold-info') opts.thresholdInfo = Number(v);
-      else if (k === 'threshold-warn') opts.thresholdWarn = Number(v);
-      else if (k === 'threshold-critical') opts.thresholdCritical = Number(v);
-      else if (k === 'port') opts.port = Number(v);
+      else if (k === 'threshold-info') opts.thresholdInfo = parseNonNegInt(k, v);
+      else if (k === 'threshold-warn') opts.thresholdWarn = parseNonNegInt(k, v);
+      else if (k === 'threshold-critical') opts.thresholdCritical = parseNonNegInt(k, v);
+      else if (k === 'port') opts.port = parseNonNegInt(k, v);
       else throw new Error(`Unknown flag: --${k}`);
     } else if (!arg.startsWith('-')) {
       if (!PRESENTATIONS.includes(arg)) {
@@ -57,6 +73,14 @@ function parseArgs(argv) {
   if (opts.decks.length === 0) opts.decks = [...PRESENTATIONS];
   if (!['landscape', 'portrait', 'both'].includes(opts.viewport)) {
     throw new Error(`--viewport must be landscape|portrait|both`);
+  }
+  if (
+    opts.thresholdInfo > opts.thresholdWarn ||
+    opts.thresholdWarn >= opts.thresholdCritical
+  ) {
+    throw new Error(
+      `Thresholds must satisfy info <= warn < critical (got info=${opts.thresholdInfo}, warn=${opts.thresholdWarn}, critical=${opts.thresholdCritical})`
+    );
   }
   return opts;
 }
@@ -96,14 +120,16 @@ const MIME = {
 };
 
 function startServer(rootDir, port) {
+  const root = path.resolve(rootDir);
+  const rootWithSep = root + path.sep;
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
       try {
         const url = new URL(req.url, 'http://127.0.0.1');
-        let rel = decodeURIComponent(url.pathname);
-        if (rel.endsWith('/')) rel += 'index.html';
-        const abs = path.join(rootDir, rel);
-        if (!abs.startsWith(rootDir)) {
+        let rel = decodeURIComponent(url.pathname).replace(/^\/+/, '');
+        if (rel === '' || rel.endsWith('/')) rel += 'index.html';
+        const abs = path.resolve(root, rel);
+        if (abs !== root && !abs.startsWith(rootWithSep)) {
           res.writeHead(403);
           return res.end();
         }
@@ -227,10 +253,18 @@ async function measurePage(page, url, deck, viewport, thresholds, errors) {
         const scale = secRect.width > 0 ? secRect.width / slideW : 1;
         if (!scale || !isFinite(scale)) return null;
         const toLogical = (px) => px / scale;
-        let maxRight = 0;
-        let maxBottom = 0;
-        let rightEl = null;
-        let bottomEl = null;
+        const axes = {
+          right: { overflow: 0, el: null },
+          bottom: { overflow: 0, el: null },
+          left: { overflow: 0, el: null },
+          top: { overflow: 0, el: null },
+        };
+        const note = (name, value, el) => {
+          if (value > axes[name].overflow) {
+            axes[name].overflow = value;
+            axes[name].el = el;
+          }
+        };
         const isVisible = (el) => {
           const cs = getComputedStyle(el);
           if (cs.display === 'none' || cs.visibility === 'hidden') return false;
@@ -245,36 +279,49 @@ async function measurePage(page, url, deck, viewport, thresholds, errors) {
           }
           const right = toLogical(r.right - secRect.left);
           const bottom = toLogical(r.bottom - secRect.top);
-          if (right > maxRight) { maxRight = right; rightEl = el; }
-          if (bottom > maxBottom) { maxBottom = bottom; bottomEl = el; }
+          const left = toLogical(r.left - secRect.left);
+          const top = toLogical(r.top - secRect.top);
+          note('right', right - slideW, el);
+          note('bottom', bottom - slideH, el);
+          note('left', -left, el);
+          note('top', -top, el);
           for (const child of el.children) walk(child);
         };
         for (const child of section.children) walk(child);
-        const overflowRight = Math.max(0, maxRight - slideW);
-        const overflowBottom = Math.max(0, maxBottom - slideH);
         const describe = (el) =>
           el && {
             tag: el.tagName.toLowerCase(),
             classes: el.getAttribute('class') || '',
             snippet: (el.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
           };
-        const offender =
-          overflowBottom >= overflowRight ? describe(bottomEl) : describe(rightEl);
-        return { overflowRight, overflowBottom, offender };
+        const ranked = Object.entries(axes).sort(
+          (a, b) => b[1].overflow - a[1].overflow
+        );
+        const worstEl = ranked[0][1].el;
+        return {
+          overflowRight: axes.right.overflow,
+          overflowBottom: axes.bottom.overflow,
+          overflowLeft: axes.left.overflow,
+          overflowTop: axes.top.overflow,
+          offender: describe(worstEl),
+        };
       },
       { slideW: cfg.w, slideH: cfg.h }
     );
 
     if (!m) continue;
-    const rightPx = Math.round(m.overflowRight);
-    const bottomPx = Math.round(m.overflowBottom);
-    const rightSev = severityFor(rightPx, thresholds);
-    const bottomSev = severityFor(bottomPx, thresholds);
-    if (!rightSev && !bottomSev) continue;
+    const px = {
+      right: Math.round(m.overflowRight),
+      bottom: Math.round(m.overflowBottom),
+      left: Math.round(m.overflowLeft),
+      top: Math.round(m.overflowTop),
+    };
     const severityRank = { INFO: 1, WARNING: 2, CRITICAL: 3 };
-    const worst = [rightSev, bottomSev].filter(Boolean).sort(
-      (a, b) => severityRank[b] - severityRank[a]
-    )[0];
+    const severities = Object.values(px)
+      .map((v) => severityFor(v, thresholds))
+      .filter(Boolean);
+    if (severities.length === 0) continue;
+    const worst = severities.sort((a, b) => severityRank[b] - severityRank[a])[0];
 
     let sourceFile;
     let sourceLine;
@@ -296,7 +343,7 @@ async function measurePage(page, url, deck, viewport, thresholds, errors) {
       sourceFile,
       sourceLine,
       slideBox: { w: cfg.w, h: cfg.h },
-      overflow: { right: rightPx, bottom: bottomPx },
+      overflow: { right: px.right, bottom: px.bottom, left: px.left, top: px.top },
       severity: worst,
       offender: m.offender || null,
     });
@@ -364,15 +411,14 @@ async function run() {
   fs.mkdirSync(path.dirname(opts.out), { recursive: true });
   fs.writeFileSync(opts.out, JSON.stringify(report, null, 2));
 
-  const txtPath = opts.out.replace(/\.json$/, '.txt');
+  const parsedOut = path.parse(opts.out);
+  const txtPath = path.format({ dir: parsedOut.dir, name: parsedOut.name, ext: '.txt' });
   const lines = allFindings.map((f) => {
     const off = f.offender
       ? `${f.offender.tag}${f.offender.classes ? '.' + f.offender.classes.replace(/\s+/g, '.') : ''}`
       : '(unknown)';
-    const axis =
-      f.overflow.bottom >= f.overflow.right
-        ? `bottom ${f.overflow.bottom}px`
-        : `right ${f.overflow.right}px`;
+    const worstAxis = Object.entries(f.overflow).sort((a, b) => b[1] - a[1])[0];
+    const axis = `${worstAxis[0]} ${worstAxis[1]}px`;
     return `[${f.severity.padEnd(8)}] ${f.sourceFile}:${f.sourceLine} (${f.viewport}, h=${f.h}/v=${f.v}): ${axis} — <${off}>`;
   });
   if (errors.length) {
