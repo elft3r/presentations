@@ -33,6 +33,8 @@ Three independent presentations live in top-level directories: `cloud-migrations
 - `white_contrast_compact_verbatim_headers.css` — main theme (accent: Mariposit Green `#24584C`, links: Metallic Gold `#B39A6A`). Includes component classes: `.section-title`, `.card`, `.badge`, `.styled-list`, `.source`, `.social-links`, `.divider`
 - `utilities.css` — Tailwind-like layout utilities (flex, grid, spacing, sizing, typography)
 
+Source of truth for design tokens, component classes, and layout utilities is `custom-themes/`. Do not duplicate values in slides (prefer CSS variables and utility classes over inline styles) and do not duplicate the rules in agent prompts — agents should read these files directly.
+
 ### CI/CD
 
 - `.github/workflows/deploy.yml` — deploys `_site/` to GitHub Pages on push to main
