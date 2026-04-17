@@ -31,11 +31,11 @@ Derive the concrete values (which hex colors are on-palette, which utility class
 
 Static HTML/CSS inspection cannot see content that overflows the logical slide box (960×700 landscape, 540×960 portrait) — that depends on rendered fonts, images, and wrap behavior. Run the detector first so you have empirical layout data.
 
-1. Invoke: `node scripts/check-overflow.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
+1. Invoke: `node scripts/check-render.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
 2. Read the resulting report from `.claude/cache/overflow-report.json` (sibling `.txt` is easier to quote).
 3. Keep each finding's `(sourceFile, sourceLine, viewport, severity, overflow, offender)` — you will merge these into the per-file report in Step 4.
 
-If the script exits with code 2 (script failure), say so up front in your report and proceed with static-only review. Use `Bash` only to invoke `scripts/check-overflow.js`; do not use it for anything else.
+If the script exits with code 2 (script failure), say so up front in your report and proceed with static-only review. Use `Bash` only to invoke `scripts/check-render.js`; do not use it for anything else.
 
 ### Step 2: Discover slide files
 
@@ -77,7 +77,7 @@ These are the categories. The CSS supplies the specifics.
     - Muted text (`--r-muted-color`) at font-sizes below 1em is a contrast risk — flag it.
     - Use semantic `<ul>`/`<ol>` for lists, not styled `<div>`s.
     - Do not add `aria-hidden` manually to fragments — Reveal.js manages this.
-12. **Content fit (no overflow).** Slide content must render inside the logical slide box (960×700 landscape, 540×960 portrait). Evidence comes from `scripts/check-overflow.js` (Step 1), not visual guess. The report's `overflow.right` and `overflow.bottom` values determine severity. Landscape overflow applies to desktop viewing; portrait overflow applies to mobile viewing — both must pass. Portrait-only overflow is still a CRITICAL defect (mobile is a deploy target); the fix is usually collapsing `.grid-cols-*` to one column or shrinking text, not rewriting the slide.
+12. **Content fit (no overflow).** Slide content must render inside the logical slide box (960×700 landscape, 540×960 portrait). Evidence comes from `scripts/check-render.js` (Step 1), not visual guess. The report's `overflow.right` and `overflow.bottom` values determine severity. Landscape overflow applies to desktop viewing; portrait overflow applies to mobile viewing — both must pass. Portrait-only overflow is still a CRITICAL defect (mobile is a deploy target); the fix is usually collapsing `.grid-cols-*` to one column or shrinking text, not rewriting the slide.
 
 ---
 
@@ -102,7 +102,7 @@ For each overflow finding from Step 1, cite it as:
 
 **[SEVERITY]** Line NN: `<axis>` overflow `<px>` px in `<landscape|portrait>` (slide h=H/v=V)
 - **Offender**: `<tag.classes snippet>`
-- **Source**: `scripts/check-overflow.js`
+- **Source**: `scripts/check-render.js`
 - **Fix**: reduce card count, shrink headings, collapse to one column, move content to a nested vertical slide, or trim copy.
 
 End with a **Summary**:
