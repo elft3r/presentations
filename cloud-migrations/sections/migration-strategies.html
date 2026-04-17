@@ -19,30 +19,37 @@
   <h2>The 7 Rs</h2>
   <div class="grid place-items-center">
     <img
-      class="rounded"
+      class="rounded max-w-70"
       src="imgs/aws-migration-paths.png"
       alt="AWS Migration Paths"
-      style="max-width: 70%"
       loading="lazy"
     />
   </div>
 </section>
 <section>
-  <h2>The 7 Rs</h2>
-  <h3>Retire</h3>
-  <ul class="styled-list">
-    <li>Decommission applications that are obsolete</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>
-          An old, custom-built inventory management system, which got replaced
-          by a new ERP system
-        </li>
-        <li>Freeing up resources and reducing maintenance costs</li>
-      </ul>
-    </li>
-  </ul>
+  <h2>The 7 Rs — Low Effort</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card fragment">
+      <h3><em>Retire</em></h3>
+      <p>Decommission obsolete applications</p>
+      <p><small>e.g. old inventory system replaced by ERP</small></p>
+    </div>
+    <div class="card fragment">
+      <h3><em>Retain</em></h3>
+      <p>Keep on-premise — not yet ready to migrate</p>
+      <p><small>e.g. mainframe running critical financial processing</small></p>
+    </div>
+    <div class="card fragment">
+      <h3><em>Rehost</em></h3>
+      <p>Lift and Shift — no architecture changes</p>
+      <p><small>e.g. move e-commerce app to cloud as-is</small></p>
+    </div>
+    <div class="card fragment">
+      <h3><em>Relocate</em></h3>
+      <p>Move virtualized environments without modification</p>
+      <p><small>e.g. Hyper-V workloads to cloud without changing VMs</small></p>
+    </div>
+  </div>
   <div class="source mt-4">
     <a
       href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
@@ -52,25 +59,24 @@
   </div>
 </section>
 <section>
-  <h2>The 7 Rs</h2>
-  <h3>Retain</h3>
-  <ul class="styled-list">
-    <li>Keep the application on-premise</li>
-    <li>Application is not yet ready</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>
-          A mainframe system that runs critical financial processing, that is
-          challenging to migrate
-        </li>
-        <li>
-          Retain in the current environment and focus migrating less critical
-          systems
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <h2>The 7 Rs — Higher Effort</h2>
+  <div class="grid grid-cols-3 gap-6">
+    <div class="card fragment">
+      <h3><em>Replatform</em></h3>
+      <p>Minor optimizations, use managed services</p>
+      <p><small>e.g. migrate on-prem DB to Amazon RDS</small></p>
+    </div>
+    <div class="card fragment">
+      <h3><em>Refactor</em></h3>
+      <p>Redesign for cloud-native benefits</p>
+      <p><small>e.g. break monolith into microservices</small></p>
+    </div>
+    <div class="card fragment">
+      <h3><em>Repurchase</em></h3>
+      <p>Replace with a SaaS alternative</p>
+      <p><small>e.g. on-prem VCS to GitHub or GitLab</small></p>
+    </div>
+  </div>
   <div class="source mt-4">
     <a
       href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
@@ -80,130 +86,11 @@
   </div>
 </section>
 <section>
-  <h2>The 7 Rs</h2>
-  <h3>Rehost</h3>
+  <h2>Migration Strategy Takeaways</h2>
   <ul class="styled-list">
-    <li>Lift and Shift</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>Quickly migrate an e-commerce application to the cloud</li>
-        <li>
-          Don't change the core architecture, and quickly gain cloud benefits
-          without major redevelopment
-        </li>
-      </ul>
-    </li>
+    <li>Not every application needs the same migration strategy</li>
+    <li>Start with low-effort strategies (Rehost, Retain) for quick wins</li>
+    <li>Refactor only when there is a clear business benefit</li>
+    <li>Evaluate SaaS alternatives before rebuilding</li>
   </ul>
-  <div class="source mt-4">
-    <a
-      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-      target="_blank" rel="noopener noreferrer"
-      >About the migration strategies</a
-    >
-  </div>
-</section>
-<section>
-  <h2>The 7 Rs</h2>
-  <h3>Replatform</h3>
-  <ul class="styled-list">
-    <li>Minor optimizations to the application</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>
-          A customer management application with an on-premise database that's
-          compatible with cloud services
-        </li>
-        <li>
-          Migrate to a managed cloud database service (e.g. Amazon RDS) to
-          reduce operational overhead
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <div class="source mt-4">
-    <a
-      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-      target="_blank" rel="noopener noreferrer"
-      >About the migration strategies</a
-    >
-  </div>
-</section>
-<section>
-  <h2>The 7 Rs</h2>
-  <h3>Refactor or Re-Architect</h3>
-  <ul class="styled-list">
-    <li>Redesign applications for cloud-native benefits</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>Legacy application that cannot scale to meet the demand</li>
-        <li>
-          Refactor by breaking it into microservices and following cloud-native
-          principles
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <div class="source mt-4">
-    <a
-      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-      target="_blank" rel="noopener noreferrer"
-      >About the migration strategies</a
-    >
-  </div>
-</section>
-<section>
-  <h2>The 7 Rs</h2>
-  <h3>Repurchase</h3>
-  <ul class="styled-list">
-    <li>Replace existing application with cloud-based SaaS alternative</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>
-          A company is running an on-premise version control system but wants to
-          leverage a SaaS solution
-        </li>
-        <li>
-          Replace the current version control system with a SaaS solution like
-          GitHub or GitLab
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <div class="source mt-4">
-    <a
-      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-      target="_blank" rel="noopener noreferrer"
-      >About the migration strategies</a
-    >
-  </div>
-</section>
-<section>
-  <h2>The 7 Rs</h2>
-  <h3>Relocate</h3>
-  <ul class="styled-list">
-    <li>Move entire virtualized environments without altering the platform</li>
-    <li class="fragment">
-      <b>Example:</b>
-      <ul>
-        <li>
-          A company is running Hyper-V based applications on-premise and wants
-          to leverage cloud flexibility without refactoring
-        </li>
-        <li>
-          Relocate to a Hyper-V solution in the cloud without modifying the VMs
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <div class="source mt-4">
-    <a
-      href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
-      target="_blank" rel="noopener noreferrer"
-      >About the migration strategies</a
-    >
-  </div>
 </section>

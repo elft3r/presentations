@@ -1,4 +1,6 @@
-<section class="section-title" aria-label="Section: Technical"><h2>Technical</h2></section>
+<section class="section-title" aria-label="Section: Technical">
+  <h2>Technical</h2>
+</section>
 <section>
   <h2>How to structure your Cloud?</h2>
   <ul class="styled-list">
@@ -7,20 +9,20 @@
   </ul>
 </section>
 <section>
-  <h2>How to structure your Cloud?</h2>
-  <div class="flex justify-center">
+  <h2>Cloud Account Structure</h2>
+  <div class="grid place-items-center">
     <img
-      class="rounded"
+      class="rounded max-w-70"
       src="imgs/gruntwork-landing-zone.png"
       alt="Gruntwork Landing Zone Account Structure"
-      style="max-width: 70%"
       loading="lazy"
     />
   </div>
   <div class="source">
     <a
       href="https://docs.gruntwork.io/guides/production-framework/ingredients/landing-zone/"
-      target="_blank" rel="noopener noreferrer"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       Gruntwork Landing Zone
     </a>
@@ -29,29 +31,45 @@
 <section>
   <h2>Account Vending</h2>
   <ul class="styled-list">
-    <li>Create and configure new accounts / subscriptions / ...</li>
-    <li>What is the best way to automate this?</li>
+    <li>Automate creation of new accounts / subscriptions</li>
+    <li>Enforce security baselines and guardrails from day one</li>
+    <li>
+      Limit access on an <em>account level</em> — strongest isolation boundary
+    </li>
   </ul>
 </section>
 <section>
-  <h2>Infrastructure as Code (IaC)</h2>
-  <ul class="styled-list">
-    <li>Define your Infrastructure <em>statically</em> in code</li>
-    <li>Really good for certain things</li>
-    <li>Challenging at scale</li>
-  </ul>
+  <h2>Infrastructure as Code & Event Driven</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"
+        ><i class="fa-solid fa-file-code" aria-hidden="true"></i
+      ></span>
+      <h3>Infrastructure as Code</h3>
+      <ul class="styled-list">
+        <li>Define infrastructure <em>statically</em> in code</li>
+        <li>Great for repeatability and auditability</li>
+        <li>Challenging at scale</li>
+      </ul>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"
+        ><i class="fa-solid fa-bolt" aria-hidden="true"></i
+      ></span>
+      <h3>Event Driven</h3>
+      <ul class="styled-list">
+        <li>Let events trigger infrastructure changes</li>
+        <li>Scales well but harder to track</li>
+        <li>Complements IaC — use both together</li>
+      </ul>
+    </div>
+  </div>
 </section>
 <section>
-  <h2>Event Driven</h2>
+  <h2>Technical Takeaways</h2>
   <ul class="styled-list">
-    <li>Let events trigger infrastructure changes</li>
-    <li>Harder to keep track of the changes</li>
-  </ul>
-</section>
-<section>
-  <h2>Solution?</h2>
-  <ul class="styled-list">
-    <li>IaC and Event driven play nicely together</li>
-    <li>Additional tooling needs to track the changes</li>
+    <li>Use account-level isolation as your strongest security boundary</li>
+    <li>Automate account vending with guardrails from day one</li>
+    <li>Combine IaC and event-driven approaches — they complement each other</li>
   </ul>
 </section>

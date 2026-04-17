@@ -1,22 +1,23 @@
-<section class="section-title" aria-label="Section: Security"><h2>Security</h2></section>
-<section>
+<section class="section-title" aria-label="Section: Security">
   <h2>Security</h2>
+</section>
+<section>
+  <h2>Is the Cloud Secure?</h2>
   <div>
     <q>The Cloud is not secure</q>
-    <div class="source">A lot of people</div>
+    <div class="source">— A lot of people</div>
   </div>
   <div class="fragment mt-8">
     <q>It's as secure or even more secure than your on-prem data center</q>
-    <div class="source">Me</div>
+    <div class="source">— Me</div>
   </div>
 </section>
 <section>
   <h2>Security is a shared responsibility</h2>
   <div class="grid place-items-center">
     <img
-      class="rounded object-contain"
+      class="rounded object-contain max-w-70"
       src="imgs/aws-shared-responsibility-model.jpg"
-      style="max-width: 70%"
       alt="AWS Shared Responsibility Model"
       loading="lazy"
     />
@@ -24,10 +25,19 @@
   <div class="source">
     <a
       href="https://aws.amazon.com/compliance/shared-responsibility-model/"
-      target="_blank" rel="noopener noreferrer"
+      target="_blank"
+      rel="noopener noreferrer"
       >AWS Shared Responsibility Model</a
     >
   </div>
+  <aside class="notes">
+    All major Cloud Providers have a Shared Responsibility Model:
+    AWS: https://aws.amazon.com/compliance/shared-responsibility-model/
+    Google Cloud: https://cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate
+    IBM Cloud: https://cloud.ibm.com/docs/overview?topic=overview-shared-responsibilities
+    Microsoft Azure: https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
+    Oracle Cloud: https://docs.public.oneportal.content.oci.oraclecloud.com/en-us/iaas/Content/cloud-adoption-framework/security.htm
+  </aside>
 </section>
 <section>
   <h2>All Cloud Providers have a Shared Responsibility Model</h2>
@@ -35,35 +45,40 @@
     <li>
       <a
         href="https://aws.amazon.com/compliance/shared-responsibility-model/"
-        target="_blank" rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         >Amazon Web Services</a
       >
     </li>
     <li>
       <a
         href="https://cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate"
-        target="_blank" rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         >Google Cloud</a
       >
     </li>
     <li>
       <a
         href="https://cloud.ibm.com/docs/overview?topic=overview-shared-responsibilities"
-        target="_blank" rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         >IBM Cloud</a
       >
     </li>
     <li>
       <a
         href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility"
-        target="_blank" rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         >Microsoft Azure</a
       >
     </li>
     <li>
       <a
         href="https://docs.public.oneportal.content.oci.oraclecloud.com/en-us/iaas/Content/cloud-adoption-framework/security.htm"
-        target="_blank" rel="noopener noreferrer"
+        target="_blank"
+        rel="noopener noreferrer"
         >Oracle Cloud</a
       >
     </li>
@@ -79,7 +94,15 @@
       src="https://www.youtube.com/embed/kd33UVZhnAA?si=YS0xQj2t0MLZuHbi"
       title="Google Data Center Security: 6 Layers Deep"
       frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allow="
+        accelerometer;
+        autoplay;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture;
+        web-share;
+      "
       referrerpolicy="strict-origin-when-cross-origin"
       sandbox="allow-scripts allow-same-origin allow-presentation"
       allowfullscreen
@@ -91,6 +114,7 @@
   <ul class="styled-list">
     <li>Security is a shared responsibility</li>
     <li>Cloud Providers invest a lot in technology and people</li>
+    <li>IAM is your most important security tool — get it right</li>
     <li>You need to make use of the available tools</li>
   </ul>
 </section>
