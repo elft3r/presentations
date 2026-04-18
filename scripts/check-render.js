@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 // Headless design-check runner for Reveal.js decks.
-// Categories land incrementally. Active today:
+//
+// Categories (scoped to things that only a render pass can measure reliably):
 //   - overflow: content exceeds the 960x700 (landscape) / 540x960 (portrait) slide box
 //   - contrast: text below WCAG AA (<4.5:1 normal, <3:1 large) against its effective bg
+//   - console: pageerror / console.error during a page load
+//
+// Deliberately NOT included: broken image paths (static fs.existsSync),
+// GIF auto-play (static grep), outline:none focus indicator (static grep),
+// byte-exact visual regression (flakes without a pixel-diff library). The
+// design-review agent covers these via static invariants with Read/Grep.
 //
 // Playwright is not a repo dependency; it's resolved from the global
 // install at /opt/node22/lib/node_modules/playwright (with local
@@ -49,7 +56,12 @@ function parsePosFloat(flag, raw) {
   return n;
 }
 
-const CATEGORIES_AVAILABLE = ['overflow', 'contrast', 'resources', 'console', 'motion', 'focus'];
+// Only keep categories that a render pass measures meaningfully better than the
+// static design-review agent can. Motion (GIF auto-play), focus (outline: none),
+// broken image paths, and byte-exact visual regression are cheaper/more reliable
+// as static grep invariants in the agent prompt.
+const CATEGORIES_AVAILABLE = ['overflow', 'contrast', 'console'];
+const CATEGORIES_DEFAULT = [...CATEGORIES_AVAILABLE];
 
 function parseArgs(argv) {
   const opts = {
@@ -61,7 +73,7 @@ function parseArgs(argv) {
     thresholdCritical: 16,
     contrastAA: 4.5, // normal text AA
     contrastAALarge: 3.0, // large text AA
-    categories: null, // default: all currently-implemented categories
+    categories: null, // default: CATEGORIES_DEFAULT
     port: 0,
   };
   for (const arg of argv) {
@@ -104,7 +116,7 @@ function parseArgs(argv) {
       `--contrast-aa-large must be <= --contrast-aa (got ${opts.contrastAALarge} vs ${opts.contrastAA})`
     );
   }
-  if (!opts.categories) opts.categories = [...CATEGORIES_AVAILABLE];
+  if (!opts.categories) opts.categories = [...CATEGORIES_DEFAULT];
   for (const c of opts.categories) {
     if (!CATEGORIES_AVAILABLE.includes(c)) {
       throw new Error(`Unknown category: ${c}. Available: ${CATEGORIES_AVAILABLE.join(', ')}`);
@@ -327,7 +339,6 @@ const IN_PAGE_CONTRAST_HELPERS = `
 async function measurePage(page, url, deck, viewport, opts, thresholds, errors) {
   const runOverflow = opts.categories.includes('overflow');
   const runContrast = opts.categories.includes('contrast');
-  const runResources = opts.categories.includes('resources');
   const runConsole = opts.categories.includes('console');
 
   // Per-slide attribution. Updated inside the slide loop.
@@ -337,33 +348,11 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
     sourceFile: `${deck}/index.html`,
     sourceLine: 1,
   };
-  const resourceBuckets = new Map();
   const consoleBuckets = new Map();
 
-  const resourceSeverity = (type) =>
-    ['image', 'stylesheet', 'font', 'script', 'document'].includes(type) ? 'CRITICAL' : 'WARNING';
-
   page.on('response', (resp) => {
-    const status = resp.status();
-    if (status < 400) return;
-    const u = resp.url();
-    if (status === 404) errors.push({ presentation: deck, url: u, message: '404' });
-    if (!runResources) return;
-    const type = (resp.request().resourceType && resp.request().resourceType()) || 'other';
-    const key = `${status}|${type}|${u}`;
-    if (resourceBuckets.has(key)) {
-      resourceBuckets.get(key).count += 1;
-      return;
-    }
-    resourceBuckets.set(key, {
-      ...currentSlide,
-      presentation: deck,
-      viewport,
-      category: 'resources',
-      severity: resourceSeverity(type),
-      resource: { url: u, status, type },
-      count: 1,
-    });
+    // errors[] remains a debug stream for 404s; we don't emit resources findings.
+    if (resp.status() === 404) errors.push({ presentation: deck, url: resp.url(), message: '404' });
   });
   page.on('pageerror', (err) => {
     errors.push({ presentation: deck, url, message: `pageerror: ${err.message}` });
@@ -641,173 +630,9 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
     }
   }
 
-  // Motion: emulate prefers-reduced-motion and flag animations still running + visible GIFs.
-  if (opts.categories.includes('motion')) {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    // Disable Reveal's own slide-transition animation so it doesn't leak into motion findings.
-    await page.evaluate(() => window.Reveal.configure({ transition: 'none', backgroundTransition: 'none' }));
-    await page.waitForTimeout(100);
-    for (const s of slides) {
-      await page.evaluate(({ h, v }) => window.Reveal.slide(h, v), { h: s.h, v: s.v });
-      // Wait for any residual transitions to complete (Reveal's default is ~800 ms).
-      await page.waitForTimeout(900);
-      const sourceInfo = await (async () => {
-        let sf, sl;
-        if (s.external) {
-          sf = path.posix.join(deck, s.external);
-          sl = (buildSectionLineMap(path.join(ROOT, deck, s.external))[s.v]) || 1;
-        } else {
-          sf = `${deck}/index.html`;
-          sl = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
-        }
-        return { sourceFile: sf, sourceLine: sl };
-      })();
-      const base = { presentation: deck, viewport, h: s.h, v: s.v, ...sourceInfo };
-      const items = await page.evaluate(() => {
-        const section =
-          document.querySelector('.reveal .slides section.present section.present') ||
-          document.querySelector('.reveal .slides > section.present');
-        if (!section) return [];
-        const out = [];
-        // Running animations.
-        const seenAnim = new Set();
-        try {
-          const anims = document.getAnimations({ subtree: true });
-          for (const a of anims) {
-            const eff = a.effect;
-            if (!eff) continue;
-            const target = eff.target;
-            if (!target || !section.contains(target) || target === section) continue;
-            // Skip Reveal's own slide-wrapper elements (they animate on transition).
-            if (target.matches && target.matches('.reveal, .reveal .slides, .reveal .slides > section, .reveal .slides section')) continue;
-            if (a.playState !== 'running') continue;
-            const timing = eff.getTiming();
-            const dur = timing && timing.duration;
-            if (typeof dur !== 'number' || dur === 0) continue;
-            const key = target.tagName + '|' + (target.getAttribute('class') || '') + '|animation';
-            if (seenAnim.has(key)) continue;
-            seenAnim.add(key);
-            out.push({
-              kind: 'animation',
-              duration: dur,
-              offender: {
-                tag: target.tagName.toLowerCase(),
-                classes: target.getAttribute('class') || '',
-                snippet: (target.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
-              },
-            });
-          }
-        } catch (_) { /* getAnimations may not be available for all nodes; ignore */ }
-        // Visible GIFs — they don't honor prefers-reduced-motion natively.
-        for (const img of section.querySelectorAll('img')) {
-          const src = img.currentSrc || img.src || '';
-          if (!/\.gif(\?|$)/i.test(src)) continue;
-          const cs = getComputedStyle(img);
-          if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) continue;
-          out.push({
-            kind: 'gif',
-            src,
-            offender: {
-              tag: 'img',
-              classes: img.getAttribute('class') || '',
-              snippet: (img.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
-            },
-          });
-        }
-        return out;
-      });
-      for (const it of items) {
-        findings.push({
-          ...base,
-          category: 'motion',
-          severity: 'WARNING',
-          motion: it.kind === 'animation'
-            ? { kind: 'animation', duration: it.duration }
-            : { kind: 'gif', src: it.src },
-          offender: it.offender,
-        });
-      }
-    }
-    await page.emulateMedia({ reducedMotion: 'no-preference' });
-    // Restore Reveal's default transitions for subsequent passes.
-    await page.evaluate(() => window.Reveal.configure({ transition: 'slide', backgroundTransition: 'fade' }));
-  }
-
-  // Focus: programmatic focus on interactive elements; flag missing visible focus delta.
-  if (opts.categories.includes('focus')) {
-    for (const s of slides) {
-      await page.evaluate(({ h, v }) => window.Reveal.slide(h, v), { h: s.h, v: s.v });
-      await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
-      const sourceInfo = (() => {
-        let sf, sl;
-        if (s.external) {
-          sf = path.posix.join(deck, s.external);
-          sl = (buildSectionLineMap(path.join(ROOT, deck, s.external))[s.v]) || 1;
-        } else {
-          sf = `${deck}/index.html`;
-          sl = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
-        }
-        return { sourceFile: sf, sourceLine: sl };
-      })();
-      const base = { presentation: deck, viewport, h: s.h, v: s.v, ...sourceInfo };
-      const items = await page.evaluate(() => {
-        const section =
-          document.querySelector('.reveal .slides section.present section.present') ||
-          document.querySelector('.reveal .slides > section.present');
-        if (!section) return [];
-        const interactive = section.querySelectorAll(
-          'a[href], button, [tabindex]:not([tabindex="-1"]), input, select, textarea'
-        );
-        const keys = ['outline', 'outlineOffset', 'outlineColor', 'outlineStyle', 'outlineWidth', 'boxShadow', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor', 'backgroundColor', 'color'];
-        const snap = (el) => {
-          const cs = getComputedStyle(el);
-          const o = {};
-          for (const k of keys) o[k] = cs[k];
-          return o;
-        };
-        const seen = new Set();
-        const out = [];
-        const active = document.activeElement;
-        for (const el of interactive) {
-          const cls = el.getAttribute('class') || '';
-          const dedupKey = el.tagName + '|' + cls;
-          if (seen.has(dedupKey)) continue;
-          seen.add(dedupKey);
-          const before = snap(el);
-          el.focus({ preventScroll: true });
-          // Force reflow
-          el.offsetHeight;
-          const after = snap(el);
-          const same = keys.every((k) => before[k] === after[k]);
-          if (same) {
-            out.push({
-              offender: {
-                tag: el.tagName.toLowerCase(),
-                classes: cls,
-                snippet: (el.outerHTML || '').replace(/\s+/g, ' ').slice(0, 200),
-                text: (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80),
-              },
-            });
-          }
-          el.blur();
-        }
-        if (active && active.focus) active.focus({ preventScroll: true });
-        return out;
-      });
-      for (const it of items) {
-        findings.push({
-          ...base,
-          category: 'focus',
-          severity: 'WARNING',
-          offender: it.offender,
-        });
-      }
-    }
-  }
 
   // Settle late async events (e.g. deferred image loads) before flushing.
   await page.waitForTimeout(100);
-  for (const f of resourceBuckets.values()) findings.push(f);
   for (const f of consoleBuckets.values()) findings.push(f);
 
   return findings;
@@ -895,20 +720,8 @@ async function run() {
       const size = f.contrast.isLarge ? 'large' : 'normal';
       return `${prefix}: ${f.contrast.ratio}:1 ${f.contrast.fg} on ${f.contrast.bg} (${size}, req ${f.contrast.required}:1, x${f.contrast.count}) — <${describeOffender(f.offender)}>`;
     }
-    if (f.category === 'resources') {
-      return `${prefix}: ${f.resource.status} ${f.resource.type} ${f.resource.url} (x${f.count})`;
-    }
     if (f.category === 'console') {
       return `${prefix}: ${f.console.kind} "${f.console.message.replace(/\s+/g, ' ').slice(0, 160)}" (x${f.count})`;
-    }
-    if (f.category === 'motion') {
-      const body = f.motion.kind === 'gif'
-        ? `auto-play gif ${f.motion.src}`
-        : `running animation (${Math.round(f.motion.duration)}ms) under prefers-reduced-motion:reduce`;
-      return `${prefix}: ${body} — <${describeOffender(f.offender)}>`;
-    }
-    if (f.category === 'focus') {
-      return `${prefix}: no visible focus indicator — <${describeOffender(f.offender)}>`;
     }
     return prefix;
   };

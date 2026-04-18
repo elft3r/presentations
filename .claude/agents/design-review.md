@@ -29,15 +29,14 @@ Derive the concrete values (which hex colors are on-palette, which utility class
 
 ### Step 1: Run render-based checks
 
-Static HTML/CSS inspection cannot see defects that depend on rendered fonts, images, computed colors, or runtime resource loads. Run the render checker first so you have empirical data. Active categories:
+Static HTML/CSS inspection cannot see defects that depend on rendered fonts, computed colors, or runtime JavaScript. Run the render checker first so you have empirical data. Active categories:
 - **overflow** — content exceeding the 960×700 / 540×960 slide box.
 - **contrast** — text below WCAG AA vs its effective background.
-- **resources** — HTTP 4xx/5xx responses for images, stylesheets, fonts, scripts. Dedup'd per URL+status.
 - **console** — page-level JS errors (`pageerror`) and `console.error` messages. Dedup'd per message.
-- **motion** — renders under `prefers-reduced-motion: reduce`; flags any animation still running on descendants of the slide and any visible `.gif` (GIFs don't honor the media query natively).
-- **focus** — programmatically focuses every interactive element (`a[href]`, `button`, `[tabindex]`, `input`, `select`, `textarea`) and flags any whose computed outline/box-shadow/border/background/color don't change at all.
 
-The checker runs each category in `landscape` and `portrait` viewports by default. Add `--viewport=all` (or `=print`) to also run under `@media print` emulation — useful for catching slides whose print styles blow past the 700 px box.
+The checker runs each category in `landscape` and `portrait` viewports by default (~25 s full three-deck run). Add `--viewport=all` (or `=print`) to also run under `@media print` emulation — useful for catching slides whose print styles blow past the 700 px box.
+
+The checks **not** owned by this script (they're reliable enough as static grep invariants — see invariants 14–16 below): broken image paths, GIF auto-play, and focus-indicator outlines. Do those directly with Grep/Read against the source during Step 3; do not try to run them via the script.
 
 1. Invoke: `node scripts/check-render.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
 2. Read the resulting report from `.claude/cache/render-report.json` (sibling `.txt` is easier to quote). Each entry carries a `category` field (`overflow` or `contrast`) and category-specific payload.
@@ -87,10 +86,10 @@ These are the categories. The CSS supplies the specifics.
     - Do not add `aria-hidden` manually to fragments — Reveal.js manages this.
 12. **Content fit (no overflow).** Slide content must render inside the logical slide box (960×700 landscape, 540×960 portrait). Evidence comes from `scripts/check-render.js` (`category: "overflow"`), not visual guess. The report's `overflow.right` / `.bottom` / `.left` / `.top` values determine severity. Landscape overflow applies to desktop viewing; portrait overflow applies to mobile viewing — both must pass. Portrait-only overflow is still a CRITICAL defect (mobile is a deploy target); the fix is usually collapsing `.grid-cols-*` to one column or shrinking text, not rewriting the slide.
 13. **WCAG color contrast.** Text must render against its effective background at ≥4.5:1 (normal text) or ≥3:1 (large text, ≥24 px or ≥18.66 px at ≥700 weight). Evidence comes from `scripts/check-render.js` (`category: "contrast"`), which samples computed `color` against the composite of ancestor backgrounds (including gradient endpoints). The report's `contrast.ratio` / `.required` / `.isLarge` / `.fg` / `.bg` / `.count` fields drive the finding. Muted token (`--r-muted-color`) on the body background is a recurring offender (~3.81:1, below AA for normal text); the gold link token (`--r-link-color`) on the body is even worse (~2.57:1). Fixes: increase font size past the large-text threshold, switch to a darker shade, or change the background.
-14. **Resource integrity.** Every image, stylesheet, font, and script must load without a 4xx/5xx response. Evidence: `category: "resources"` in the render report. Severity: CRITICAL for image / stylesheet / font / script / document (each breaks styling or content); WARNING otherwise. Dedup'd by URL+status — the `count` field records how many requests hit it. Fix: correct the path or remove the reference.
-15. **No console noise.** Reveal plugins and external scripts must not throw `pageerror`s or emit `console.error` messages. Evidence: `category: "console"` in the render report. `pageerror` → CRITICAL; `console.error` → WARNING. Dedup'd per message. Note: the sandboxed test env can surface cert errors for CDNs (Font Awesome etc.); treat those as test-env noise rather than a production defect.
-16. **Motion honors `prefers-reduced-motion`.** Under `reducedMotion: reduce`, no descendant of the current slide should still have a running non-zero-duration animation. Visible auto-play GIFs inside slides are inherently non-compliant (GIFs ignore the media query). Evidence: `category: "motion"`. Severity: WARNING per occurrence. Fix: wrap the animation in `@media (prefers-reduced-motion: no-preference) { ... }` or swap the GIF for a static poster with an opt-in play control.
-17. **Focus indicator.** Every focusable element must show a visible delta in outline / box-shadow / border / background / color on focus. Evidence: `category: "focus"`. Caveat: programmatic `.focus()` does not trigger `:focus-visible`; a slide that relies *only* on `:focus-visible` rules may also get flagged — cross-check by tabbing through the deck locally before disputing. Fix: add a `:focus` rule (in addition to any `:focus-visible`) or replace `outline: none` with a visible alternative.
+14. **No console noise.** Reveal plugins and external scripts must not throw `pageerror`s or emit `console.error` messages. Evidence: `category: "console"` in the render report. `pageerror` → CRITICAL; `console.error` → WARNING. Dedup'd per message. Note: the sandboxed test env can surface cert errors for CDNs (Font Awesome etc.); treat those as test-env noise rather than a production defect.
+15. **Image paths resolve** (static). For every `<img src="…">` whose `src` does not start with `http` or `//`, verify the file exists at `<deck>/<src>` via Read/Glob. A missing file is CRITICAL — the image will 404 at runtime. (The script's `errors[]` array also records runtime 404s for diagnosis, but the static path check is faster and more reliable.)
+16. **Motion / auto-play GIFs** (static). Grep each `sections/*.html` for `<img[^>]+\.gif` — every hit is a WARNING: GIFs auto-play and ignore `prefers-reduced-motion`. Fix: replace with a static poster + explicit play control, or guard with a `@media (prefers-reduced-motion: no-preference)` wrapper.
+17. **Focus indicator** (static). Grep `sections/*.html` and the shared theme CSS for `outline:\s*(none|0)`. Every hit requires a companion `:focus` or `:focus-visible` rule that sets a visible alternative (outline, box-shadow, border, or background change). Missing alternative → WARNING.
 
 ---
 
@@ -107,8 +106,8 @@ For each audited file:
    - **Fix**: `<suggested fix>`
 
 **Severity levels**:
-- **CRITICAL** — off-palette color, wrong component class, broken layout, missing `alt`, icon-only link without `aria-label`, table without header semantics, **content overflow > 16 px in either axis in either viewport**, **contrast ratio < 3:1**, **4xx/5xx on an image/stylesheet/font/script/document**, **pageerror on any slide**
-- **WARNING** — missing utility class where one applies, missing `aria-hidden` on decorative icon, muted text below 1em, missing `rel="noopener noreferrer"`, `<div>` used for a list, table missing `<caption>`/`aria-label`, missing root `lang`, `outline: none` without replacement focus style, custom animation without reduced-motion fallback, inline accent border on `.card`, progression step not derived from the accent→link gradient, active timeline card not additionally highlighted, **content overflow 5–16 px in either axis in either viewport**, **contrast ratio ≥ 3:1 but below AA (normal text below 4.5:1 while above 3:1)**, **4xx/5xx on any other resource type**, **console.error message**
+- **CRITICAL** — off-palette color, wrong component class, broken layout, missing `alt`, icon-only link without `aria-label`, table without header semantics, **content overflow > 16 px in either axis in either viewport**, **contrast ratio < 3:1**, **pageerror on any slide**, **`<img src>` pointing at a file that does not exist**
+- **WARNING** — missing utility class where one applies, missing `aria-hidden` on decorative icon, muted text below 1em, missing `rel="noopener noreferrer"`, `<div>` used for a list, table missing `<caption>`/`aria-label`, missing root `lang`, `outline: none` without replacement focus style, custom animation without reduced-motion fallback, inline accent border on `.card`, progression step not derived from the accent→link gradient, active timeline card not additionally highlighted, **content overflow 5–16 px in either axis in either viewport**, **contrast ratio ≥ 3:1 but below AA (normal text below 4.5:1 while above 3:1)**, **console.error message**, **auto-play `.gif` image**
 - **INFO** — stylistic inconsistency, section that would benefit from `aria-label`, dense `.grid-cols-5` with portrait concerns, slide relying solely on background gradient for structure, off-screen image missing `loading="lazy"`, **content overflow 1–4 px in either axis in either viewport (sub-pixel / thin-border effects)**
 
 For each overflow finding (`category: "overflow"`), cite it as:
@@ -125,35 +124,18 @@ For each contrast finding (`category: "contrast"`), cite it as:
 - **Source**: `scripts/check-render.js`
 - **Fix**: darken the foreground token, widen the element past the large-text threshold (≥24 px or ≥18.66 px bold), or recolor the surrounding background.
 
-For each resources finding (`category: "resources"`), cite it as:
-
-**[SEVERITY]** Line NN: `<status>` on `<type>` `<url>` in `<viewport>` (slide h=H/v=V, x`<count>` occurrences)
-- **Source**: `scripts/check-render.js`
-- **Fix**: fix the path, update the CDN URL, or remove the reference.
-
 For each console finding (`category: "console"`), cite it as:
 
 **[SEVERITY]** Line NN: `<kind>` "`<message>`" in `<viewport>` (slide h=H/v=V, x`<count>` occurrences)
 - **Source**: `scripts/check-render.js`
 - **Fix**: trace the error to its source; confirm whether it's a production issue or test-env noise (e.g. sandboxed CDN cert failures).
 
-For each motion finding (`category: "motion"`), cite it as:
-
-**[WARNING]** Line NN: auto-play `<kind>` (`<duration|src>`) under prefers-reduced-motion:reduce in `<viewport>` (slide h=H/v=V)
-- **Offender**: `<tag.classes snippet>`
-- **Source**: `scripts/check-render.js`
-- **Fix**: guard the animation with `@media (prefers-reduced-motion: no-preference)` or replace the GIF with a static poster + opt-in play control.
-
-For each focus finding (`category: "focus"`), cite it as:
-
-**[WARNING]** Line NN: no visible focus delta on `<tag.classes>` in `<viewport>` (slide h=H/v=V)
-- **Offender**: `<tag.classes snippet>`
-- **Source**: `scripts/check-render.js`
-- **Fix**: add a visible `:focus` style (not only `:focus-visible`) or drop `outline: none` without a replacement.
+For each static finding (invariants 15–17, caught by Grep/Read), cite it like any other static issue with a file:line reference and a concrete fix.
 
 End with a **Summary**:
 - Total issues by severity
 - Most common issue type
-- **Render check status**: per-category counts (overflow, contrast, resources, console, motion, focus — each `N critical / M warning`) — or "Render check passed" if zero
+- **Render check status**: per-category counts (overflow, contrast, console — each `N critical / M warning`) — or "Render check passed" if zero
+- **Static check status**: counts of static-invariant findings (broken image paths, GIFs, focus-indicator issues)
 - Overall design consistency grade (A/B/C/D)
 - If you found any drift between this prompt and `custom-themes/*.css`, note it so the prompt can be updated.
