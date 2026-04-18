@@ -10,6 +10,7 @@ A Reveal.js (v5.2.1) presentation repository containing multiple HTML slide deck
 
 - **Build all presentations:** `npm run build` — copies reveal.js dist/plugins from node_modules into each presentation, copies custom themes, then stages everything into `_site/`
 - **Serve locally:** `npm run start:cloud-migrations`, `npm run start:docker-training`, `npm run start:secure-landing-zones` — serves on port 8000 via `npx serve`
+- **Check slide rendering:** `npm run check-render` — renders every slide headlessly in landscape and portrait (~25 s) and runs the render-based design checks that static inspection can't match: **overflow**, **contrast** (WCAG AA vs computed effective background), **console** (`pageerror` + `console.error`). Add deck names (`npm run check-render -- docker-training`), `-- --viewport=print` (or `--viewport=all` for landscape+portrait+print), or `-- --categories=contrast,overflow` to narrow. Output: `.claude/cache/render-report.{json,txt}`. Other design checks (broken image paths, GIF auto-play, focus indicators) are static grep invariants owned by the design-review agent — keeps the render pass fast and the checks reliable.
 - **Install deps:** `npm install`
 
 ## Architecture
