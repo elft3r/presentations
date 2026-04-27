@@ -4,7 +4,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const REVEAL_DIR = path.join(ROOT, 'node_modules', 'reveal.js');
 
-const PRESENTATIONS = ['cloud-migrations', 'secure-landing-zones', 'docker-training'];
+const { PRESENTATIONS } = require('./presentations');
 
 const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 

@@ -11,9 +11,10 @@
 // byte-exact visual regression (flakes without a pixel-diff library). The
 // design-review agent covers these via static invariants with Read/Grep.
 //
-// Playwright is not a repo dependency; it's resolved from the global
-// install at /opt/node22/lib/node_modules/playwright (with local
-// fallback so `npm i -D playwright` remains a drop-in replacement).
+// Playwright is not a repo dependency; it's resolved from the local
+// node_modules first (so `npm i -D playwright` is a drop-in upgrade)
+// and falls back to the global install at
+// /opt/node22/lib/node_modules/playwright when no local copy exists.
 
 const fs = require('fs');
 const http = require('http');
@@ -21,7 +22,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const PRESENTATIONS = ['cloud-migrations', 'secure-landing-zones', 'docker-training'];
+const { PRESENTATIONS } = require('./presentations');
 const GLOBAL_PW = '/opt/node22/lib/node_modules/playwright';
 
 function loadPlaywright() {
@@ -341,14 +342,17 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
   const runContrast = opts.categories.includes('contrast');
   const runConsole = opts.categories.includes('console');
 
-  // Per-slide attribution. Updated inside the slide loop.
-  let currentSlide = {
+  const consoleBuckets = new Map();
+  // Console events fire asynchronously; the slide active when the listener
+  // fires may not be the slide that triggered the underlying load. We
+  // therefore attribute these to the deck (index.html:1) rather than guess
+  // a per-slide source. The viewport is still accurate.
+  const deckBase = {
     h: null,
     v: null,
     sourceFile: `${deck}/index.html`,
     sourceLine: 1,
   };
-  const consoleBuckets = new Map();
 
   page.on('response', (resp) => {
     // errors[] remains a debug stream for 404s; we don't emit resources findings.
@@ -363,7 +367,7 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
       return;
     }
     consoleBuckets.set(key, {
-      ...currentSlide,
+      ...deckBase,
       presentation: deck,
       viewport,
       category: 'console',
@@ -382,7 +386,7 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
       return;
     }
     consoleBuckets.set(key, {
-      ...currentSlide,
+      ...deckBase,
       presentation: deck,
       viewport,
       category: 'console',
@@ -454,7 +458,6 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
       sourceLine = indexHtmlLineFor(path.join(ROOT, deck, 'index.html'), s.h);
     }
     const base = { presentation: deck, viewport, h: s.h, v: s.v, sourceFile, sourceLine };
-    currentSlide = { h: s.h, v: s.v, sourceFile, sourceLine };
 
     if (runOverflow) {
       const m = await page.evaluate(
@@ -482,6 +485,7 @@ async function measurePage(page, url, deck, viewport, opts, thresholds, errors) 
           const isVisible = (el) => {
             const cs = getComputedStyle(el);
             if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+            if (parseFloat(cs.opacity) === 0) return false;
             return true;
           };
           const walk = (el) => {

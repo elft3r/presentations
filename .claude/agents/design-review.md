@@ -36,11 +36,15 @@ Static HTML/CSS inspection cannot see defects that depend on rendered fonts, com
 
 The checker runs each category in `landscape` and `portrait` viewports by default (~25 s full three-deck run). Add `--viewport=all` (or `=print`) to also run under `@media print` emulation — useful for catching slides whose print styles blow past the 700 px box.
 
-The checks **not** owned by this script (they're reliable enough as static grep invariants — see invariants 14–16 below): broken image paths, GIF auto-play, and focus-indicator outlines. Do those directly with Grep/Read against the source during Step 3; do not try to run them via the script.
+The checks **not** owned by this script (they're reliable enough as static grep invariants — see invariants 15–17 below): broken image paths, GIF auto-play, and focus-indicator outlines. Do those directly with Grep/Read against the source during Step 3; do not try to run them via the script.
 
-1. Invoke: `node scripts/check-render.js <presentation>` (or no argument to check all three, matching `$ARGUMENTS`). The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
-2. Read the resulting report from `.claude/cache/render-report.json` (sibling `.txt` is easier to quote). Each entry carries a `category` field (`overflow` or `contrast`) and category-specific payload.
-3. Keep each finding's `(category, sourceFile, sourceLine, viewport, severity, offender, + category-specific fields)` — you will merge these into the per-file report in Step 4.
+1. Invoke: `node scripts/check-render.js <presentation>`. Pick `<presentation>` from `$ARGUMENTS`:
+   - If `$ARGUMENTS` is empty → run with no argument (all three decks).
+   - If `$ARGUMENTS` is a deck name (`cloud-migrations`, `docker-training`, `secure-landing-zones`) → pass it directly.
+   - If `$ARGUMENTS` is a file path like `cloud-migrations/sections/foo.html` → extract the leading deck segment and pass that. Do not pass the file path itself; the script rejects non-deck args.
+   The first run after a fresh checkout may take ~30 s because it runs the build implicitly and launches Chromium.
+2. Read the resulting report from `.claude/cache/render-report.json` (sibling `.txt` is easier to quote). Each entry carries a `category` field — currently `overflow`, `contrast`, or `console` — and a category-specific payload.
+3. Keep each finding's `(category, sourceFile, sourceLine, viewport, severity, offender, + category-specific fields)` — you will merge **all** of them (overflow + contrast + console) into the per-file report in Step 4. Console findings carry `h: null, v: null` and source `<deck>/index.html:1` because they fire asynchronously and aren't reliably attributable to a specific slide; report them at the deck level.
 
 If the script exits with code 2 (script failure), say so up front in your report and proceed with static-only review. Use `Bash` only to invoke `scripts/check-render.js`; do not use it for anything else.
 
@@ -52,7 +56,7 @@ If the script exits with code 2 (script failure), say so up front in your report
 
 ### Step 3: Audit each `<section>`
 
-Check each slide against the invariants below, using the CSS you loaded in Step 0 for specifics. Track issues with file paths and line numbers. Merge the overflow findings from Step 1 into this pass — they are the only evidence for invariant #12.
+Check each slide against the invariants below, using the CSS you loaded in Step 0 for specifics. Track issues with file paths and line numbers. Merge the render findings from Step 1 into this pass — overflow into invariant #12, contrast into #13, console into #14. Static invariants #15–#17 (broken image paths, GIFs, focus outlines) you check directly via Read/Grep here.
 
 ### Step 4: Report
 
