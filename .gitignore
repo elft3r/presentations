@@ -27,3 +27,4 @@ _site/
 */sections/jochen.html
 
 .claude/settings.local.json
+.claude/cache/

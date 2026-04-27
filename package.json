@@ -5,6 +5,7 @@
   "description": "Reveal.js presentations",
   "scripts": {
     "build": "node scripts/build.js",
+    "check-render": "node scripts/check-render.js",
     "start:cloud-migrations": "cd cloud-migrations && npx serve -l 8000",
     "start:secure-landing-zones": "cd secure-landing-zones && npx serve -l 8000",
     "start:docker-training": "cd docker-training && npx serve -l 8000"
