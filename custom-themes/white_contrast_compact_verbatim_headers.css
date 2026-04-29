@@ -37,6 +37,20 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-link-color: #B39A6A;
   --r-link-color-dark: #6E5C3A;
   --r-link-color-hover: #C9B48A;
+  /* Progression scale: live interpolation between --r-accent-color and
+     --r-link-color-dark. The number is the % blend toward link-color-dark
+     (--r-prog-0 = pure accent, --r-prog-100 = pure dark gold). Change
+     either endpoint and every step recomputes automatically. */
+  --r-prog-0:   var(--r-accent-color);
+  --r-prog-15:  color-mix(in srgb, var(--r-accent-color) 85%, var(--r-link-color-dark));
+  --r-prog-25:  color-mix(in srgb, var(--r-accent-color) 75%, var(--r-link-color-dark));
+  --r-prog-30:  color-mix(in srgb, var(--r-accent-color) 70%, var(--r-link-color-dark));
+  --r-prog-45:  color-mix(in srgb, var(--r-accent-color) 55%, var(--r-link-color-dark));
+  --r-prog-50:  color-mix(in srgb, var(--r-accent-color) 50%, var(--r-link-color-dark));
+  --r-prog-60:  color-mix(in srgb, var(--r-accent-color) 40%, var(--r-link-color-dark));
+  --r-prog-75:  color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color-dark));
+  --r-prog-90:  color-mix(in srgb, var(--r-accent-color) 10%, var(--r-link-color-dark));
+  --r-prog-100: var(--r-link-color-dark);
   --r-selection-background-color: #DCCFB7;
   --r-selection-color: #fff;
   --r-accent-color: #24584C;
