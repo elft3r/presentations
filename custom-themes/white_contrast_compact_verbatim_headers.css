@@ -36,7 +36,6 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-code-font: monospace;
   --r-link-color: #B39A6A;
   --r-link-color-dark: #6E5C3A;
-  --r-link-color-hover: #C9B48A;
   /* Progression scale: live interpolation between --r-accent-color and
      --r-link-color-dark. The number is the % blend toward link-color-dark
      (--r-prog-0 = pure accent, --r-prog-100 = pure dark gold). Change
