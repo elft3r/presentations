@@ -4,8 +4,12 @@
 </section>
 <section>
   <h2>I'm not a lawyer</h2>
-  <div class="card max-w-65 mx-auto mt-8">
-    <p>Speaker notes &amp; sources, not legal advice. Talk to your counsel.</p>
+  <div class="card max-w-70 mx-auto mt-8">
+    <ul class="styled-list">
+      <li>This is an <em>engineer's</em> view of regulation, not legal advice</li>
+      <li>The landscape moves faster than slides do — verify before you bet on it</li>
+      <li>Every regulator reads the same text differently — talk to <em>your</em> compliance team early</li>
+    </ul>
   </div>
 </section>
 <section>
@@ -14,17 +18,17 @@
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span>
       <h3>Swiss Banks</h3>
-      <p>FINMA-compliant cloud usage is established and legally assessed</p>
+      <p><small>FINMA-compliant cloud usage is established</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-landmark" aria-hidden="true"></i></span>
       <h3>Public Sector</h3>
-      <p>City of Zurich and federal agencies use cloud services</p>
+      <p><small>City of Zurich and federal agencies use cloud</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></span>
       <h3>Legal Opinions</h3>
-      <p>Multiple law firms have published assessments supporting cloud adoption</p>
+      <p><small>Law firms have published supporting assessments</small></p>
     </div>
   </div>
   <aside class="notes">
@@ -39,53 +43,50 @@
 </section>
 <section>
   <h2>Key Regulations</h2>
-  <div class="grid grid-cols-5 gap-4">
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></span>
-      <h3>nDSG</h3>
-      <p><small>Swiss data protection</small></p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span>
-      <h3>revFINMA<br>2023/1</h3>
-      <p><small>Operational risk &amp; resilience</small></p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i></span>
-      <h3>GDPR</h3>
-      <p><small>EU data protection</small></p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
-      <h3>DORA</h3>
-      <p><small>EU operational resilience<br>(in force 2025-01)</small></p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i></span>
-      <h3>EU Data Act</h3>
-      <p><small>Cloud switching &amp; portability<br>(since 2025-09)</small></p>
-    </div>
-  </div>
+  <ul class="styled-list">
+    <li class="fragment">
+      <a href="https://www.fedlex.admin.ch/eli/cc/2022/491/en" target="_blank" rel="noopener noreferrer"><em>nDSG</em></a>
+      — revised Swiss Data Protection Act (in force since 2023-09)
+    </li>
+    <li class="fragment">
+      <a href="https://www.finma.ch/en/documentation/circulars/" target="_blank" rel="noopener noreferrer"><em>revFINMA Circular 2023/1</em></a>
+      — operational risks &amp; resilience; supersedes parts of 2018/3
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noopener noreferrer"><em>GDPR</em></a>
+      — EU data protection (Regulation 2016/679)
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" rel="noopener noreferrer"><em>DORA</em></a>
+      — EU Digital Operational Resilience Act (in force since 2025-01)
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" rel="noopener noreferrer"><em>EU Data Act</em></a>
+      — cloud-switching &amp; portability rights (applicable since 2025-09)
+    </li>
+  </ul>
   <aside class="notes">
-    nDSG (revDSG): https://www.fedlex.admin.ch/eli/cc/2022/491/en
-    revFINMA Circular 2023/1 — Operational Risks and Resilience: https://www.finma.ch/en/documentation/circulars/
-    GDPR (Regulation (EU) 2016/679): https://eur-lex.europa.eu/eli/reg/2016/679/oj
-    DORA (Regulation (EU) 2022/2554): https://eur-lex.europa.eu/eli/reg/2022/2554/oj
-    EU Data Act (Regulation (EU) 2023/2854): https://eur-lex.europa.eu/eli/reg/2023/2854/oj
+    Swiss-only audiences: emphasise nDSG and revFINMA 2023/1.
+    Anyone with EU exposure: GDPR + DORA + EU Data Act all bite.
+    DORA is the new big one for FINMA-regulated firms with EU customers
+    or EU subsidiaries — overlaps heavily with the FINMA outsourcing
+    framework on third-party risk and incident reporting.
+    EU Data Act forces cloud providers to support customer-driven
+    switching and forbids egress fees beyond cost-recovery from 2027.
   </aside>
 </section>
 <section>
-  <h2>Why people worry about US hyperscalers</h2>
+  <h2>The CLOUD Act question</h2>
   <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-gavel" aria-hidden="true"></i></span>
       <h3>US CLOUD Act</h3>
-      <p>US providers can be compelled to disclose data, regardless of where it sits</p>
+      <p><small>US providers can be compelled to disclose data, regardless of where it sits</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-eye" aria-hidden="true"></i></span>
       <h3>FISA 702</h3>
-      <p>Surveillance over non-US persons' data held by US providers</p>
+      <p><small>Surveillance over non-US persons' data held by US providers</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
@@ -94,32 +95,75 @@
     </div>
   </div>
   <aside class="notes">
-    Schrems II (CJEU C-311/18): https://curia.europa.eu/juris/liste.jsf?num=C-311/18
-    EDPB Recommendations 01/2020 on supplementary measures: https://edpb.europa.eu/our-work-tools/our-documents/recommendations/recommendations-012020-measures-supplement-transfer_en
-    US CLOUD Act (2018): https://www.congress.gov/bill/115th-congress/house-bill/4943
-    Note: data residency alone does not block a CLOUD Act order — operator nationality and key custody matter.
+    This is THE objection regulators and security teams raise as soon as
+    AWS/Azure/GCP enter the conversation. Address it head-on rather than
+    hoping it doesn't come up.
+
+    What to say:
+
+    1. US CLOUD Act (2018, Clarifying Lawful Overseas Use of Data Act):
+       a US court can compel a US-headquartered provider to hand over
+       data they hold or control, regardless of where the data
+       physically sits. So a Swiss customer's data in AWS Frankfurt is
+       still in scope as long as AWS Inc. is the operator.
+
+    2. FISA Section 702: lets US intelligence surveil non-US persons'
+       communications held by US "electronic communication service
+       providers". Schrems II (CJEU C-311/18, 2020) struck down Privacy
+       Shield over this exact issue.
+
+    3. Therefore "data residency" alone is NOT sovereignty. EU
+       geography + US operator = US-court reach.
+
+    Provider responses (the right-hand card):
+    - Sovereign regions operated by EU/Swiss legal entities so the
+      US-court compulsion path doesn't apply (AWS European Sovereign
+      Cloud, Google + S3NS / Bleu, Swisscom Sovereign Cloud).
+    - Customer-managed keys (BYOK / HYOK / external KMS): if the
+      customer holds the keys, the provider technically cannot read the
+      data even when compelled to surrender it.
+    - Confidential computing: encryption-in-use via hardware enclaves
+      (AWS Nitro, Azure Confidential, Intel SGX, AMD SEV-SNP).
+
+    Sources to mention if asked:
+    - US CLOUD Act: https://www.congress.gov/bill/115th-congress/house-bill/4943
+    - Schrems II: https://curia.europa.eu/juris/liste.jsf?num=C-311/18
+    - EDPB Recommendations 01/2020 on supplementary measures:
+      https://edpb.europa.eu/our-work-tools/our-documents/recommendations/recommendations-012020-measures-supplement-transfer_en
   </aside>
 </section>
 <section>
   <h2>What is Cloud Sovereignty?</h2>
-  <p><em>Digital sovereignty</em> is the umbrella — three concrete layers:</p>
   <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-database" aria-hidden="true"></i></span>
       <h3>Data</h3>
-      <p>Data is subject to the laws of the country where it is stored</p>
+      <p><small>Subject to the laws of where it sits</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
       <h3>Operational</h3>
-      <p>Control over operations — no foreign administrative access</p>
+      <p><small>No foreign administrative access</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
       <h3>Technical</h3>
-      <p>Independence from a single vendor's stack — portability, open standards, no lock-in</p>
+      <p><small>Portability, open standards, no lock-in</small></p>
     </div>
   </div>
+  <aside class="notes">
+    "Digital sovereignty" is the umbrella term — strategic autonomy
+    over digital infrastructure. The three cards are the concrete
+    layers it breaks into.
+
+    These are independent dials: a deployment can be data-sovereign
+    (data in CH/EU) but not operationally sovereign (admin staff sit
+    in the US), and vice versa.
+
+    Microsoft, Google and Gartner all use roughly this three-layer
+    framing. We dropped the original "Software Sovereignty" card here
+    in favour of "Technical" — same idea, broader scope.
+  </aside>
 </section>
 <section>
   <h2>Sovereign Cloud Offerings</h2>
