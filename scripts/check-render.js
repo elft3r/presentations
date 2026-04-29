@@ -255,6 +255,20 @@ const IN_PAGE_CONTRAST_HELPERS = `
       const h = m[1];
       return [parseInt(h[0] + h[0], 16), parseInt(h[1] + h[1], 16), parseInt(h[2] + h[2], 16), 1];
     }
+    // Modern color() function in sRGB — what Chromium emits for color-mix(in srgb, …).
+    // Components are 0..1 floats; alpha is optional and may be a float or a percentage.
+    m = /^color\\(\\s*srgb\\s+([\\d.eE+-]+)\\s+([\\d.eE+-]+)\\s+([\\d.eE+-]+)(?:\\s*\\/\\s*([\\d.eE+-]+%?))?\\s*\\)$/i.exec(str);
+    if (m) {
+      const r = parseFloat(m[1]) * 255;
+      const g = parseFloat(m[2]) * 255;
+      const b = parseFloat(m[3]) * 255;
+      let a = 1;
+      if (m[4] != null) {
+        a = m[4].endsWith('%') ? parseFloat(m[4]) / 100 : parseFloat(m[4]);
+      }
+      if ([r, g, b, a].some(Number.isNaN)) return null;
+      return [r, g, b, a];
+    }
     return null;
   }
   function sRGBToLinear(c) {

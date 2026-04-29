@@ -35,8 +35,21 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-heading4-size: 1em;
   --r-code-font: monospace;
   --r-link-color: #B39A6A;
-  --r-link-color-dark: #8C7850;
-  --r-link-color-hover: #C9B48A;
+  --r-link-color-dark: #6E5C3A;
+  /* Progression scale: live interpolation between --r-accent-color and
+     --r-link-color-dark. The number is the % blend toward link-color-dark
+     (--r-prog-0 = pure accent, --r-prog-100 = pure dark gold). Change
+     either endpoint and every step recomputes automatically. */
+  --r-prog-0:   var(--r-accent-color);
+  --r-prog-15:  color-mix(in srgb, var(--r-accent-color) 85%, var(--r-link-color-dark));
+  --r-prog-25:  color-mix(in srgb, var(--r-accent-color) 75%, var(--r-link-color-dark));
+  --r-prog-30:  color-mix(in srgb, var(--r-accent-color) 70%, var(--r-link-color-dark));
+  --r-prog-45:  color-mix(in srgb, var(--r-accent-color) 55%, var(--r-link-color-dark));
+  --r-prog-50:  color-mix(in srgb, var(--r-accent-color) 50%, var(--r-link-color-dark));
+  --r-prog-60:  color-mix(in srgb, var(--r-accent-color) 40%, var(--r-link-color-dark));
+  --r-prog-75:  color-mix(in srgb, var(--r-accent-color) 25%, var(--r-link-color-dark));
+  --r-prog-90:  color-mix(in srgb, var(--r-accent-color) 10%, var(--r-link-color-dark));
+  --r-prog-100: var(--r-link-color-dark);
   --r-selection-background-color: #DCCFB7;
   --r-selection-color: #fff;
   --r-accent-color: #24584C;
@@ -45,7 +58,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-card-bg: #ffffff;
   --r-card-border: #e2e8f0;
   --r-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --r-muted-color: #718096;
+  --r-muted-color: #4F5B6B;
 }
 
 .reveal-viewport {
@@ -212,6 +225,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   position: relative;
   width: 70%;
   padding: 1em 1.5em;
+  box-sizing: border-box;
   box-shadow: none;
 }
 
@@ -224,6 +238,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   display: block;
   width: 80%;
   padding: 0.8em 1.2em;
+  box-sizing: border-box;
   text-align: left;
 }
 
@@ -333,13 +348,17 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  * LINKS
  *********************************************/
 .reveal a {
-  color: var(--r-link-color);
+  color: var(--r-link-color-dark);
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: text-decoration-color 0.15s ease;
 }
 
-.reveal a:hover {
-  color: var(--r-link-color-hover);
+.reveal a:hover,
+.reveal a:focus-visible {
+  color: var(--r-link-color-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
   text-shadow: none;
   border: none;
 }
@@ -416,7 +435,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal section.section-title .source,
 .reveal section.section-title .source a {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .reveal section.section-title .source a:hover {
@@ -574,6 +593,38 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal .source a:hover {
   color: var(--r-accent-color);
+}
+
+/*********************************************
+ * REDUCED MOTION
+ * GIFs ignore prefers-reduced-motion; pair an
+ * animated image with a static fallback and use
+ * the media query to swap them.
+ *********************************************/
+.reveal .motion-gif-fallback { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .motion-gif { display: none; }
+  .reveal .motion-gif-fallback { display: block; }
+}
+
+/*********************************************
+ * SYNTAX HIGHLIGHTING CONTRAST OVERRIDES
+ * Bundled Monokai is below WCAG AA on the
+ * default dark editor background — lift the
+ * lowest-contrast tokens.
+ *********************************************/
+.reveal pre code .hljs-comment,
+.reveal pre code .hljs-quote {
+  color: #b4ac8c;
+}
+
+.reveal pre code .hljs-keyword,
+.reveal pre code .hljs-selector-tag,
+.reveal pre code .hljs-literal,
+.reveal pre code .hljs-section,
+.reveal pre code .hljs-link {
+  color: #ff85c1;
 }
 
 /*********************************************
