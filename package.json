@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "reveal.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "marked": "^18.0.2"
   }
 }
