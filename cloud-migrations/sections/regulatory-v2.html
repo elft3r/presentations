@@ -4,13 +4,11 @@
 </section>
 <section>
   <h2>I'm not a lawyer</h2>
-  <div class="card max-w-70 mx-auto mt-8">
-    <ul class="styled-list">
-      <li>This is an <em>engineer's</em> view of regulation, not legal advice</li>
-      <li>The landscape moves faster than slides do — verify before you bet on it</li>
-      <li>Every regulator reads the same text differently — talk to <em>your</em> compliance team early</li>
-    </ul>
-  </div>
+  <ul class="styled-list max-w-70 mx-auto mt-8">
+    <li>This is an <em>engineer's</em> view of regulation, not legal advice</li>
+    <li>The landscape moves faster than slides do — verify before you bet on it</li>
+    <li>Every regulator reads the same text differently — talk to <em>your</em> compliance team early</li>
+  </ul>
 </section>
 <section>
   <h2>You are not the first</h2>
@@ -134,7 +132,7 @@
 </section>
 <section>
   <h2>What is Cloud Sovereignty?</h2>
-  <div class="grid grid-cols-3 gap-6">
+  <div class="grid gap-6" style="grid-template-columns: 1fr 1.25fr 1fr;">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-database" aria-hidden="true"></i></span>
       <h3>Data</h3>
@@ -227,7 +225,11 @@
   <h2>Do you actually need it?</h2>
   <q>Sovereignty follows data classification — not the other way around.</q>
   <ul class="styled-list mt-8">
-    <li class="fragment">What data class? <span class="badge">public</span> <span class="badge">internal</span> <span class="badge">confidential</span> <span class="badge">CID</span></li>
+    <li class="fragment">What data class do your assets fall into?
+      <ul>
+        <li><span class="badge">public</span> <span class="badge">internal</span> <span class="badge">confidential</span> <span class="badge">CID</span></li>
+      </ul>
+    </li>
     <li class="fragment">Who is the regulator and what do they actually require?</li>
     <li class="fragment">Is encryption + customer-held keys enough — or is operator nationality in scope?</li>
     <li class="fragment">What cost / service-availability premium can you absorb?</li>
