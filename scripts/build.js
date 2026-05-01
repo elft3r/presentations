@@ -4,8 +4,17 @@ const { marked } = require('marked');
 
 const ROOT = path.resolve(__dirname, '..');
 const REVEAL_DIR = path.join(ROOT, 'node_modules', 'reveal.js');
+const PKG = require(path.join(ROOT, 'package.json'));
 
 const { PRESENTATIONS } = require('./presentations');
+
+// Drop raw HTML from rendered Markdown so a malicious or accidental
+// <script>/<iframe> in README.md cannot reach the public landing page.
+marked.use({
+  renderer: {
+    html: () => '',
+  },
+});
 
 const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 
@@ -85,12 +94,13 @@ const readme = path.join(ROOT, 'README.md');
 if (fs.existsSync(readme)) {
   console.log('\nRendering README.md to _site/index.html...');
   let markdown = fs.readFileSync(readme, 'utf8');
-  // Rewrite absolute production URLs to site-relative paths so the landing
+  // Rewrite the configured homepage to a site-relative path so the landing
   // page works on both production and PR preview deployments.
-  markdown = markdown.replace(
-    /https:\/\/elft3r\.github\.io\/presentations\//g,
-    './'
-  );
+  if (PKG.homepage) {
+    const homepage = PKG.homepage.endsWith('/') ? PKG.homepage : PKG.homepage + '/';
+    const escaped = homepage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    markdown = markdown.replace(new RegExp(escaped, 'g'), './');
+  }
   const rendered = marked.parse(markdown);
   const html = `<!DOCTYPE html>
 <html lang="en">

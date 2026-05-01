@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Reveal.js presentations",
+  "homepage": "https://elft3r.github.io/presentations/",
   "scripts": {
     "build": "node scripts/build.js",
     "check-render": "node scripts/check-render.js",
