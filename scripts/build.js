@@ -1,10 +1,20 @@
 const fs = require('fs');
 const path = require('path');
+const { marked } = require('marked');
 
 const ROOT = path.resolve(__dirname, '..');
 const REVEAL_DIR = path.join(ROOT, 'node_modules', 'reveal.js');
+const PKG = require(path.join(ROOT, 'package.json'));
 
 const { PRESENTATIONS } = require('./presentations');
+
+// Drop raw HTML from rendered Markdown so a malicious or accidental
+// <script>/<iframe> in README.md cannot reach the public landing page.
+marked.use({
+  renderer: {
+    html: () => '',
+  },
+});
 
 const STOCK_PLUGINS = ['highlight', 'markdown', 'notes'];
 
@@ -79,10 +89,75 @@ for (const pres of PRESENTATIONS) {
   copyRecursive(path.join(ROOT, pres), path.join(siteDir, pres));
 }
 
-// Copy README.md to serve as the landing page
+// Render README.md to _site/index.html as the landing page
 const readme = path.join(ROOT, 'README.md');
 if (fs.existsSync(readme)) {
-  fs.copyFileSync(readme, path.join(siteDir, 'README.md'));
+  console.log('\nRendering README.md to _site/index.html...');
+  let markdown = fs.readFileSync(readme, 'utf8');
+  // Rewrite the configured homepage to a site-relative path so the landing
+  // page works on both production and PR preview deployments.
+  if (PKG.homepage) {
+    const homepage = PKG.homepage.endsWith('/') ? PKG.homepage : PKG.homepage + '/';
+    const escaped = homepage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    markdown = markdown.replace(new RegExp(escaped, 'g'), './');
+  }
+  const rendered = marked.parse(markdown);
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Presentations</title>
+  <style>
+    :root {
+      --bg: #F8F9FA;
+      --text: #2d3748;
+      --heading: #1a202c;
+      --accent: #24584C;
+      --link: #B39A6A;
+      --link-hover: #6E5C3A;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main {
+      max-width: 720px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+    }
+    h1, h2, h3 {
+      color: var(--heading);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+    }
+    h1 { font-size: 2.5rem; border-bottom: 4px solid var(--accent); padding-bottom: 0.5rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--link); text-decoration: none; border-bottom: 1px solid currentColor; }
+    a:hover, a:focus { color: var(--link-hover); }
+    ul { padding-left: 1.25rem; }
+    li { margin: 0.4rem 0; }
+    img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <main>
+${rendered}  </main>
+</body>
+</html>
+`;
+  fs.writeFileSync(path.join(siteDir, 'index.html'), html);
 }
 
 console.log('\nBuild complete! Output in _site/');
