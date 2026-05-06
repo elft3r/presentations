@@ -9,16 +9,16 @@ A presentation on cloud migration best practices and learnings, with a focus on 
 Sections are loaded in this order (see `index.html`):
 
 1. `header.html` — title slide
-2. `jochen.html` — speaker intro (symlink to shared file)
-3. `disclaimer.html` — disclaimer
+2. `jochen.html` — speaker intro (copied from `shared/` by `npm run build`, gitignored)
+3. `cloud.html` — cloud fundamentals, service models, infrastructure
 4. `why-migrate.html` — business and technology drivers for migration
-5. `cloud.html` — cloud fundamentals, service models, infrastructure
-6. `regulatory.html` — legal, regulations (nDSG, revFINMA, GDPR, DORA, EU Data Act), sovereignty
-7. `security.html` — shared responsibility, IAM, data center security
-8. `migration-strategies.html` — the 7 Rs framework
-9. `migrate-regulated-company.html` — FINMA-regulated company use case
-10. `technical.html` — account vending, IaC, event-driven
-11. `learnings.html` — organizational, technical, and FinOps learnings
+5. `regulatory.html` — legal, regulations (nDSG, revFINMA, GDPR, DORA, EU Data Act), sovereignty
+6. `security.html` — shared responsibility, IAM, data center security
+7. `migration-strategies.html` — the 7 Rs framework
+8. `migrate-regulated-company.html` — FINMA-regulated company use case
+9. `technical.html` — account vending, IaC, event-driven
+10. `learnings.html` — organizational, technical, and FinOps learnings
+11. Q&A — inline slide in `index.html`
 
 ## Local Development
 
