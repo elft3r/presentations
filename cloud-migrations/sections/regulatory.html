@@ -3,21 +3,29 @@
 </section>
 <section>
   <h2>I'm not a lawyer</h2>
+  <ul class="styled-list max-w-70 mx-auto mt-8">
+    <li>This is an <em>engineer's</em> view of regulation, not legal advice</li>
+    <li>The landscape moves faster than slides do — verify before you bet on it</li>
+    <li>Every regulator reads the same text differently — talk to <em>your</em> compliance team early</li>
+  </ul>
+</section>
+<section>
+  <h2>You are not the first</h2>
   <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span>
       <h3>Swiss Banks</h3>
-      <p>FINMA-compliant cloud usage is established and legally assessed</p>
+      <p><small>FINMA-compliant cloud usage is established</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-landmark" aria-hidden="true"></i></span>
       <h3>Public Sector</h3>
-      <p>City of Zurich and federal agencies use cloud services</p>
+      <p><small>City of Zurich and federal agencies use cloud</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></span>
       <h3>Legal Opinions</h3>
-      <p>Multiple law firms have published assessments supporting cloud adoption</p>
+      <p><small>Law firms have published supporting assessments</small></p>
     </div>
   </div>
   <aside class="notes">
@@ -32,81 +40,209 @@
 </section>
 <section>
   <h2>Key Regulations</h2>
+  <ul class="styled-list">
+    <li class="fragment">
+      <a href="https://www.fedlex.admin.ch/eli/cc/2022/491/en" target="_blank" rel="noopener noreferrer"><em>nDSG</em></a>
+      — revised Swiss Data Protection Act (in force since 2023-09)
+    </li>
+    <li class="fragment">
+      <a href="https://www.finma.ch/en/~/media/finma/dokumente/dokumentencenter/myfinma/rundschreiben/finma-rs-2023-01-20221207.pdf" target="_blank" rel="noopener noreferrer"><em>revFINMA Circular 2023/1</em></a>
+      — operational risks &amp; resilience; supersedes parts of 2018/3
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noopener noreferrer"><em>GDPR</em></a>
+      — EU data protection (Regulation 2016/679)
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" rel="noopener noreferrer"><em>DORA</em></a>
+      — EU Digital Operational Resilience Act (applicable since 2025-01)
+    </li>
+    <li class="fragment">
+      <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" rel="noopener noreferrer"><em>EU Data Act</em></a>
+      — cloud-switching &amp; portability rights (applicable since 2025-09)
+    </li>
+  </ul>
+  <aside class="notes">
+    Swiss-only audiences: emphasise nDSG and revFINMA 2023/1.
+    Anyone with EU exposure: GDPR + DORA + EU Data Act all bite.
+    DORA is the new big one for FINMA-regulated firms with EU customers
+    or EU subsidiaries — overlaps heavily with the FINMA outsourcing
+    framework on third-party risk and incident reporting.
+    EU Data Act forces cloud providers to support customer-driven
+    switching and forbids egress fees beyond cost-recovery from 2027.
+  </aside>
+</section>
+<section>
+  <h2>The CLOUD Act question</h2>
   <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></span>
-      <h3>nDSG</h3>
-      <p>New Swiss Data Protection Act — stricter rules for data processing and transfers</p>
+      <span class="icon-accent"><i class="fa-solid fa-gavel" aria-hidden="true"></i></span>
+      <h3>US CLOUD Act</h3>
+      <p><small>US providers can be compelled to disclose data, regardless of where it sits</small></p>
     </div>
     <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span>
-      <h3>FINMA</h3>
-      <p>Circular 2018/3 on outsourcing — risk assessment and audit requirements</p>
+      <span class="icon-accent"><i class="fa-solid fa-eye" aria-hidden="true"></i></span>
+      <h3>FISA 702</h3>
+      <p><small>Surveillance over non-US persons' data held by US providers</small></p>
     </div>
     <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i></span>
-      <h3>GDPR</h3>
-      <p>EU data protection — relevant when serving EU customers or processing EU data</p>
+      <span class="icon-accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+      <h3>Provider responses</h3>
+      <p><small>EU/Swiss sovereign regions · BYOK / HYOK / external KMS · confidential computing</small></p>
     </div>
   </div>
+  <aside class="notes">
+    This is THE objection regulators and security teams raise as soon as
+    AWS/Azure/GCP enter the conversation. Address it head-on rather than
+    hoping it doesn't come up.
+
+    What to say:
+
+    1. US CLOUD Act (2018, Clarifying Lawful Overseas Use of Data Act):
+       a US court can compel a US-headquartered provider to hand over
+       data they hold or control, regardless of where the data
+       physically sits. So a Swiss customer's data in AWS Frankfurt is
+       still in scope as long as AWS Inc. is the operator.
+
+    2. FISA Section 702: lets US intelligence surveil non-US persons'
+       communications held by US "electronic communication service
+       providers". Schrems II (CJEU C-311/18, 2020) struck down Privacy
+       Shield over this exact issue.
+
+    3. Therefore "data residency" alone is NOT sovereignty. EU
+       geography + US operator = US-court reach.
+
+    Provider responses (the right-hand card):
+    - Sovereign regions operated by EU/Swiss legal entities so the
+      US-court compulsion path doesn't apply (AWS European Sovereign
+      Cloud, Google + S3NS / Bleu, Swisscom Sovereign Cloud).
+    - Customer-managed keys (BYOK / HYOK / external KMS): if the
+      customer holds the keys, the provider technically cannot read the
+      data even when compelled to surrender it.
+    - Confidential computing: encryption-in-use via hardware enclaves
+      (AWS Nitro, Azure Confidential, Intel SGX, AMD SEV-SNP).
+
+    Sources to mention if asked:
+    - US CLOUD Act: https://www.congress.gov/bill/115th-congress/house-bill/4943
+    - Schrems II: https://curia.europa.eu/juris/liste.jsf?num=C-311/18
+    - EDPB Recommendations 01/2020 on supplementary measures:
+      https://edpb.europa.eu/our-work-tools/our-documents/recommendations/recommendations-012020-measures-supplement-transfer_en
+  </aside>
 </section>
 <section>
   <h2>What is Cloud Sovereignty?</h2>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-3 gap-6">
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-database" aria-hidden="true"></i></span>
       <h3>Data</h3>
-      <p>Data is subject to the laws of the country where it is stored</p>
+      <p><small>Subject to the laws of where it sits</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
       <h3>Operational</h3>
-      <p>Control over operations — no foreign administrative access</p>
+      <p><small>No foreign admin access</small></p>
     </div>
     <div class="card fragment">
       <span class="icon-accent"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
-      <h3>Software</h3>
-      <p>Independence from vendor lock-in and proprietary platforms</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-landmark" aria-hidden="true"></i></span>
-      <h3>Digital</h3>
-      <p>Strategic autonomy over digital infrastructure and data</p>
+      <h3>Technical</h3>
+      <p><small>Portability, open standards, no lock-in</small></p>
     </div>
   </div>
+  <aside class="notes">
+    "Digital sovereignty" is the umbrella term — strategic autonomy
+    over digital infrastructure. The three cards are the concrete
+    layers it breaks into.
+
+    These are independent dials: a deployment can be data-sovereign
+    (data in CH/EU) but not operationally sovereign (admin staff sit
+    in the US), and vice versa.
+
+    Microsoft, Google and Gartner all use roughly this three-layer
+    framing. We dropped the original "Software Sovereignty" card here
+    in favour of "Technical" — same idea, broader scope.
+  </aside>
 </section>
 <section>
   <h2>Sovereign Cloud Offerings</h2>
-  <div class="grid grid-cols-4 gap-4">
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-brands fa-aws" aria-hidden="true"></i></span>
-      <h3><em>AWS</em></h3>
-      <p>European Sovereign Cloud, dedicated infrastructure in Europe</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-brands fa-microsoft" aria-hidden="true"></i></span>
-      <h3><em>Azure</em></h3>
-      <p>Confidential Computing, sovereign regions, Cloud for Sovereignty</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-      <h3><em>Google Cloud</em></h3>
-      <p>Distributed Cloud, S3NS partnership (France), sovereign controls</p>
-    </div>
-    <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-flag" aria-hidden="true"></i></span>
-      <h3><em>Swiss Market</em></h3>
-      <p>Local options like Swisscom + hyperscaler partnerships</p>
-    </div>
+  <div style="font-size: 0.6em;">
+    <table>
+      <caption>Sovereign cloud offerings — operator, location, catalog, key custody, and cost premium</caption>
+      <thead>
+        <tr>
+          <th scope="col">Offering</th>
+          <th scope="col">Operator</th>
+          <th scope="col">Location</th>
+          <th scope="col">Catalog</th>
+          <th scope="col">Keys</th>
+          <th scope="col">Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AWS European Sovereign</td>
+          <td>AWS Europe (EU staff)</td>
+          <td>EU</td>
+          <td>Subset</td>
+          <td>BYOK / ext. KMS</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td>Azure Sovereign overlay</td>
+          <td>Microsoft</td>
+          <td>EU</td>
+          <td>Near-full</td>
+          <td>BYOK / Managed HSM</td>
+          <td>Low–Med</td>
+        </tr>
+        <tr>
+          <td>Google + S3NS (Bleu)</td>
+          <td>FR JV (Thales × Google)</td>
+          <td>FR</td>
+          <td>Subset</td>
+          <td>BYOK / ext. KMS</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td>Swisscom Sovereign</td>
+          <td>Swisscom</td>
+          <td>CH</td>
+          <td>Smaller</td>
+          <td>Swisscom / customer</td>
+          <td>Medium</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <aside class="notes">
+    AWS European Sovereign Cloud: https://aws.amazon.com/compliance/europe-digital-sovereignty/
+    Microsoft Cloud for Sovereignty: https://www.microsoft.com/en-us/industry/sovereignty/cloud
+    Google Cloud + S3NS / Bleu: https://www.s3ns.io/
+    Swisscom Sovereign Cloud: https://www.swisscom.ch/en/business/enterprise/offer/cloud/sovereign-cloud.html
+  </aside>
+</section>
+<section>
+  <h2>Do you actually need it?</h2>
+  <q>Sovereignty follows data classification — not the other way around.</q>
+  <ul class="styled-list mt-8">
+    <li class="fragment">What data class do your assets fall into?
+      <ul>
+        <li><span class="badge">public</span> <span class="badge">internal</span> <span class="badge">confidential</span> <span class="badge">CID</span></li>
+      </ul>
+    </li>
+    <li class="fragment">Who is the regulator and what do they actually require?</li>
+    <li class="fragment">Is encryption + customer-held keys enough — or is operator nationality in scope?</li>
+    <li class="fragment">What cost / service-availability premium can you absorb?</li>
+  </ul>
 </section>
 <section>
   <h2>Regulatory &amp; Sovereignty Takeaways</h2>
   <ul class="styled-list">
-    <li>It's not illegal to use the Cloud — even Swiss banks and the public sector do</li>
-    <li><b>Involve your lawyers</b> early</li>
+    <li>It's not illegal to use the Cloud — Swiss banks and public sector already do</li>
+    <li><b>Classify data first</b>, then pick a provider — not vice versa</li>
     <li>Data residency alone is <em>not</em> sovereignty</li>
-    <li>Sovereignty requirements impact provider, region, and service choices</li>
-    <li>Key management is critical: BYOK, HYOK, or external KMS</li>
+    <li>Map regulators × data classes × providers in a matrix; review yearly</li>
+    <li>Key management is critical: BYOK / HYOK / external KMS</li>
+    <li>Sovereign ≠ secure — you still own the upper half of shared responsibility</li>
+    <li><b>Involve your lawyers</b> early</li>
   </ul>
 </section>
