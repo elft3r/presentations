@@ -52,20 +52,11 @@ EXPOSE 8080
 CMD ["./hello"]
       </code></pre>
     </div>
-    <div class="grid grid-cols-1 gap-4">
-      <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-hammer"></i></span>
-        <p>Stage 1 compiles using the full <code>golang:1.23</code> image.</p>
-      </div>
-      <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-box"></i></span>
-        <p>Stage 2 copies only the binary into a fresh <code>alpine:3.21</code> image.</p>
-      </div>
-      <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-scissors"></i></span>
-        <p>Build tools never reach the final image.</p>
-      </div>
-    </div>
+    <ul class="styled-list">
+      <li class="fragment"><strong>Stage 1</strong> compiles using the full <code>golang:1.23</code> image.</li>
+      <li class="fragment"><strong>Stage 2</strong> copies only the binary into a fresh <code>alpine:3.21</code> image.</li>
+      <li class="fragment">Build tools never reach the final image.</li>
+    </ul>
   </div>
 </section>
 
