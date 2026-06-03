@@ -12,6 +12,7 @@
     "start:docker-training": "cd docker-training && npx serve -l 8000"
   },
   "dependencies": {
+    "decktape": "^3.16.1",
     "reveal.js": "^5.2.1"
   },
   "devDependencies": {

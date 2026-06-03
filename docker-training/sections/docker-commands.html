@@ -1,30 +1,33 @@
-<section class="section-title" aria-label="Section: Docker Commands"><h2>Docker Commands</h2></section>
-<section>
-  <h2>Top Docker Commands &mdash; Information</h2>
-  <pre><code class="language-bash" data-trim>
-$ docker --help     # returns all commands available
-$ docker attach     # attach to a running container
-$ docker info       # displays system wide information
-$ docker inspect    # inspect container or image details
-  </code></pre>
+<section class="section-title" aria-label="Section: Docker Commands">
+  <h2>Docker Commands</h2>
 </section>
 <section>
-  <h2>Top Docker Commands &mdash; Images</h2>
+  <h2>Top Docker Commands &mdash; General</h2>
   <pre><code class="language-bash" data-trim>
-$ docker build      # builds a Dockerfile into an image
-$ docker login      # login to Container Image Registry
-$ docker pull       # pull image from Container Registry
-$ docker rmi        # remove image
+$ docker --help                # returns all commands available
+$ docker system info           # displays system wide information
+$ docker system prune          # remove unused data
   </code></pre>
 </section>
 <section>
   <h2>Top Docker Commands &mdash; Containers</h2>
   <pre><code class="language-bash" data-trim>
-$ docker ps         # display running containers
-$ docker ps -a      # show all containers stopped/started
-$ docker run        # start and run a new container
-$ docker start      # start existing container
-$ docker stop       # stop existing container
-$ docker rm         # remove container
+$ docker container ls          # display running containers
+$ docker container ls -a       # show all containers stopped/started
+$ docker container run         # start and run a new container
+$ docker container start       # start existing container
+$ docker container stop        # stop existing container
+$ docker container rm          # remove container
+$ docker container inspect     # inspect container details
+  </code></pre>
+</section>
+<section>
+  <h2>Top Docker Commands &mdash; Images</h2>
+  <pre><code class="language-bash" data-trim>
+$ docker image build           # builds a Dockerfile into an image
+$ docker image rm              # remove image
+$ docker login                 # login to Container Image Registry
+$ docker image pull            # pull image from Container Registry
+$ docker image inspect         # inspect image details
   </code></pre>
 </section>

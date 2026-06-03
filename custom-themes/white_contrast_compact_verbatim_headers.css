@@ -628,10 +628,65 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 /*********************************************
- * PRINT BACKGROUND
+ * PDF / PRINT EXPORT SAFEGUARD
+ *
+ * Chromium's page.pdf() pipeline (used by decktape/Puppeteer) and its print
+ * path can rasterize *blurred* box-shadow / text-shadow as hard rectangles,
+ * leaving stray grey boxes behind cards, the profile photo and title text.
+ *
+ * We neutralise only the blurred decorative shadows. Zero-blur ring highlights
+ * (box-shadow: 0 0 0 Npx ...) don't trigger the bug and carry meaning, so they
+ * are intentionally left intact.
+ *
+ * Three export contexts, same fix:
+ *   .pdf-export  — added by portrait.js when navigator.webdriver is set
+ *                  (decktape/Puppeteer headless export)
+ *   .print-pdf   — added by reveal.js for its ?print-pdf browser view
+ *   @media print — real Ctrl+P / Save as PDF
+ * Live on-screen rendering keeps every shadow.
  *********************************************/
+html.pdf-export,
+html.print-pdf {
+  --r-card-shadow: none;
+}
+html.pdf-export .reveal pre,
+html.pdf-export .reveal .card,
+html.pdf-export .reveal .r-frame,
+html.pdf-export .reveal a:hover .r-frame,
+html.pdf-export .shadow-2xl,
+html.print-pdf .reveal pre,
+html.print-pdf .reveal .card,
+html.print-pdf .reveal .r-frame,
+html.print-pdf .reveal a:hover .r-frame,
+html.print-pdf .shadow-2xl {
+  box-shadow: none !important;
+}
+html.pdf-export .reveal *,
+html.pdf-export .reveal *::before,
+html.pdf-export .reveal *::after,
+html.print-pdf .reveal *,
+html.print-pdf .reveal *::before,
+html.print-pdf .reveal *::after {
+  text-shadow: none !important;
+}
+
 @media print {
+  :root {
+    --r-card-shadow: none;
+  }
   .backgrounds {
     background-color: var(--r-background-color);
+  }
+  .reveal pre,
+  .reveal .card,
+  .reveal .r-frame,
+  .reveal a:hover .r-frame,
+  .shadow-2xl {
+    box-shadow: none !important;
+  }
+  .reveal *,
+  .reveal *::before,
+  .reveal *::after {
+    text-shadow: none !important;
   }
 }
