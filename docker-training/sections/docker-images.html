@@ -1,23 +1,159 @@
 <section class="section-title" aria-label="Section: Docker Images"><h2>Docker Images</h2></section>
 <section>
   <h2>Images &amp; Layers</h2>
-  <div class="grid grid-cols-2 gap-6">
-    <div>
-      <pre><code class="language-dockerfile" data-trim>
-FROM ubuntu:24.04
-COPY . /app
-RUN make /app
-CMD python /app/app.py
-      </code></pre>
-    </div>
-    <div>
-      <img
-        class="rounded"
-        src="imgs/images-layers.png"
-        alt="Docker Images and Layers"
-      />
-    </div>
-  </div>
+  <svg viewBox="0 0 900 420" style="width:100%;height:auto;display:block;"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-label="Docker image layers diagram with Dockerfile">
+    <defs>
+      <marker id="arr-layers" markerWidth="12" markerHeight="8"
+              refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+        <polygon points="0 0, 12 4, 0 8" fill="#38B5D0"/>
+      </marker>
+      <marker id="arr-sm" markerWidth="8" markerHeight="6"
+              refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+        <polygon points="0 0, 8 3, 0 6" fill="#4a5568"/>
+      </marker>
+    </defs>
+
+    <!-- ── LEFT PANEL: image layer stack ── -->
+
+    <!-- Outer dashed container -->
+    <rect x="2" y="2" width="335" height="340" rx="6"
+          fill="none" stroke="#5AB5CE" stroke-width="2" stroke-dasharray="8,4"/>
+
+    <!-- "Thin R/W layer" box -->
+    <rect x="12" y="10" width="268" height="36" rx="4"
+          fill="none" stroke="#5AB5CE" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="146" y="33" text-anchor="middle"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="13" fill="#1a202c">Thin R/W layer</text>
+
+    <!-- "← Container layer" label -->
+    <line x1="340" y1="28" x2="282" y2="28"
+          stroke="#4a5568" stroke-width="1.5" marker-end="url(#arr-sm)"/>
+    <text x="344" y="32"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="11" fill="#4a5568">Container layer</text>
+
+    <!-- Downward arrows from thin R/W layer to inner stack -->
+    <line x1="42"  y1="46" x2="42"  y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
+    <polygon points="38,65  42,72  46,65"  fill="#5AB5CE"/>
+    <line x1="82"  y1="46" x2="82"  y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
+    <polygon points="78,65  82,72  86,65"  fill="#5AB5CE"/>
+    <line x1="122" y1="46" x2="122" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
+    <polygon points="118,65 122,72 126,65" fill="#5AB5CE"/>
+    <line x1="162" y1="46" x2="162" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
+    <polygon points="158,65 162,72 166,65" fill="#5AB5CE"/>
+    <line x1="202" y1="46" x2="202" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
+    <polygon points="198,65 202,72 206,65" fill="#5AB5CE"/>
+
+    <!-- Inner box (white, dashed border) -->
+    <rect x="10" y="74" width="300" height="220" rx="2"
+          fill="white" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+    <!-- Layer 1 (top): CMD → 91e54dfb1179, 0 B -->
+    <rect x="12" y="76"  width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <text x="26" y="106" font-family="monospace" font-size="12" fill="white">91e54dfb1179</text>
+    <text x="298" y="106" text-anchor="end" font-family="monospace" font-size="12" fill="white">0 B</text>
+
+    <!-- Layer 2: RUN → d74508fb6632, 1.895 KB -->
+    <rect x="12" y="130" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <text x="26" y="160" font-family="monospace" font-size="12" fill="white">d74508fb6632</text>
+    <text x="298" y="160" text-anchor="end" font-family="monospace" font-size="12" fill="white">1.895 KB</text>
+
+    <!-- Layer 3: COPY → c22013c84729, 194.5 KB -->
+    <rect x="12" y="184" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <text x="26" y="214" font-family="monospace" font-size="12" fill="white">c22013c84729</text>
+    <text x="298" y="214" text-anchor="end" font-family="monospace" font-size="12" fill="white">194.5 KB</text>
+
+    <!-- Layer 4 (bottom): FROM → d3a1f33e8a5a, 188.1 MB -->
+    <rect x="12" y="238" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <text x="26" y="268" font-family="monospace" font-size="12" fill="white">d3a1f33e8a5a</text>
+    <text x="298" y="268" text-anchor="end" font-family="monospace" font-size="12" fill="white">188.1 MB</text>
+
+    <!-- "ubuntu:15.04" label -->
+    <text x="160" y="312" text-anchor="middle"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="13" fill="#1a202c">ubuntu:15.04</text>
+
+    <!-- Right bracket spanning all 4 layers (y=76 to y=288) -->
+    <path d="M 312,76 L 322,76 L 322,288 L 312,288"
+          fill="none" stroke="#555" stroke-width="2"/>
+    <line x1="322" y1="182" x2="338" y2="182" stroke="#555" stroke-width="1.5"/>
+
+    <!-- Padlock icon -->
+    <rect x="319" y="170" width="16" height="13" rx="2" fill="#B8860B"/>
+    <path d="M 321,170 Q 321,161 327,161 Q 333,161 333,170"
+          fill="none" stroke="#B8860B" stroke-width="2.5"/>
+
+    <!-- "Image layers (R/O)" label -->
+    <text x="342" y="187"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="12" font-weight="600" fill="#1a202c">Image layers (R/O)</text>
+
+    <!-- Container caption -->
+    <text x="160" y="358" text-anchor="middle"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="13" fill="#4a5568">Container</text>
+    <text x="160" y="375" text-anchor="middle"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="11" fill="#4a5568">(based on ubuntu:15.04 image)</text>
+
+    <!-- ── RIGHT PANEL: Dockerfile ── -->
+
+    <!-- "Dockerfile:" heading -->
+    <text x="693" y="56" text-anchor="middle"
+          font-family="Source Sans Pro,Helvetica,sans-serif"
+          font-size="17" font-weight="700" fill="#1a202c">Dockerfile:</text>
+
+    <!-- Code box with wave bottom (teal) -->
+    <path d="M 498,68 L 890,68 L 890,296
+             Q 870,312 845,296 Q 810,276 775,296
+             Q 745,316 710,296 Q 676,276 642,296
+             Q 612,316 578,296 Q 544,276 510,296
+             Q 498,304 498,296 Z"
+          fill="#3D7A8A"/>
+
+    <!-- FROM ubuntu:15.04 — row center y ≈ 97 -->
+    <text x="512" y="107"
+          font-family="monospace" font-size="15" font-weight="600" fill="white">FROM ubuntu:<tspan fill="#FF6B6B">15.04</tspan></text>
+
+    <!-- COPY . /app — row center y ≈ 155 -->
+    <text x="512" y="165"
+          font-family="monospace" font-size="15" font-weight="600" fill="white">COPY . /app</text>
+
+    <!-- RUN make /app — row center y ≈ 213 -->
+    <text x="512" y="223"
+          font-family="monospace" font-size="15" font-weight="600" fill="white">RUN make /app</text>
+
+    <!-- CMD python /app/app.py — row center y ≈ 271 -->
+    <text x="512" y="281"
+          font-family="monospace" font-size="15" font-weight="600" fill="white">CMD python /app/app.py</text>
+
+    <!-- ── ARROWS (Reveal.js fragments, one per instruction) ── -->
+    <!--
+      FROM (y≈97)  → d3a1f33e8a5a base layer (y≈261): diagonal down-left
+      COPY (y≈155) → c22013c84729 3rd layer  (y≈209): gentle down-left
+      RUN  (y≈213) → d74508fb6632 2nd layer  (y≈155): gentle up-left
+      CMD  (y≈271) → 91e54dfb1179 top layer  (y≈101): diagonal up-left
+      Arrows cross in the middle, matching the PowerPoint animation.
+    -->
+    <line class="fragment" data-fragment-index="1"
+          x1="498" y1="97"  x2="322" y2="261"
+          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+
+    <line class="fragment" data-fragment-index="2"
+          x1="498" y1="155" x2="322" y2="209"
+          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+
+    <line class="fragment" data-fragment-index="3"
+          x1="498" y1="213" x2="322" y2="155"
+          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+
+    <line class="fragment" data-fragment-index="4"
+          x1="498" y1="271" x2="322" y2="101"
+          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+  </svg>
 </section>
 <section>
   <h2>Container Layer</h2>
