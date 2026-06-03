@@ -17,16 +17,16 @@ CMD ["./hello"]
       <pre><code class="language-bash" data-trim>
 $ docker image ls hello-single
 REPOSITORY     SIZE
-hello-single   838MB
+hello-single   838 MB
       </code></pre>
     </div>
     <div class="grid grid-cols-1 gap-4">
       <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <span class="icon-accent"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>
         <p>Compiler &amp; build tools ship in the final image — never needed at runtime.</p>
       </div>
       <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-shield-halved"></i></span>
+        <span class="icon-accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
         <p>More packages = more vulnerabilities, slower pulls, higher costs.</p>
       </div>
     </div>
@@ -64,7 +64,7 @@ CMD ["./hello"]
   <h2>The Result &mdash; 98% Smaller</h2>
   <div class="grid grid-cols-2 gap-6">
     <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-box-open"></i></span>
+      <span class="icon-accent"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span>
       <h3>Single-Stage</h3>
       <p>Go toolchain + compiler + sources + app</p>
       <pre><code class="language-bash" data-trim>
@@ -72,7 +72,7 @@ hello-single   838 MB
       </code></pre>
     </div>
     <div class="card fragment">
-      <span class="icon-accent"><i class="fa-solid fa-feather-pointed"></i></span>
+      <span class="icon-accent"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
       <h3>Multi-Stage</h3>
       <p>Alpine Linux + compiled binary only</p>
       <pre><code class="language-bash" data-trim>
@@ -102,7 +102,7 @@ COPY --from=nginx:latest \
       </code></pre>
     </div>
     <div class="card">
-      <span class="icon-accent"><i class="fa-solid fa-layer-group"></i></span>
+      <span class="icon-accent"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
       <p>Copy from any build stage or external image — without including it in the final result.</p>
     </div>
   </div>
@@ -130,11 +130,11 @@ hello-dev    838 MB    # full toolchain
     </div>
     <div class="grid grid-cols-1 gap-4">
       <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-rocket"></i></span>
+        <span class="icon-accent"><i class="fa-solid fa-rocket" aria-hidden="true"></i></span>
         <p>Production — minimal image, binary only.</p>
       </div>
       <div class="card fragment">
-        <span class="icon-accent"><i class="fa-solid fa-wrench"></i></span>
+        <span class="icon-accent"><i class="fa-solid fa-wrench" aria-hidden="true"></i></span>
         <p>Development — full toolchain, same Dockerfile.</p>
       </div>
     </div>
