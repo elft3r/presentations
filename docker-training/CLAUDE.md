@@ -19,15 +19,16 @@ Sections are loaded in this order (see `index.html`):
 9. `docker-desktop.html` — Docker Desktop
 10. `docker-commands.html` — CLI commands
 11. `docker-images.html` — images & Dockerfiles
-12. `docker-networking.html` — container networking
-13. `docker-volumes.html` — persistent storage
-14. `docker-compose.html` — Docker Compose
-15. `devops-docker.html` — DevOps with Docker
-16. `docker-swarm.html` — Swarm orchestration
-17. `serverless.html` — serverless concepts
-18. `docker-kubernetes.html` — Kubernetes overview
-19. `monitoring.html` — container monitoring
-20. `resources.html` — further resources
+12. `multistage-builds.html` — multi-stage builds
+13. `docker-networking.html` — container networking
+14. `docker-volumes.html` — persistent storage
+15. `docker-compose.html` — Docker Compose
+16. `devops-docker.html` — DevOps with Docker
+17. `docker-swarm.html` — Swarm orchestration
+18. `serverless.html` — serverless concepts
+19. `docker-kubernetes.html` — Kubernetes overview
+20. `monitoring.html` — container monitoring
+21. `resources.html` — further resources
 
 ## Local Development
 

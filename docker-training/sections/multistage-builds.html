@@ -1,0 +1,168 @@
+<section class="section-title" aria-label="Section: Multi-Stage Builds"><h2>Multi-Stage Builds</h2></section>
+
+<section>
+  <h2>The Problem &mdash; Bloated Images</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-dockerfile" data-trim>
+FROM golang:1.23
+
+WORKDIR /app
+COPY main.go .
+RUN go build -o hello main.go
+
+EXPOSE 8080
+CMD ["./hello"]
+      </code></pre>
+      <pre><code class="language-bash" data-trim>
+$ docker image ls hello-single
+REPOSITORY     SIZE
+hello-single   838MB
+      </code></pre>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div class="card">
+        <span class="icon-accent"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <p>The Go compiler, toolchain, and build tools end up in the final image — but are never needed at runtime.</p>
+      </div>
+      <div class="card">
+        <span class="icon-accent"><i class="fa-solid fa-shield-halved"></i></span>
+        <p>More packages mean more vulnerabilities, slower pulls, and higher storage costs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Multi-Stage Builds</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-dockerfile" data-trim>
+# Stage 1: Build
+FROM golang:1.23 AS builder
+WORKDIR /app
+COPY main.go .
+RUN CGO_ENABLED=0 go build -o hello main.go
+
+# Stage 2: Minimal runtime
+FROM alpine:3.21
+WORKDIR /app
+COPY --from=builder /app/hello .
+EXPOSE 8080
+CMD ["./hello"]
+      </code></pre>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-hammer"></i></span>
+        <p>Stage 1 compiles the app using the full <code>golang:1.23</code> image.</p>
+      </div>
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-box"></i></span>
+        <p>Stage 2 starts fresh from <code>alpine:3.21</code> — only the compiled binary is copied over.</p>
+      </div>
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-scissors"></i></span>
+        <p>Build tools are discarded and never reach the final image.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The Result &mdash; 98% Smaller</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-box-open"></i></span>
+      <h3>Single-Stage</h3>
+      <p>Go toolchain + compiler + sources + app</p>
+      <pre><code class="language-bash" data-trim>
+hello-single   838 MB
+      </code></pre>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-feather-pointed"></i></span>
+      <h3>Multi-Stage</h3>
+      <p>Alpine Linux + compiled binary only</p>
+      <pre><code class="language-bash" data-trim>
+hello-multi    12.1 MB
+      </code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Named Stages &amp; COPY --from</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <h3>Assign names with AS</h3>
+      <pre><code class="language-dockerfile" data-trim>
+FROM golang:1.23 AS builder
+FROM alpine:3.21 AS runtime
+      </code></pre>
+      <h3>Reference by name or number</h3>
+      <pre><code class="language-dockerfile" data-trim>
+# By name (preferred)
+COPY --from=builder /app/hello .
+
+# From an external image
+COPY --from=nginx:latest \
+  /etc/nginx/nginx.conf /nginx.conf
+      </code></pre>
+    </div>
+    <div class="card">
+      <span class="icon-accent"><i class="fa-solid fa-layer-group"></i></span>
+      <p>Copy files from any previous build stage — or directly from an external image — without adding the full image to your final result.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>One Dockerfile, Multiple Targets</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-bash" data-trim>
+# Production: run all stages
+$ docker image build \
+  --tag hello-multi:1.0 .
+
+# Dev: stop at the builder stage
+$ docker image build \
+  --target builder \
+  --tag hello-dev:1.0 .
+      </code></pre>
+      <pre><code class="language-bash" data-trim>
+REPOSITORY   SIZE
+hello-multi  12.1 MB   # production
+hello-dev    838 MB    # full toolchain
+      </code></pre>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-rocket"></i></span>
+        <h3>Production</h3>
+        <p>Minimal image — only what is needed to run.</p>
+      </div>
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-wrench"></i></span>
+        <h3>Development</h3>
+        <p>Full toolchain for debugging — from the same Dockerfile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Lab &mdash; Multi-Stage Builds</h2>
+  <ul class="styled-list">
+    <li><span class="badge">Task 1</span> Build a single-stage Go image and inspect its size (~838 MB)</li>
+    <li><span class="badge">Task 2</span> Refactor to a multi-stage Dockerfile and compare sizes (12 MB)</li>
+    <li><span class="badge">Task 3</span> Use named stages and <code>COPY --from</code> to add a health-check binary</li>
+    <li><span class="badge">Task 4</span> Use <code>--target</code> to build a dev image with the full toolchain</li>
+  </ul>
+  <p class="source">
+    <a href="https://github.com/elft3r/training/blob/main/Docker/kickstart/chapters/multistage-builds.md">
+      github.com/elft3r/training — Docker/kickstart/chapters/multistage-builds.md
+    </a>
+  </p>
+</section>
