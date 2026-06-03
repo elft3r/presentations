@@ -20,14 +20,14 @@ REPOSITORY     SIZE
 hello-single   838MB
       </code></pre>
     </div>
-    <div class="grid grid-cols-1 gap-2 text-base">
+    <div class="grid grid-cols-1 gap-4">
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-triangle-exclamation"></i></span>
-        <p>The Go compiler, toolchain, and build tools end up in the final image — but are never needed at runtime.</p>
+        <p>Compiler &amp; build tools ship in the final image — never needed at runtime.</p>
       </div>
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-shield-halved"></i></span>
-        <p>More packages mean more vulnerabilities, slower pulls, and higher storage costs.</p>
+        <p>More packages = more vulnerabilities, slower pulls, higher costs.</p>
       </div>
     </div>
   </div>
@@ -52,18 +52,18 @@ EXPOSE 8080
 CMD ["./hello"]
       </code></pre>
     </div>
-    <div class="grid grid-cols-1 gap-2 text-base">
+    <div class="grid grid-cols-1 gap-4">
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-hammer"></i></span>
-        <p>Stage 1 compiles the app using the full <code>golang:1.23</code> image.</p>
+        <p>Stage 1 compiles using the full <code>golang:1.23</code> image.</p>
       </div>
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-box"></i></span>
-        <p>Stage 2 starts fresh from <code>alpine:3.21</code> — only the compiled binary is copied over.</p>
+        <p>Stage 2 copies only the binary into a fresh <code>alpine:3.21</code> image.</p>
       </div>
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-scissors"></i></span>
-        <p>Build tools are discarded and never reach the final image.</p>
+        <p>Build tools never reach the final image.</p>
       </div>
     </div>
   </div>
@@ -110,9 +110,9 @@ COPY --from=nginx:latest \
   /etc/nginx/nginx.conf /nginx.conf
       </code></pre>
     </div>
-    <div class="card text-base">
+    <div class="card">
       <span class="icon-accent"><i class="fa-solid fa-layer-group"></i></span>
-      <p>Copy files from any previous build stage — or directly from an external image — without adding the full image to your final result.</p>
+      <p>Copy from any build stage or external image — without including it in the final result.</p>
     </div>
   </div>
 </section>
@@ -137,14 +137,14 @@ hello-multi  12.1 MB   # production
 hello-dev    838 MB    # full toolchain
       </code></pre>
     </div>
-    <div class="grid grid-cols-1 gap-2 text-base">
+    <div class="grid grid-cols-1 gap-4">
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-rocket"></i></span>
-        <p>Production — minimal image, only what is needed to run.</p>
+        <p>Production — minimal image, binary only.</p>
       </div>
       <div class="card fragment">
         <span class="icon-accent"><i class="fa-solid fa-wrench"></i></span>
-        <p>Development — full toolchain for debugging, from the same Dockerfile.</p>
+        <p>Development — full toolchain, same Dockerfile.</p>
       </div>
     </div>
   </div>
