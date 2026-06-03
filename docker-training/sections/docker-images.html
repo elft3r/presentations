@@ -106,52 +106,56 @@
           font-family="Source Sans Pro,Helvetica,sans-serif"
           font-size="17" font-weight="700" fill="#1a202c">Dockerfile:</text>
 
-    <!-- Code box with wave bottom (teal) -->
-    <path d="M 498,68 L 890,68 L 890,296
-             Q 870,312 845,296 Q 810,276 775,296
-             Q 745,316 710,296 Q 676,276 642,296
-             Q 612,316 578,296 Q 544,276 510,296
-             Q 498,304 498,296 Z"
+    <!--
+      File/document shape:
+        • Top-right corner is cut and folded (dog-ear) to read as a document
+        • Bottom edge is a single gentle arc — the classic page-curl silhouette
+      Lines are tightly spaced (40 px apart, centers at y=100/140/180/220).
+    -->
+    <!-- Main document body -->
+    <path d="M 498,68 L 872,68 L 892,88 L 892,244 Q 695,262 498,244 Z"
           fill="#3D7A8A"/>
+    <!-- Folded corner — slightly darker to show the crease -->
+    <path d="M 872,68 L 892,68 L 892,88 Z" fill="#2B5E6E"/>
+    <line x1="872" y1="68" x2="892" y2="88"
+          stroke="#1e4555" stroke-width="1.2" opacity="0.6"/>
 
-    <!-- FROM ubuntu:15.04 — row center y ≈ 97 -->
-    <text x="512" y="107"
+    <!-- FROM ubuntu:15.04 — center y=100 -->
+    <text x="512" y="108"
           font-family="monospace" font-size="15" font-weight="600" fill="white">FROM ubuntu:<tspan fill="#FF6B6B">15.04</tspan></text>
 
-    <!-- COPY . /app — row center y ≈ 155 -->
-    <text x="512" y="165"
+    <!-- COPY . /app — center y=140 -->
+    <text x="512" y="148"
           font-family="monospace" font-size="15" font-weight="600" fill="white">COPY . /app</text>
 
-    <!-- RUN make /app — row center y ≈ 213 -->
-    <text x="512" y="223"
+    <!-- RUN make /app — center y=180 -->
+    <text x="512" y="188"
           font-family="monospace" font-size="15" font-weight="600" fill="white">RUN make /app</text>
 
-    <!-- CMD python /app/app.py — row center y ≈ 271 -->
-    <text x="512" y="281"
+    <!-- CMD python /app/app.py — center y=220 -->
+    <text x="512" y="228"
           font-family="monospace" font-size="15" font-weight="600" fill="white">CMD python /app/app.py</text>
 
     <!-- ── ARROWS (Reveal.js fragments, one per instruction) ── -->
     <!--
-      FROM (y≈97)  → d3a1f33e8a5a base layer (y≈261): diagonal down-left
-      COPY (y≈155) → c22013c84729 3rd layer  (y≈209): gentle down-left
-      RUN  (y≈213) → d74508fb6632 2nd layer  (y≈155): gentle up-left
-      CMD  (y≈271) → 91e54dfb1179 top layer  (y≈101): diagonal up-left
-      Arrows cross in the middle, matching the PowerPoint animation.
+      Dockerfile lines (compact, x-start=498): FROM y=100, COPY y=140, RUN y=180, CMD y=220
+      Layer centers (unchanged):               d3a1 y=261, c220 y=207, d745 y=153, 91e5 y=101
+      Arrows cross in the middle (FROM↔CMD, COPY↔RUN), matching the PowerPoint animation.
     -->
     <line class="fragment" data-fragment-index="1"
-          x1="498" y1="97"  x2="322" y2="261"
+          x1="498" y1="100" x2="322" y2="261"
           stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="2"
-          x1="498" y1="155" x2="322" y2="209"
+          x1="498" y1="140" x2="322" y2="207"
           stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="3"
-          x1="498" y1="213" x2="322" y2="155"
+          x1="498" y1="180" x2="322" y2="153"
           stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="4"
-          x1="498" y1="271" x2="322" y2="101"
+          x1="498" y1="220" x2="322" y2="101"
           stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
   </svg>
 </section>
