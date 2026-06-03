@@ -1,0 +1,142 @@
+<section class="section-title" aria-label="Section: Multi-Stage Builds"><h2>Multi-Stage Builds</h2></section>
+
+<section>
+  <h2>The Problem &mdash; Bloated Images</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-dockerfile" data-trim>
+FROM golang:1.23
+
+WORKDIR /app
+COPY main.go .
+RUN go build -o hello main.go
+
+EXPOSE 8080
+CMD ["./hello"]
+      </code></pre>
+      <pre><code class="language-bash" data-trim>
+$ docker image ls hello-single
+REPOSITORY     SIZE
+hello-single   838 MB
+      </code></pre>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>
+        <p>Compiler &amp; build tools ship in the final image — never needed at runtime.</p>
+      </div>
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+        <p>More packages = more vulnerabilities, slower pulls, higher costs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Multi-Stage Builds</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-dockerfile" data-trim>
+# Stage 1: Build
+FROM golang:1.23 AS builder
+WORKDIR /app
+COPY main.go .
+RUN CGO_ENABLED=0 go build -o hello main.go
+
+# Stage 2: Minimal runtime
+FROM alpine:3.21
+WORKDIR /app
+COPY --from=builder /app/hello .
+EXPOSE 8080
+CMD ["./hello"]
+      </code></pre>
+    </div>
+    <ul class="styled-list">
+      <li class="fragment"><strong>Stage 1</strong> compiles using the full <code>golang:1.23</code> image.</li>
+      <li class="fragment"><strong>Stage 2</strong> copies only the binary into a fresh <code>alpine:3.21</code> image.</li>
+      <li class="fragment">Build tools never reach the final image.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>The Result &mdash; 98% Smaller</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span>
+      <h3>Single-Stage</h3>
+      <p>Go toolchain + compiler + sources + app</p>
+      <pre><code class="language-bash" data-trim>
+hello-single   838 MB
+      </code></pre>
+    </div>
+    <div class="card fragment">
+      <span class="icon-accent"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
+      <h3>Multi-Stage</h3>
+      <p>Alpine Linux + compiled binary only</p>
+      <pre><code class="language-bash" data-trim>
+hello-multi    12.1 MB
+      </code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Named Stages &amp; COPY --from</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <h3>Assign names with AS</h3>
+      <pre><code class="language-dockerfile" data-trim>
+FROM golang:1.23 AS builder
+FROM alpine:3.21 AS runtime
+      </code></pre>
+      <h3>Reference by name or number</h3>
+      <pre><code class="language-dockerfile" data-trim>
+# By name (preferred)
+COPY --from=builder /app/hello .
+
+# From an external image
+COPY --from=nginx:latest \
+  /etc/nginx/nginx.conf /nginx.conf
+      </code></pre>
+    </div>
+    <div class="card">
+      <span class="icon-accent"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+      <p>Copy from any build stage or external image — without including it in the final result.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>One Dockerfile, Multiple Targets</h2>
+  <div class="grid grid-cols-2 gap-6">
+    <div>
+      <pre><code class="language-bash" data-trim>
+# Production: run all stages
+$ docker image build \
+  --tag hello-multi:1.0 .
+
+# Dev: stop at the builder stage
+$ docker image build \
+  --target builder \
+  --tag hello-dev:1.0 .
+      </code></pre>
+      <pre><code class="language-bash" data-trim>
+REPOSITORY   SIZE
+hello-multi  12.1 MB   # production
+hello-dev    838 MB    # full toolchain
+      </code></pre>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-rocket" aria-hidden="true"></i></span>
+        <p>Production — minimal image, binary only.</p>
+      </div>
+      <div class="card fragment">
+        <span class="icon-accent"><i class="fa-solid fa-wrench" aria-hidden="true"></i></span>
+        <p>Development — full toolchain, same Dockerfile.</p>
+      </div>
+    </div>
+  </div>
+</section>
