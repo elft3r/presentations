@@ -8,6 +8,20 @@
  * when the device orientation is portrait.
  */
 
+/**
+ * PDF-export safeguard.
+ *
+ * Headless renderers (decktape/Puppeteer) generate the PDF via Chromium's
+ * page.pdf() pipeline, which can rasterize blur-based box-shadow/text-shadow
+ * as hard rectangles — producing stray grey boxes behind cards, the profile
+ * photo, and title text. Puppeteer sets navigator.webdriver === true, which is
+ * never true during normal browsing, so we tag <html> and strip those shadows
+ * in CSS for export only. Live presentation rendering is unaffected.
+ */
+if (navigator.webdriver) {
+  document.documentElement.classList.add("pdf-export");
+}
+
 /* exported portraitSetup */
 // eslint-disable-next-line no-unused-vars
 function portraitSetup() {
