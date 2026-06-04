@@ -10,11 +10,11 @@
     <defs>
       <marker id="arr-layers" markerWidth="12" markerHeight="8"
               refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-        <polygon points="0 0, 12 4, 0 8" fill="#38B5D0"/>
+        <polygon points="0 0, 12 4, 0 8" style="fill: var(--r-accent-color)"/>
       </marker>
       <marker id="arr-sm" markerWidth="8" markerHeight="6"
               refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
-        <polygon points="0 0, 8 3, 0 6" fill="#4a5568"/>
+        <polygon points="0 0, 8 3, 0 6" style="fill: var(--r-muted-color)"/>
       </marker>
     </defs>
 
@@ -22,55 +22,55 @@
 
     <!-- Outer dashed container -->
     <rect x="2" y="2" width="335" height="340" rx="6"
-          fill="none" stroke="#5AB5CE" stroke-width="2" stroke-dasharray="8,4"/>
+          fill="none" style="stroke: var(--r-accent-color)" stroke-width="2" stroke-dasharray="8,4"/>
 
     <!-- "Thin R/W layer" box -->
     <rect x="12" y="10" width="268" height="36" rx="4"
-          fill="none" stroke="#5AB5CE" stroke-width="1.5" stroke-dasharray="5,3"/>
+          fill="none" style="stroke: var(--r-accent-color)" stroke-width="1.5" stroke-dasharray="5,3"/>
     <text x="146" y="33" text-anchor="middle"
           font-family="Source Sans Pro,Helvetica,sans-serif"
           font-size="13" fill="#1a202c">Thin R/W layer</text>
 
     <!-- "← Container layer" label -->
     <line x1="340" y1="28" x2="282" y2="28"
-          stroke="#4a5568" stroke-width="1.5" marker-end="url(#arr-sm)"/>
+          style="stroke: var(--r-muted-color)" stroke-width="1.5" marker-end="url(#arr-sm)"/>
     <text x="344" y="32"
           font-family="Source Sans Pro,Helvetica,sans-serif"
-          font-size="11" fill="#4a5568">Container layer</text>
+          font-size="11" style="fill: var(--r-muted-color)">Container layer</text>
 
     <!-- Downward arrows from thin R/W layer to inner stack -->
-    <line x1="42"  y1="46" x2="42"  y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
-    <polygon points="38,65  42,72  46,65"  fill="#5AB5CE"/>
-    <line x1="82"  y1="46" x2="82"  y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
-    <polygon points="78,65  82,72  86,65"  fill="#5AB5CE"/>
-    <line x1="122" y1="46" x2="122" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
-    <polygon points="118,65 122,72 126,65" fill="#5AB5CE"/>
-    <line x1="162" y1="46" x2="162" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
-    <polygon points="158,65 162,72 166,65" fill="#5AB5CE"/>
-    <line x1="202" y1="46" x2="202" y2="68" stroke="#5AB5CE" stroke-width="1.5"/>
-    <polygon points="198,65 202,72 206,65" fill="#5AB5CE"/>
+    <line x1="42"  y1="46" x2="42"  y2="68" style="stroke: var(--r-accent-color)" stroke-width="1.5"/>
+    <polygon points="38,65  42,72  46,65"  style="fill: var(--r-accent-color)"/>
+    <line x1="82"  y1="46" x2="82"  y2="68" style="stroke: var(--r-accent-color)" stroke-width="1.5"/>
+    <polygon points="78,65  82,72  86,65"  style="fill: var(--r-accent-color)"/>
+    <line x1="122" y1="46" x2="122" y2="68" style="stroke: var(--r-accent-color)" stroke-width="1.5"/>
+    <polygon points="118,65 122,72 126,65" style="fill: var(--r-accent-color)"/>
+    <line x1="162" y1="46" x2="162" y2="68" style="stroke: var(--r-accent-color)" stroke-width="1.5"/>
+    <polygon points="158,65 162,72 166,65" style="fill: var(--r-accent-color)"/>
+    <line x1="202" y1="46" x2="202" y2="68" style="stroke: var(--r-accent-color)" stroke-width="1.5"/>
+    <polygon points="198,65 202,72 206,65" style="fill: var(--r-accent-color)"/>
 
     <!-- Inner box (white, dashed border) -->
     <rect x="10" y="74" width="300" height="220" rx="2"
-          fill="white" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+          fill="white" style="stroke: var(--r-card-border)" stroke-width="1.5" stroke-dasharray="4,3"/>
 
     <!-- Layer 1 (top): CMD → 91e54dfb1179, 0 B -->
-    <rect x="12" y="76"  width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <rect x="12" y="76"  width="296" height="50" rx="2" style="fill: var(--r-accent-color)"/>
     <text x="26" y="106" font-family="monospace" font-size="12" fill="white">91e54dfb1179</text>
     <text x="298" y="106" text-anchor="end" font-family="monospace" font-size="12" fill="white">0 B</text>
 
     <!-- Layer 2: RUN → d74508fb6632, 1.895 KB -->
-    <rect x="12" y="130" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <rect x="12" y="130" width="296" height="50" rx="2" style="fill: var(--r-accent-color)"/>
     <text x="26" y="160" font-family="monospace" font-size="12" fill="white">d74508fb6632</text>
     <text x="298" y="160" text-anchor="end" font-family="monospace" font-size="12" fill="white">1.895 KB</text>
 
     <!-- Layer 3: COPY → c22013c84729, 194.5 KB -->
-    <rect x="12" y="184" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <rect x="12" y="184" width="296" height="50" rx="2" style="fill: var(--r-accent-color)"/>
     <text x="26" y="214" font-family="monospace" font-size="12" fill="white">c22013c84729</text>
     <text x="298" y="214" text-anchor="end" font-family="monospace" font-size="12" fill="white">194.5 KB</text>
 
     <!-- Layer 4 (bottom): FROM → d3a1f33e8a5a, 188.1 MB -->
-    <rect x="12" y="238" width="296" height="50" rx="2" fill="#3D7A8A"/>
+    <rect x="12" y="238" width="296" height="50" rx="2" style="fill: var(--r-accent-color)"/>
     <text x="26" y="268" font-family="monospace" font-size="12" fill="white">d3a1f33e8a5a</text>
     <text x="298" y="268" text-anchor="end" font-family="monospace" font-size="12" fill="white">188.1 MB</text>
 
@@ -81,13 +81,13 @@
 
     <!-- Right bracket spanning all 4 layers (y=76 to y=288) -->
     <path d="M 312,76 L 322,76 L 322,288 L 312,288"
-          fill="none" stroke="#555" stroke-width="2"/>
-    <line x1="322" y1="182" x2="338" y2="182" stroke="#555" stroke-width="1.5"/>
+          fill="none" style="stroke: var(--r-muted-color)" stroke-width="2"/>
+    <line x1="322" y1="182" x2="338" y2="182" style="stroke: var(--r-muted-color)" stroke-width="1.5"/>
 
     <!-- Padlock icon -->
-    <rect x="319" y="170" width="16" height="13" rx="2" fill="#B8860B"/>
+    <rect x="319" y="170" width="16" height="13" rx="2" style="fill: var(--r-link-color)"/>
     <path d="M 321,170 Q 321,161 327,161 Q 333,161 333,170"
-          fill="none" stroke="#B8860B" stroke-width="2.5"/>
+          fill="none" style="stroke: var(--r-link-color)" stroke-width="2.5"/>
 
     <!-- "Image layers (R/O)" label -->
     <text x="342" y="187"
@@ -97,10 +97,10 @@
     <!-- Container caption -->
     <text x="160" y="358" text-anchor="middle"
           font-family="Source Sans Pro,Helvetica,sans-serif"
-          font-size="13" fill="#4a5568">Container</text>
+          font-size="13" style="fill: var(--r-muted-color)">Container</text>
     <text x="160" y="375" text-anchor="middle"
           font-family="Source Sans Pro,Helvetica,sans-serif"
-          font-size="11" fill="#4a5568">(based on ubuntu:15.04 image)</text>
+          font-size="11" style="fill: var(--r-muted-color)">(based on ubuntu:15.04 image)</text>
 
     <!-- ── RIGHT PANEL: Dockerfile ── -->
 
@@ -117,15 +117,15 @@
     -->
     <!-- Main document body -->
     <path d="M 498,68 L 872,68 L 892,88 L 892,244 Q 695,262 498,244 Z"
-          fill="#3D7A8A"/>
+          style="fill: var(--r-accent-color)"/>
     <!-- Folded corner — slightly darker to show the crease -->
-    <path d="M 872,68 L 892,68 L 892,88 Z" fill="#2B5E6E"/>
+    <path d="M 872,68 L 892,68 L 892,88 Z" style="fill: var(--r-heading-color)"/>
     <line x1="872" y1="68" x2="892" y2="88"
           stroke="#1e4555" stroke-width="1.2" opacity="0.6"/>
 
     <!-- FROM ubuntu:15.04 — center y=100 -->
     <text x="512" y="108"
-          font-family="monospace" font-size="15" font-weight="600" fill="white">FROM ubuntu:<tspan fill="#FF6B6B">15.04</tspan></text>
+          font-family="monospace" font-size="15" font-weight="600" fill="white">FROM ubuntu:<tspan style="fill: var(--r-link-color)">15.04</tspan></text>
 
     <!-- COPY . /app — center y=140 -->
     <text x="512" y="148"
@@ -147,19 +147,19 @@
     -->
     <line class="fragment" data-fragment-index="1"
           x1="498" y1="100" x2="322" y2="261"
-          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+          style="stroke: var(--r-accent-color)" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="2"
           x1="498" y1="140" x2="322" y2="207"
-          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+          style="stroke: var(--r-accent-color)" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="3"
           x1="498" y1="180" x2="322" y2="153"
-          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+          style="stroke: var(--r-accent-color)" stroke-width="3.5" marker-end="url(#arr-layers)"/>
 
     <line class="fragment" data-fragment-index="4"
           x1="498" y1="220" x2="322" y2="101"
-          stroke="#38B5D0" stroke-width="3.5" marker-end="url(#arr-layers)"/>
+          style="stroke: var(--r-accent-color)" stroke-width="3.5" marker-end="url(#arr-layers)"/>
   </svg>
 </section>
 <section>
@@ -170,6 +170,7 @@
       src="imgs/container-layers.png"
       style="max-width: 70%"
       alt="Container Layers"
+      loading="lazy"
     />
   </div>
 </section>
@@ -181,6 +182,7 @@
       src="imgs/image-layer-detail1.jpeg"
       style="max-width: 80%"
       alt="Image Layer Details"
+      loading="lazy"
     />
   </div>
 </section>
@@ -192,6 +194,7 @@
       src="imgs/image-layer-detail2.jpeg"
       style="max-width: 80%"
       alt="Image Layer Details"
+      loading="lazy"
     />
   </div>
 </section>
