@@ -461,6 +461,36 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   margin-bottom: 0;
 }
 
+/* Community engagement card: compact card highlighting past community roles */
+.reveal .community-card {
+  padding: 0.5em 1.1em 0.6em;
+}
+
+.reveal .community-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.3em;
+  font-size: 0.6em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--r-accent-color);
+}
+
+.reveal .community-card__title .badge {
+  margin-left: auto;
+}
+
+.reveal .community-card .styled-list {
+  margin: 0;
+  font-size: 0.78em;
+}
+
+.reveal .community-card .styled-list li {
+  margin-bottom: 0.15em;
+}
+
 /*********************************************
  * ICON ACCENT
  *********************************************/
